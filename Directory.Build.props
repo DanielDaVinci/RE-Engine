@@ -1,0 +1,50 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <!-- Сохраняем стандартные пути Windows SDK -->
+<!--    <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>-->
+<!--    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>-->
+
+    <!-- Обновляем IncludePath БЕЗ перезаписи стандартных путей -->
+    <IncludePath>
+      $(IncludePath);
+      $(SolutionDir)ThirdParty\ExternalIncludes;
+      $(SolutionDir);
+    </IncludePath>
+
+<!--    &lt;!&ndash; Обновляем LibraryPath с сохранением системных путей &ndash;&gt;-->
+<!--    <LibraryPath>-->
+<!--      $(LibraryPath);-->
+<!--      $(VC_LibraryPath_x86);-->
+<!--      $(WindowsSDK_LibraryPath_x86);-->
+<!--      $(SolutionDir)ThirdParty\ExternalLibraries;-->
+<!--      $(SolutionDir)Libraries;-->
+<!--    </LibraryPath>-->
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(SolutionDir);
+        $(SolutionDir)ThirdParty\ExternalIncludes;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+        $(SolutionDir)ThirdParty\ExternalLibraries;
+        $(SolutionDir)Libraries;
+        $(SolutionDir)$(Configuration)\;
+        %(AdditionalLibraryDirectories);
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+        opengl32.lib;
+        glew32s.lib;
+        glfw3_mt.lib;
+        assimp-vc143-mtd.lib;
+        SOIL.lib;
+        %(AdditionalDependencies);
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

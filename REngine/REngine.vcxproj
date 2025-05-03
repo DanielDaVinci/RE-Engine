@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{7512F410-5E1A-4AD3-B5E6-18A17AF36900}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>REngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)/Libraries;$(SolutionDir)ThirdParty\ExternalLibraries;</LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Core.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)
+       </AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Core.lib;</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Editor\Display\Frame\RFrame.cpp" />
+    <ClCompile Include="Engine\Editor\Display\Shader\FShader.cpp" />
+    <ClCompile Include="Engine\Editor\REditor.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\RContainerWidget\RContainerWidget.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\Widget\RWidget.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\Window\RWindow.cpp" />
+    <ClCompile Include="Engine\REngine.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineWindow\REngineWindow.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.cpp" />
+    <ClCompile Include="Engine\Runtime\GameFramework\Camera\RCamera.cpp" />
+    <ClCompile Include="Engine\Runtime\GameFramework\Model\RModel.cpp" />
+    <ClCompile Include="Engine\Runtime\GameFramework\Scene\RScene.cpp" />
+    <ClCompile Include="Launch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assimp-vc143-mtd.dll" />
+    <Content Include="Content\objects\backpack\ao.jpg" />
+    <Content Include="Content\objects\backpack\backpack.mtl" />
+    <Content Include="Content\objects\backpack\backpack.obj" />
+    <Content Include="Content\objects\backpack\diffuse.jpg" />
+    <Content Include="Content\objects\backpack\normal.png" />
+    <Content Include="Content\objects\backpack\roughness.jpg" />
+    <Content Include="Content\objects\backpack\specular.jpg" />
+    <Content Include="Content\objects\kitten-walk\Kitten_Albedo.png" />
+    <Content Include="Content\objects\kitten-walk\kitten_walk.obj" />
+    <Content Include="Content\objects\kitten-walk\result.mtl" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit.mtl" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit.obj" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_Helm _Glasses_mask.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_Helm _Glasses_mask_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_Helm _mask.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_Helm _mask_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_Helm _mask_spec.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Helmet.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Helmet_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Helmet_glasses.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Helmet_spec.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_helmet_visor.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us_lower_fp.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us_lower_fp_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us_lower_fp_spec.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Neck.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Neck_ddn.tga" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Neck_spec.dds" />
+    <Content Include="Content\objects\Nano_suit\NanoSuit_us_spec.dds" />
+    <Content Include="Content\objects\Nano_suit\Nanosuit_us_Visorlight.dds" />
+    <Content Include="Content\objects\Nano_suit\Nano_suit.max" />
+    <Content Include="coredll.dll" />
+    <Content Include="Data\Shaders\frameShader.frag" />
+    <Content Include="Data\Shaders\frameShader.vs" />
+    <Content Include="Data\Shaders\shader.frag" />
+    <Content Include="Data\Shaders\shader.vs" />
+    <Content Include="Data\Shaders\strokeShader.frag" />
+    <Content Include="Data\Shaders\strokeShader.vs" />
+    <Content Include="Data\Textures\BUMPS.BMP" />
+    <Content Include="Data\Textures\Container.png" />
+    <Content Include="Data\Textures\Container_specular.png" />
+    <Content Include="Data\Textures\CRATE.BMP" />
+    <Content Include="Data\Textures\CUBE.BMP" />
+    <Content Include="Data\Textures\Font.bmp" />
+    <Content Include="Data\Textures\Image1.bmp" />
+    <Content Include="Data\Textures\Image2.bmp" />
+    <Content Include="Data\Textures\LIGHTS.BMP" />
+    <Content Include="Data\Textures\Logo.bmp" />
+    <Content Include="Data\Textures\Mask1.bmp" />
+    <Content Include="Data\Textures\Mask2.bmp" />
+    <Content Include="Data\Textures\NeHe.bmp" />
+    <Content Include="Data\Textures\Particle.bmp" />
+    <Content Include="Data\Textures\Star.bmp" />
+    <Content Include="Data\Textures\Terrain.raw" />
+    <Content Include="Data\Textures\TIM.BMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Editor\Display\Frame\RFrame.h" />
+    <ClInclude Include="Engine\Editor\Display\Shader\FShader.h" />
+    <ClInclude Include="Engine\Editor\REditor.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\RContainerWidget\RContainerWidget.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\Widget\RWidget.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\Window\RWindow.h" />
+    <ClInclude Include="Engine\REngine.h" />
+    <ClInclude Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.h" />
+    <ClInclude Include="Engine\Runtime\EngineWindow\REngineWindow.h" />
+    <ClInclude Include="Engine\Runtime\Engine\MeshLibrary.h" />
+    <ClInclude Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.h" />
+    <ClInclude Include="Engine\Runtime\GameFramework\Camera\RCamera.h" />
+    <ClInclude Include="Engine\Runtime\GameFramework\Model\RModel.h" />
+    <ClInclude Include="Engine\Runtime\GameFramework\Scene\RScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Editor\UI\Widgets\ContainerWidget\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdParty\ThirdParty.vcxproj">
+      <Project>{a64fe1c1-2ca8-4c36-bad4-d7db16d735c4}</Project>
+      <Name>ThirdParty</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
