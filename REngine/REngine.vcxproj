@@ -195,9 +195,10 @@
     <ClInclude Include="Engine\Runtime\GameFramework\Scene\RScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Editor\UI\Widgets\ContainerWidget\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{279a85f4-b99e-4fe2-a1c1-d5eb9a1d5ff1}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ThirdParty\ThirdParty.vcxproj">
       <Project>{a64fe1c1-2ca8-4c36-bad4-d7db16d735c4}</Project>
       <Name>ThirdParty</Name>
