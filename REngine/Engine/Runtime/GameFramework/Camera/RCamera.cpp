@@ -151,8 +151,8 @@ glm::vec3 RCamera::getFrontDirection()
 	glm::vec3 direction;
 
 	direction.x = glm::cos(glm::radians(angle.x)) * glm::cos(glm::radians(angle.y));
-	direction.y = glm::sin(glm::radians(angle.x));
-	direction.z = glm::cos(glm::radians(angle.x)) * glm::sin(glm::radians(angle.y));
+	direction.y = glm::cos(glm::radians(angle.x)) * glm::sin(glm::radians(angle.y));
+	direction.z = glm::sin(glm::radians(angle.x));
 
 	return direction;
 }
@@ -164,5 +164,5 @@ glm::vec3 RCamera::getUpDirection()
 
 glm::vec3 RCamera::getRightDirection()
 {
-	return glm::cross(getFrontDirection(), { 0.0f, 1.0f, 0.0f });
+	return glm::cross(getFrontDirection(), { 0.0f, 0.0f, 1.0f });
 }

@@ -11,14 +11,14 @@ RContainerWidget::~RContainerWidget()
 {
 }
 
-void RContainerWidget::Init(const std::shared_ptr<REditor>& InEditor)
+void RContainerWidget::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
-    RWidget::Init(InEditor);
+    RWidget::Initialize(InEditor);
     
     for (const auto& Child : ChildrenWidgets)
     {
         RCheckContinue(Child);
-        Child->Init(InEditor);
+        Child->Initialize(InEditor);
     }
 }
 

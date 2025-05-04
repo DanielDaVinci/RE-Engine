@@ -21,7 +21,7 @@ public:
 
     virtual bool IsNeedDockspace() const;
 
-    void Init(const std::shared_ptr<REditor>& InEditor) override;
+    void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
 protected:

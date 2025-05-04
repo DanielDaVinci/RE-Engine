@@ -38,7 +38,7 @@ void REditor::Init(GLFWwindow* window)
     ImGui_ImplOpenGL3_Init("#version 330 core");
     
     RootWidget = std::make_shared<RRootWindow>(GetSharedThis());
-    RootWidget->Init(GetSharedThis<REditor>());
+    RootWidget->Initialize(GetSharedThis<REditor>());
 
     const std::pair<GLint, GLint>& WindowSize = GetGLFWWindowSize(window);
     Frame = std::make_shared<RFrame>(WindowSize.first, WindowSize.second);
@@ -97,7 +97,9 @@ void REditor::Render(GLdouble DeltaTime)
     Shader->setUniform("viewPos", ScreenCamera->getPosition());
 
     glm::mat4 model(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.0f));
+    model = glm::translate(model, glm::vec3(0.0f, -10.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     Shader->setUniform("model", model);
     Shader->setUniform("view", ScreenCamera->getViewMatrix());

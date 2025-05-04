@@ -17,24 +17,20 @@ class FShader;
 class RModel
 {
 public:
-
-	std::vector<RStaticMesh> meshes;
-
-    std::vector<Texture> textures_load;
-
-	std::string directory;
-
-public:
 	RModel(std::string path);
 
 	void Draw(FShader shader);
 
+protected:
+	void LoadModel(std::string path);
+	void ProcessNode(aiNode* node, const aiScene* scene);
+	RStaticMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+	unsigned int LoadTextureFromFile(const char* path, const std::string& directory, bool gamma = false);
+	
 private:
-
-	void loadModel(std::string path);
-	void processNode(aiNode* node, const aiScene* scene);
-	RStaticMesh processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
-	unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
+	std::vector<RStaticMesh> StaticMeshes;
+	std::vector<Texture> LoadedTextures;
+	std::string directory;
 
 };

@@ -50,9 +50,9 @@ bool RWindow::IsNeedDockspace() const
     return true;
 }
 
-void RWindow::Init(const std::shared_ptr<REditor>& InEditor)
+void RWindow::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
-    RContainerWidget::Init(InEditor);
+    RContainerWidget::Initialize(InEditor);
 }
 
 void RWindow::Draw()

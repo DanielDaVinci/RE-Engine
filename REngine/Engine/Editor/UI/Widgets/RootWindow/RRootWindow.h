@@ -10,7 +10,7 @@ public:
     explicit RRootWindow(const std::shared_ptr<RObject>& InOwner);
     ~RRootWindow() override;
 
-    void Init(const std::shared_ptr<REditor>& InEditor) override;
+    void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
 protected:

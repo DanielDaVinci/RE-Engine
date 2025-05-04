@@ -12,7 +12,7 @@ public:
     void SetEditor(const std::shared_ptr<REditor>& InEditor);
     std::shared_ptr<REditor> GetEditor() const;
 
-    virtual void Init(const std::shared_ptr<REditor>& InEditor);
+    virtual void Initialize(const std::shared_ptr<REditor>& InEditor);
     virtual void Draw() = 0;
 
 protected:

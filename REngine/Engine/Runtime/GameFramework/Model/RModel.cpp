@@ -12,16 +12,18 @@ using namespace std;
 
 RModel::RModel(string path)
 {
-	loadModel(path);
+	LoadModel(path);
 }
 
 void RModel::Draw(FShader shader)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+	for (RStaticMesh& Mesh : StaticMeshes)
+	{
+		Mesh.Draw(shader);
+	}
 }
 
-void RModel::loadModel(string path)
+void RModel::LoadModel(string path)
 {
 	Assimp::Importer import;
 	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate);
@@ -34,23 +36,23 @@ void RModel::loadModel(string path)
 
 	directory = path.substr(0, path.find_last_of('/'));
 
-	processNode(scene->mRootNode, scene);
+	ProcessNode(scene->mRootNode, scene);
 }
 
-void RModel::processNode(aiNode* node, const aiScene* scene)
+void RModel::ProcessNode(aiNode* node, const aiScene* scene)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		meshes.push_back(processMesh(scene->mMeshes[node->mMeshes[i]], scene));
+		StaticMeshes.push_back(ProcessMesh(scene->mMeshes[node->mMeshes[i]], scene));
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene);
+		ProcessNode(node->mChildren[i], scene);
 	}
 }
 
-RStaticMesh RModel::processMesh(aiMesh* mesh, const aiScene* scene)
+RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
@@ -98,17 +100,17 @@ RStaticMesh RModel::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-		vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return RStaticMesh(vertices, indices, textures);
 }
 
-vector<Texture> RModel::loadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)
+vector<Texture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)
 {
 	vector<Texture> textures;
 	
@@ -119,31 +121,33 @@ vector<Texture> RModel::loadMaterialTextures(aiMaterial* material, aiTextureType
 
 		bool skip = false;
 
-		for (unsigned int j = 0; j < textures_load.size(); j++)
+		for (const Texture& Texture : LoadedTextures)
 		{
-			if (strcmp(textures_load[j].path.C_Str(), path.C_Str()) == 0)
+			if (strcmp(Texture.path.C_Str(), path.C_Str()) == 0)
 			{
-				textures.push_back(textures_load[j]);
+				textures.push_back(Texture);
 				skip = true;
 				break;
 			}
 		}
 
 		if (skip)
+		{
 			continue;
+		}
 
-		textures.push_back({
-			TextureFromFile(path.C_Str(), directory),
+		textures.emplace_back(
+			LoadTextureFromFile(path.C_Str(), directory),
 			typeName,
 			path
-		});
-		textures_load.push_back(textures[textures.size() - 1]);
+		);
+		LoadedTextures.push_back(textures.back());
 	}
 
 	return textures;
 }
 
-unsigned int RModel::TextureFromFile(const char* path, const string& directory, bool gamma)
+unsigned int RModel::LoadTextureFromFile(const char* path, const string& directory, bool gamma)
 {
 	string filename = path;
 	filename = directory + '/' + filename;

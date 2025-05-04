@@ -11,13 +11,13 @@ RRootWindow::~RRootWindow()
 {
 }
 
-void RRootWindow::Init(const std::shared_ptr<REditor>& InEditor)
+void RRootWindow::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
     ViewportWindow = std::make_shared<RViewportWindow>(GetSharedThis());
     RCheckReturn(ViewportWindow);
     AddChild(ViewportWindow);
     
-    RWindow::Init(InEditor);
+    RWindow::Initialize(InEditor);
 }
 
 void RRootWindow::Draw()

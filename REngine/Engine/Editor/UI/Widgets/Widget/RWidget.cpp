@@ -20,7 +20,7 @@ std::shared_ptr<REditor> RWidget::GetEditor() const
     return WeakEditor.lock();
 }
 
-void RWidget::Init(const std::shared_ptr<REditor>& InEditor)
+void RWidget::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
     SetEditor(InEditor);
 }
