@@ -89,6 +89,9 @@
   <ItemGroup>
     <ClInclude Include="Public\Check\Check.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Private\Check\" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

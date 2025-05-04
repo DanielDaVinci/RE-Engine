@@ -1,7 +1,8 @@
 #include "RWindow.h"
 
-RWindow::RWindow()
+RWindow::RWindow(const std::shared_ptr<RObject>& InOwner) : RContainerWidget(InOwner)
 {
+    WindowStyleNums = 0;
 }
 
 RWindow::~RWindow()
@@ -44,30 +45,66 @@ void RWindow::SetPaddingSize(const ImVec2& PaddingSize)
     WindowData.PaddingSize = PaddingSize;
 }
 
+bool RWindow::IsNeedDockspace() const
+{
+    return true;
+}
+
+void RWindow::Init(const std::shared_ptr<REditor>& InEditor)
+{
+    RContainerWidget::Init(InEditor);
+}
+
 void RWindow::Draw()
 {
     PushWindowStyle();
-    
     ImGui::Begin(WindowData.Name.c_str(), nullptr, WindowData.WindowFlags);
-    
     PopWindowStyle();
-    InitDockspace();
     
+    if (IsNeedDockspace())
+    {
+        InitDockspace();
+    }
+
+    DrawWindowContent();
     RContainerWidget::Draw();
     
     ImGui::End();
 }
 
-void RWindow::PushWindowStyle() const
+void RWindow::SetWindowName(const std::string& Name)
 {
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, WindowData.RoundingRadius);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, WindowData.BorderSize);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, WindowData.PaddingSize);
+    WindowData.Name = Name;
+}
+
+std::string RWindow::GetWindowName() const
+{
+    return WindowData.Name;
+}
+
+void RWindow::AddWindowStyle(ImGuiStyleVar StyleIndex, float Value)
+{
+    ImGui::PushStyleVar(StyleIndex, Value);
+    WindowStyleNums += 1;
+}
+
+void RWindow::AddWindowStyle(ImGuiStyleVar StyleIndex, const ImVec2& Value)
+{
+    ImGui::PushStyleVar(StyleIndex, Value);
+    WindowStyleNums += 1;
+}
+
+void RWindow::PushWindowStyle()
+{
+    AddWindowStyle(ImGuiStyleVar_WindowRounding, WindowData.RoundingRadius);
+    AddWindowStyle(ImGuiStyleVar_WindowBorderSize, WindowData.BorderSize);
+    AddWindowStyle(ImGuiStyleVar_WindowPadding, WindowData.PaddingSize);
 }
 
 void RWindow::PopWindowStyle()
 {
-    ImGui::PopStyleVar(3);
+    ImGui::PopStyleVar(WindowStyleNums);
+    WindowStyleNums = 0;
 }
 
 void RWindow::InitDockspace()
@@ -75,7 +112,12 @@ void RWindow::InitDockspace()
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
     {
-        ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+        ImGuiID dockspace_id = ImGui::GetID(GetWindowName().c_str());
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), WindowData.DockspaceFlags);
     }
+}
+
+void RWindow::DrawWindowContent() const
+{
+    
 }

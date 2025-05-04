@@ -2,17 +2,18 @@
 #include <memory>
 
 #define GLEW_STATIC
+#include "Core/Public/Object/RObject.h"
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
 class REditor;
 class REngineWindow;
 
-class REngine
+class REngine : public RObject
 {
     using ThisClass = REngine;
 public:
-    REngine();
+    explicit REngine(const std::shared_ptr<RObject>& InOwner);
     ~REngine();
 
     bool IsEngineActive() const;
@@ -61,4 +62,4 @@ private:
     std::shared_ptr<REditor> Editor;
 };
 
-static REngine* Engine = nullptr;
+static std::shared_ptr<REngine> Engine = nullptr;

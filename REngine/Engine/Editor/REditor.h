@@ -3,6 +3,7 @@
 #define GLEW_STATIC
 #include <memory>
 
+#include "Core/Public/Object/RObject.h"
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
@@ -13,10 +14,10 @@ class RCamera;
 class FShader;
 class RFrame;
 
-class REditor
+class REditor : public RObject
 {
 public:
-    REditor();
+    explicit REditor(const std::shared_ptr<RObject>& InOwner);
     ~REditor();
     
     void Init(GLFWwindow* window);
@@ -37,6 +38,9 @@ public:
 
     void OnMouseDown(int button, int mods);
     void OnMouseUp(int button, int mods);
+
+    std::shared_ptr<RFrame> GetFrame() const;
+    std::shared_ptr<RCamera> GetCamera() const;
 
 protected:
     static std::pair<GLint, GLint> GetGLFWWindowSize(GLFWwindow* window);

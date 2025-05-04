@@ -16,8 +16,9 @@
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_opengl3.h"
 #include "UI/Widgets/RootWindow/RRootWindow.h"
 
-REditor::REditor()
+REditor::REditor(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
+    
 }
 
 REditor::~REditor()
@@ -35,8 +36,9 @@ void REditor::Init(GLFWwindow* window)
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
-
-    RootWidget = std::make_shared<RRootWindow>();
+    
+    RootWidget = std::make_shared<RRootWindow>(GetSharedThis());
+    RootWidget->Init(GetSharedThis<REditor>());
 
     const std::pair<GLint, GLint>& WindowSize = GetGLFWWindowSize(window);
     Frame = std::make_shared<RFrame>(WindowSize.first, WindowSize.second);
@@ -113,30 +115,8 @@ void REditor::PostRender(GLdouble DeltaTime)
 void REditor::DrawUI(GLdouble DeltaTime)
 {
     RootWidget->Draw();
-    
-    ImGui::Begin("Scene");
-    
-    const auto& WindowSize = glm::ivec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y);
-    
-    Frame->Resize(WindowSize.x, WindowSize.y);
-    glViewport(0, 0, WindowSize.x, WindowSize.y);
-    ScreenCamera->setScreenWidth(WindowSize.x);
-    ScreenCamera->setScreenHeight(WindowSize.y);
-    
-    ImVec2 pos = ImGui::GetCursorScreenPos();
-    
-    ImGui::GetWindowDrawList()->AddImage(
-        Frame->getTextureID(),
-        ImVec2(pos.x, pos.y),
-        ImVec2(pos.x + WindowSize.x, pos.y + WindowSize.y),
-        ImVec2(0, 1),
-        ImVec2(1, 0)
-    );
-    
-    ImGui::End();
 
     ImGui::ShowDemoWindow();
-    
 }
 
 void REditor::DrawMainMenuBar()
@@ -173,6 +153,16 @@ void REditor::OnMouseDown(int button, int mods)
 void REditor::OnMouseUp(int button, int mods)
 {
     
+}
+
+std::shared_ptr<RFrame> REditor::GetFrame() const
+{
+    return Frame;
+}
+
+std::shared_ptr<RCamera> REditor::GetCamera() const
+{
+    return ScreenCamera;
 }
 
 std::pair<GLint, GLint> REditor::GetGLFWWindowSize(GLFWwindow* window)

@@ -2,19 +2,20 @@
 
 #include <vector>
 #include <memory>
-
 #include "REngine/Engine/Editor/UI/Widgets/Widget/RWidget.h"
 
 class RContainerWidget : public RWidget
 {
 public:
-    RContainerWidget();
-    ~RContainerWidget();
+    explicit RContainerWidget(const std::shared_ptr<RObject>& InOwner);
+    ~RContainerWidget() override;
 
+    void Init(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
 protected:
-    virtual void DrawChild();
+    virtual void AddChild(const std::shared_ptr<RWidget>& InChild);
+    virtual void DrawChildren();
 
 private:
     std::vector<std::shared_ptr<RWidget>> ChildrenWidgets;

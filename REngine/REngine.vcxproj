@@ -100,7 +100,7 @@
     <ClCompile Include="Engine\Editor\Display\Frame\RFrame.cpp" />
     <ClCompile Include="Engine\Editor\Display\Shader\FShader.cpp" />
     <ClCompile Include="Engine\Editor\REditor.cpp" />
-    <ClCompile Include="Engine\Editor\UI\Widgets\RContainerWidget\RContainerWidget.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Widget\RWidget.cpp" />
@@ -179,7 +179,7 @@
     <ClInclude Include="Engine\Editor\Display\Frame\RFrame.h" />
     <ClInclude Include="Engine\Editor\Display\Shader\FShader.h" />
     <ClInclude Include="Engine\Editor\REditor.h" />
-    <ClInclude Include="Engine\Editor\UI\Widgets\RContainerWidget\RContainerWidget.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Widget\RWidget.h" />

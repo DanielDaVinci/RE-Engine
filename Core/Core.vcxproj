@@ -106,6 +106,7 @@
     <ClInclude Include="Public\Class\RClass.h" />
     <ClInclude Include="Public\DynLib.h" />
     <ClInclude Include="Public\Object\RObject.h" />
+    <ClInclude Include="Public\Object\RObject.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

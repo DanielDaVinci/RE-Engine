@@ -1,19 +1,10 @@
 #pragma once
 
-#include <csignal>
-
-#ifdef _WIN32
-#define TRAP_SIGNAL SIGABRT
-#else
-#include <signal.h>
-#define TRAP_SIGNAL SIGTRAP
-#endif
-
 #define RCheck(Condition)   \
     (Condition ||           \
     []()                    \
     {                       \
-        raise(TRAP_SIGNAL); \
+        __debugbreak();     \
         return false;       \
     }())
 

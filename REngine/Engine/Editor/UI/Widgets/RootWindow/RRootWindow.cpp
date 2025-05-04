@@ -1,11 +1,23 @@
 #include "RRootWindow.h"
 
-RRootWindow::RRootWindow()
+#include "DebugLog/Public/Check/Check.h"
+#include "REngine/Engine/Editor/UI/Widgets/ViewportWindow/RViewportWindow.h"
+
+RRootWindow::RRootWindow(const std::shared_ptr<RObject>& InOwner) : RWindow(InOwner)
 {
 }
 
 RRootWindow::~RRootWindow()
 {
+}
+
+void RRootWindow::Init(const std::shared_ptr<REditor>& InEditor)
+{
+    ViewportWindow = std::make_shared<RViewportWindow>(GetSharedThis());
+    RCheckReturn(ViewportWindow);
+    AddChild(ViewportWindow);
+    
+    RWindow::Init(InEditor);
 }
 
 void RRootWindow::Draw()

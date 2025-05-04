@@ -7,7 +7,7 @@
 
 int main()
 {
-    Engine = new REngine();
+    Engine = std::make_shared<REngine>(nullptr);
     RCheck(Engine);
     
     Engine->PreInit();

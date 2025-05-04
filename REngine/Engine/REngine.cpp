@@ -7,9 +7,9 @@
 
 REngine* REngine::FCallbackWrapper::StaticEngine = nullptr;
 
-REngine::REngine()
+REngine::REngine(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
-
+    
 }
 
 REngine::~REngine()
@@ -37,9 +37,8 @@ void REngine::Init()
     WindowParameters.bResizable = GL_TRUE;
     WindowParameters.bCursorVisibility = GLFW_CURSOR_NORMAL;
     WindowParameters.SwapInterval = 1;
-
-    auto Link = new REngineWindow(WindowParameters);
-    EngineWindow = std::shared_ptr<REngineWindow>(Link);
+    
+    EngineWindow = std::make_shared<REngineWindow>(WindowParameters);
     EngineWindow->Create();
 
     EngineWindow->SetWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -52,7 +51,7 @@ void REngine::Init()
     SetWindowCallbacks();
 
     // Engine editor
-    Editor = std::make_shared<REditor>();
+    Editor = std::make_shared<REditor>(shared_from_this());
     Editor->Init(EngineWindow->glfwWindow);
 }
 

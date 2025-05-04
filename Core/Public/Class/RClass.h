@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Core/Public/DynLib.h"
 
 class DLL_API RClass
@@ -7,9 +9,7 @@ class DLL_API RClass
 public:
     RClass();
     virtual ~RClass() = default;
-
-    int b;
-
+    
 protected:
     virtual void FillReflection();
     
