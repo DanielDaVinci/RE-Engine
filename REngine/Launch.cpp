@@ -1,8 +1,6 @@
 #include "DebugLog/Public/Check/Check.h"
 #include "Engine/REngine.h"
 
-#pragma comment(linker, "/ignore:4099")
-
 //#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 int main()

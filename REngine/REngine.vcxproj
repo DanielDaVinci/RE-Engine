@@ -107,12 +107,101 @@
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\RWindow.cpp" />
     <ClCompile Include="Engine\REngine.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\FRotator\FRotator.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\Transform\FTransform.cpp">
+      <AdditionalIncludeDirectories>C:\Users\Demos\RiderProjects\REngine\;C:\Users\Demos\RiderProjects\REngine\/Libraries;
+        C:\Users\Demos\RiderProjects\REngine\;
+        C:\Users\Demos\RiderProjects\REngine\ThirdParty\ExternalIncludes;
+        ;
+      </AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>Debug\</ModuleDependenciesFile>
+      <ModuleOutputFile>Debug\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>Debug\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\REngine.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>Debug\REngine.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+      <OmitFramePointers>false</OmitFramePointers>
+      <SDLCheck>true</SDLCheck>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\Vector\FVector.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Scene\World\RWorld.cpp" />
     <ClCompile Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.cpp" />
     <ClCompile Include="Engine\Runtime\EngineWindow\REngineWindow.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.cpp" />
-    <ClCompile Include="Engine\Runtime\GameFramework\Camera\RCamera.cpp" />
-    <ClCompile Include="Engine\Runtime\GameFramework\Model\RModel.cpp" />
-    <ClCompile Include="Engine\Runtime\GameFramework\Scene\RScene.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Actor\RActor.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Camera\RCamera.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Model\RModel.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Scene\RScene.cpp" />
     <ClCompile Include="Launch.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,13 +275,24 @@
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\RWindow.h" />
     <ClInclude Include="Engine\REngine.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.tpp" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\FRotator\FRotator.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\Transform\FTransform.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\Vector\FVector.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Scene\World\RWorld.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Scene\World\World.tpp" />
     <ClInclude Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.h" />
     <ClInclude Include="Engine\Runtime\EngineWindow\REngineWindow.h" />
     <ClInclude Include="Engine\Runtime\Engine\MeshLibrary.h" />
     <ClInclude Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.h" />
-    <ClInclude Include="Engine\Runtime\GameFramework\Camera\RCamera.h" />
-    <ClInclude Include="Engine\Runtime\GameFramework\Model\RModel.h" />
-    <ClInclude Include="Engine\Runtime\GameFramework\Scene\RScene.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Camera\RCamera.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Model\RModel.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Scene\RScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">

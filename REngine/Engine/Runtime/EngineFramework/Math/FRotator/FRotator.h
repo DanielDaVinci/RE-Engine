@@ -1,0 +1,21 @@
+﻿#pragma once
+#include "GLM/fwd.hpp"
+#include "glm/vec3.hpp"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Matrix/FMatrix.h"
+
+struct FRotator : public glm::vec3
+{
+    using glm::vec3::vec3;
+    using glm::vec3::operator=;
+
+    void SetPitch(float InPitch);
+    float GetPitch() const;
+    
+    void SetYaw(float InYaw);
+    float GetYaw() const;
+    
+    void SetRoll(float InRoll);
+    float GetRoll() const;
+    
+    FMatrix GetRotationMatrix() const;
+};

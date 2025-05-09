@@ -3,10 +3,15 @@
 #include <string>
 
 
+#include "DebugLog/Public/Check/Check.h"
 #include "Display/Frame/RFrame.h"
 #include "Display/Shader/FShader.h"
-#include "REngine/Engine/Runtime/GameFramework/Camera/RCamera.h"
-#include "REngine/Engine/Runtime/GameFramework/Model/RModel.h"
+#include "glm/detail/type_quat.hpp"
+#include "glm/ext/quaternion_trigonometric.hpp"
+#include "glm/gtc/quaternion.hpp"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
+#include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 #include "ThirdParty/ExternalIncludes/GLM/fwd.hpp"
 #include "ThirdParty/ExternalIncludes/GLM/vec3.hpp"
@@ -25,7 +30,7 @@ REditor::~REditor()
 {
 }
 
-void REditor::Init(GLFWwindow* window)
+void REditor::Initialize(GLFWwindow* window)
 {
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -38,7 +43,12 @@ void REditor::Init(GLFWwindow* window)
     ImGui_ImplOpenGL3_Init("#version 330 core");
     
     RootWidget = std::make_shared<RRootWindow>(GetSharedThis());
+    RCheckReturn(RootWidget);
     RootWidget->Initialize(GetSharedThis<REditor>());
+
+    Scene = std::make_shared<RScene>(GetSharedThis());
+    RCheckReturn(Scene);
+    Scene->Initialize();
 
     const std::pair<GLint, GLint>& WindowSize = GetGLFWWindowSize(window);
     Frame = std::make_shared<RFrame>(WindowSize.first, WindowSize.second);
@@ -47,7 +57,7 @@ void REditor::Init(GLFWwindow* window)
     Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
 
     ScreenCamera = std::make_shared<RCamera>(800, 600, 45.0f);
-    ScreenCamera->setAngle({ 0.0f, -90.0f, 0.0f });
+    ScreenCamera->setAngle({ 0.0f, 0.0f, 0.0f });
 
     MainModel = std::make_shared<RModel>("Content/objects/backpack/backpack.obj");
 }
@@ -56,8 +66,11 @@ void REditor::Tick(GLdouble DeltaTime)
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
-    
-    PreRender(DeltaTime);
+
+    if (RCheck(Scene))
+    {
+        Scene->Tick(DeltaTime);
+    }
 
     ImGui::NewFrame();
     DrawMainMenuBar();
@@ -65,19 +78,14 @@ void REditor::Tick(GLdouble DeltaTime)
     ImGui::EndFrame();
 
     ImGui::Render();
-    Render(DeltaTime);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     
+    PreRender(DeltaTime);
+    Render(DeltaTime);
     PostRender(DeltaTime);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void REditor::PreRender(GLdouble DeltaTime)
-{
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void REditor::Render(GLdouble DeltaTime)
 {
     Frame->Bind();
 
@@ -85,7 +93,10 @@ void REditor::Render(GLdouble DeltaTime)
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
 
+void REditor::Render(GLdouble DeltaTime)
+{
     Shader->Use();
     Shader->setUniform("pointLight.position", ScreenCamera->getPosition());
     Shader->setUniform("pointLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
@@ -97,8 +108,9 @@ void REditor::Render(GLdouble DeltaTime)
     Shader->setUniform("viewPos", ScreenCamera->getPosition());
 
     glm::mat4 model(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, -10.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    
+    model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     Shader->setUniform("model", model);
@@ -106,12 +118,16 @@ void REditor::Render(GLdouble DeltaTime)
     Shader->setUniform("projection", ScreenCamera->getProjectionMatrix());
 
     MainModel->Draw(*Shader);
-    
-    Frame->Bind(0);
+
+    if (RCheck(Scene))
+    {
+        Scene->Render(DeltaTime);
+    }
 }
 
 void REditor::PostRender(GLdouble DeltaTime)
 {
+    Frame->Bind(0);
 }
 
 void REditor::DrawUI(GLdouble DeltaTime)

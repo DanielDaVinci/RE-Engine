@@ -1,7 +1,9 @@
 #pragma once
 
+#include "DebugLog/Private/Check/RCheckValidator.h"
+
 #define RCheck(Condition)   \
-    (Condition ||           \
+    (RCheckValidator<decltype(Condition)>::IsValid(Condition) ||           \
     []()                    \
     {                       \
         __debugbreak();     \

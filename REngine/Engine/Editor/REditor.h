@@ -7,6 +7,7 @@
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
+class RScene;
 class RRootWindow;
 class RWidget;
 class RModel;
@@ -20,7 +21,7 @@ public:
     explicit REditor(const std::shared_ptr<RObject>& InOwner);
     ~REditor();
     
-    void Init(GLFWwindow* window);
+    void Initialize(GLFWwindow* window);
     void Exit();
 
     void PreTick(GLdouble DeltaTime);
@@ -55,6 +56,8 @@ private:
 
     std::shared_ptr<RModel> MainModel;
     std::shared_ptr<RRootWindow> RootWidget;
+
+    std::shared_ptr<RScene> Scene;
 
     GLboolean Keys[1024] = {};
 };

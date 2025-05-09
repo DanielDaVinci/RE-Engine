@@ -5,7 +5,7 @@
 
 class FShader;
 
-class RStaticMesh
+class RStaticMesh 
 {
 private:
 

@@ -30,6 +30,8 @@ public:
     void Exit();
     // ---------------------------------
 
+    std::shared_ptr<REditor> GetEditor() const;
+
 protected:
     // ----------- Callbacks -----------
     class FCallbackWrapper

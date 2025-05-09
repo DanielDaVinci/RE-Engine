@@ -87,10 +87,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Private\Check\RCheckValidator.h" />
     <ClInclude Include="Public\Check\Check.h" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Private\Check\" />
+    <ClCompile Include="Private\Check\RCheckValidator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

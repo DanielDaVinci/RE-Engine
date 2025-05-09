@@ -5,7 +5,7 @@
 #include "glm/vec2.hpp"
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Editor/Display/Frame/RFrame.h"
-#include "REngine/Engine/Runtime/GameFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
 
 RViewportWindow::RViewportWindow(const std::shared_ptr<RObject>& InOwner) : RWindow(InOwner)
 {

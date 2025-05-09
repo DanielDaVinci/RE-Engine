@@ -1,9 +1,9 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4251)
 
 #include <memory>
 #include "Core/Public/Class/RClass.h"
-
-#pragma comment(linker, "/ignore:4251")
 
 class DLL_API RObject : public RClass, public std::enable_shared_from_this<RObject>
 {
@@ -11,10 +11,11 @@ public:
     explicit RObject(const std::shared_ptr<RObject>& InOwner);
     ~RObject() override;
 
-    template<typename T = RObject> requires std::is_base_of_v<RObject, T>
+    template<std::derived_from<RObject> T = RObject>
     std::shared_ptr<T> GetSharedThis();
-    
-    std::shared_ptr<RObject> GetOwner() const;
+
+    template<std::derived_from<RObject> T = RObject>
+    std::shared_ptr<T> GetOwner() const;
     
 private:
     std::weak_ptr<RObject> Owner;
@@ -23,3 +24,4 @@ private:
 };
 
 #include "RObject.tpp"
+#pragma warning(pop)

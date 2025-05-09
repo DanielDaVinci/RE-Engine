@@ -52,7 +52,7 @@ void REngine::Init()
 
     // Engine editor
     Editor = std::make_shared<REditor>(shared_from_this());
-    Editor->Init(EngineWindow->glfwWindow);
+    Editor->Initialize(EngineWindow->glfwWindow);
 }
 
 void REngine::PostInit()
@@ -91,6 +91,11 @@ void REngine::Exit()
 {
     EngineWindow->Destroy();
     glfwTerminate();
+}
+
+std::shared_ptr<REditor> REngine::GetEditor() const
+{
+    return Editor;
 }
 
 void REngine::SetWindowCallbacks()
