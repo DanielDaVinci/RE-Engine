@@ -91,6 +91,7 @@ RStaticMesh RMesh::LoadAssimpMesh(const aiMesh* AssimpMesh, const aiScene* Assim
 std::vector<FVertex> RMesh::LoadVerticesFromAssimpMesh(const aiMesh* AssimpMesh)
 {
     std::vector<FVertex> Vertices;
+    Vertices.reserve(AssimpMesh->mNumVertices);
     
     for (unsigned int i = 0; i < AssimpMesh->mNumVertices; i++)
     {
@@ -156,6 +157,7 @@ std::vector<FTexture> RMesh::LoadTexturesFromAssimpMaterial(
     const std::string& TypeName)
 {
     std::vector<FTexture> Textures;
+    Textures.reserve(AssimpMaterial->GetTextureCount(Type));
 	
     for (unsigned int i = 0; i < AssimpMaterial->GetTextureCount(Type); i++)
     {
@@ -193,26 +195,31 @@ std::vector<FTexture> RMesh::LoadTexturesFromAssimpMaterial(
 
 GLuint RMesh::LoadTextureFromFile(const std::string& Path, const std::string& Directory, bool gamma)
 {
-    std::string Fullpath = Path;
-    Fullpath = Directory + '/' + Path;
+    const std::string Fullpath = Directory + '/' + Path;
 
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
+    unsigned int TextureID;
+    glGenTextures(1, &TextureID);
 
-    int width, height, nrComponents;
-    unsigned char* data = SOIL_load_image(Fullpath.c_str(), &width, &height, &nrComponents, 0);
-    if (data)
+    int Width, Height, Channels;
+    unsigned char* data = SOIL_load_image(Fullpath.c_str(), &Width, &Height, &Channels, 0);
+    if (RCheck(data))
     {
         GLenum format;
-        if (nrComponents == 1)
+        if (Channels == 1)
+        {
             format = GL_RED;
-        else if (nrComponents == 3)
+        }
+        else if (Channels == 3)
+        {
             format = GL_RGB;
-        else if (nrComponents == 4)
+        }
+        else if (Channels == 4)
+        {
             format = GL_RGBA;
+        }
 
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glBindTexture(GL_TEXTURE_2D, TextureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, Width, Height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -220,12 +227,8 @@ GLuint RMesh::LoadTextureFromFile(const std::string& Path, const std::string& Di
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
-    else
-    {
-        std::cout << "Texture failed to load at path: " << Path << std::endl;
-    }
 
     SOIL_free_image_data(data);
 
-    return textureID;
+    return TextureID;
 }

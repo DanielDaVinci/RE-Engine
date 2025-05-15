@@ -7,7 +7,7 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    StaticMesh = std::make_shared<RMesh>(GetSharedThis());
+    StaticMesh = NewObject<RMesh>();
     RCheckReturn(StaticMesh);
     StaticMesh->LoadMesh("Content/objects/backpack/backpack.obj");
 }

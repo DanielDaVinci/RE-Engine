@@ -43,11 +43,11 @@ void REditor::Initialize(GLFWwindow* window)
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
     
-    RootWidget = std::make_shared<RRootWindow>(GetSharedThis());
+    RootWidget = NewObject<RRootWindow>();
     RCheckReturn(RootWidget);
     RootWidget->Initialize(GetSharedThis<REditor>());
 
-    Scene = std::make_shared<RScene>(GetSharedThis());
+    Scene = NewObject<RScene>();
     RCheckReturn(Scene);
     Scene->Initialize();
 

@@ -21,7 +21,7 @@ std::shared_ptr<REngine> REngine::GetEngine()
 {
     if (!SingletonEngine)
     {
-        SingletonEngine = std::make_shared<REngine>(nullptr);
+        SingletonEngine = NewObject<REngine>(nullptr);
     }
 
     return SingletonEngine;
@@ -62,7 +62,8 @@ void REngine::Initialize()
     SetWindowCallbacks();
 
     // Engine editor
-    Editor = std::make_shared<REditor>(GetSharedThis());
+    Editor = NewObject<REditor>();
+    RCheckReturn(Editor);
     Editor->Initialize(EngineWindow->glfwWindow);
 }
 

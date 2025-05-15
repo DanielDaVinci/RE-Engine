@@ -16,7 +16,13 @@ std::shared_ptr<T> RObject::GetOwner() const
 template <std::derived_from<RObject> T>
 std::shared_ptr<T> RObject::NewObject()
 {
-    std::shared_ptr<RObject> Object = std::make_shared<T>(GetSharedThis());
+    return NewObject<T>(GetSharedThis());
+}
+
+template <std::derived_from<RObject> T>
+std::shared_ptr<T> RObject::NewObject(const std::shared_ptr<RObject>& Owner)
+{
+    std::shared_ptr<RObject> Object = std::make_shared<T>(Owner);
     RCheckReturn(Object, nullptr);
     Object->Construct();
     

@@ -22,6 +22,9 @@ protected:
 
     template<std::derived_from<RObject> T = RObject>
     std::shared_ptr<T> NewObject();
+
+    template<std::derived_from<RObject> T = RObject>
+    static std::shared_ptr<T> NewObject(const std::shared_ptr<RObject>& Owner);
     
 private:
     std::weak_ptr<RObject> Owner;

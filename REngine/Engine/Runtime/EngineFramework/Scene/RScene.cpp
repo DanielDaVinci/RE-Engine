@@ -4,7 +4,7 @@
 
 void RScene::Initialize()
 {
-    World = std::make_shared<RWorld>(GetSharedThis());
+    World = NewObject<RWorld>();
     RCheckReturn(World);
     World->Initialize();
 }
