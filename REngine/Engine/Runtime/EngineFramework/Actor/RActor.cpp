@@ -5,6 +5,10 @@
 
 RActor::RActor(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
+}
+
+void RActor::Construct()
+{
     SetRootComponent(AddComponent<RSceneComponent>());
 }
 
@@ -55,9 +59,14 @@ FTransform RActor::GetTransform() const
     return RootComponent->GetRelativeTransform();
 }
 
-std::shared_ptr<RWorld> RActor::GetRWorld() const
+std::shared_ptr<RWorld> RActor::GetWorld() const
 {
     return World.lock();
+}
+
+std::shared_ptr<RSceneComponent> RActor::GetRootComponent() const
+{
+    return RootComponent;
 }
 
 void RActor::SetRootComponent(const std::shared_ptr<RSceneComponent>& Component)

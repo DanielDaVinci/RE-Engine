@@ -19,7 +19,7 @@ void RModel::Draw(FShader shader)
 {
 	for (RStaticMesh& Mesh : StaticMeshes)
 	{
-		Mesh.Draw(shader);
+		// Mesh.Draw(shader);
 	}
 }
 
@@ -107,7 +107,7 @@ RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return RStaticMesh(vertices, indices, textures);
+	return RStaticMesh(std::move(vertices), std::move(indices), std::move(textures));
 }
 
 vector<FTexture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)

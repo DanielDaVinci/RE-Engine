@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 
+#define GLEW_STATIC
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLM/fwd.hpp"
 
@@ -39,13 +40,13 @@ public:
 
 	void Use();
 
-	GLuint getUniformLocation(const GLchar* name);
-	void setUniform(const GLchar* name, const GLfloat value);
-	void setUniform(const GLchar* name, const GLint value);
-	void setUniform(const GLchar* name, const GLuint value);
-	void setUniform(const GLchar* name, const GLfloat* value);
-	void setUniform(const GLchar* name, glm::vec3 value);
-	void setUniform(const GLchar* name, glm::mat4 value);
+	GLuint getUniformLocation(const GLchar* name) const;
+	void setUniform(const GLchar* name, const GLfloat value) const;
+	void setUniform(const GLchar* name, const GLint value) const;
+	void setUniform(const GLchar* name, const GLuint value) const;
+	void setUniform(const GLchar* name, const GLfloat* value) const;
+	void setUniform(const GLchar* name, glm::vec3 value) const;
+	void setUniform(const GLchar* name, glm::mat4 value) const;
 
 private:
 

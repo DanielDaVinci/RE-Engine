@@ -16,12 +16,14 @@ public:
     explicit REngine(const std::shared_ptr<RObject>& InOwner);
     ~REngine();
 
+    static std::shared_ptr<REngine> GetEngine();
+
     bool IsEngineActive() const;
 
     // ----------- Engine loop -----------
-    void PreInit();
-    void Init();
-    void PostInit();
+    void PreInitialize();
+    void Initialize();
+    void PostInitialize();
 
     void PreTick();
     void Tick();
@@ -54,6 +56,7 @@ protected:
     // ---------------------------------
     
 private:
+    static std::shared_ptr<REngine> SingletonEngine;
     bool bIsEngineActive;
     
     GLdouble DeltaTime;
@@ -63,5 +66,3 @@ private:
     std::shared_ptr<REngineWindow> EngineWindow;
     std::shared_ptr<REditor> Editor;
 };
-
-static std::shared_ptr<REngine> Engine = nullptr;

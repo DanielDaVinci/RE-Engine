@@ -7,43 +7,51 @@
 
 using namespace std;
 
-RStaticMesh::RStaticMesh(vector<FVertex> vertices, vector<unsigned int> indices, vector<FTexture> textures)
+RStaticMesh::RStaticMesh(vector<FVertex>&& InVertices, vector<unsigned int>&& InIndices, vector<FTexture>&& InTextures)
+    : Vertices(std::move(InVertices)), Indices(std::move(InIndices)), Textures(std::move(InTextures))
 {
-	this->vertices = vertices;
-	this->indices = indices;
-	this->textures = textures;
-
-	setupMesh();
+	UpdateBuffer();
 }
 
-void RStaticMesh::Draw(FShader shader)
+RStaticMesh::RStaticMesh(const std::vector<FVertex>& InVertices, const std::vector<unsigned int>& InIndices, const std::vector<FTexture>& InTextures)
+    : Vertices(InVertices), Indices(InIndices), Textures(InTextures)
+{
+    UpdateBuffer();
+}
+
+
+void RStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
 {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
-    for (unsigned int i = 0; i < textures.size(); i++)
+    for (unsigned int i = 0; i < Textures.size(); i++)
     {
         glActiveTexture(GL_TEXTURE0 + i);
 
         stringstream ss;
         string number;
-        string name = textures[i].Type;
+        string name = Textures[i].Type;
         if (name == "texture_diffuse")
+        {
             number = to_string(diffuseNr++);
+        }
         else if (name == "texture_specular")
+        {
             number = to_string(specularNr++);
+        }
 
 
-        shader.setUniform(("material." + name + number).c_str(), i);
-        glBindTexture(GL_TEXTURE_2D, textures[i].Id);
+        Shader->setUniform(("material." + name + number).c_str(), i);
+        glBindTexture(GL_TEXTURE_2D, Textures[i].Id);
     }
     glActiveTexture(GL_TEXTURE0);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
-void RStaticMesh::setupMesh()
+void RStaticMesh::UpdateBuffer()
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -52,10 +60,10 @@ void RStaticMesh::setupMesh()
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(FVertex), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(FVertex), Vertices.data(), GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(unsigned int), Indices.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex), (void*)0);

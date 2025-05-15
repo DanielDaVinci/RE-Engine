@@ -16,6 +16,12 @@ public:
 
     template<std::derived_from<RObject> T = RObject>
     std::shared_ptr<T> GetOwner() const;
+
+protected:
+    virtual void Construct();
+
+    template<std::derived_from<RObject> T = RObject>
+    std::shared_ptr<T> NewObject();
     
 private:
     std::weak_ptr<RObject> Owner;

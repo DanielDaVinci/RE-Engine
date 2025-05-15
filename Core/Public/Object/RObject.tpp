@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "DebugLog/Public/Check/Check.h"
 
 template<std::derived_from<RObject> T>
 std::shared_ptr<T> RObject::GetSharedThis()
@@ -10,4 +11,14 @@ template<std::derived_from<RObject> T>
 std::shared_ptr<T> RObject::GetOwner() const
 {
     return std::static_pointer_cast<T>(Owner);
+}
+
+template <std::derived_from<RObject> T>
+std::shared_ptr<T> RObject::NewObject()
+{
+    std::shared_ptr<RObject> Object = std::make_shared<T>(GetSharedThis());
+    RCheckReturn(Object, nullptr);
+    Object->Construct();
+    
+    return std::static_pointer_cast<T>(Object);
 }

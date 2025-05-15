@@ -1,6 +1,5 @@
 ﻿#pragma once
-#include "GLM/fwd.hpp"
-#include "glm/mat4x4.hpp"
+#include "GLM/mat4x4.hpp"
 
 struct FMatrix : public glm::mat4
 {

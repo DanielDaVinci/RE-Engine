@@ -9,6 +9,7 @@
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/quaternion_trigonometric.hpp"
 #include "glm/gtc/quaternion.hpp"
+#include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
 #include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
@@ -54,12 +55,9 @@ void REditor::Initialize(GLFWwindow* window)
     Frame = std::make_shared<RFrame>(WindowSize.first, WindowSize.second);
     
     FrameShader = std::make_shared<FShader>("Data/Shaders/frameShader.vs", "Data/Shaders/frameShader.frag");
-    Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
 
     ScreenCamera = std::make_shared<RCamera>(800, 600, 45.0f);
     ScreenCamera->setAngle({ 0.0f, 0.0f, 0.0f });
-
-    MainModel = std::make_shared<RModel>("Content/objects/backpack/backpack.obj");
 }
 
 void REditor::Tick(GLdouble DeltaTime)
@@ -97,28 +95,6 @@ void REditor::PreRender(GLdouble DeltaTime)
 
 void REditor::Render(GLdouble DeltaTime)
 {
-    Shader->Use();
-    Shader->setUniform("pointLight.position", ScreenCamera->getPosition());
-    Shader->setUniform("pointLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-    Shader->setUniform("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-    Shader->setUniform("pointLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-    Shader->setUniform("pointLight.constant", 1.0f);
-    Shader->setUniform("pointLight.linear", 0.22f);
-    Shader->setUniform("pointLight.constant", 0.20f);
-    Shader->setUniform("viewPos", ScreenCamera->getPosition());
-
-    glm::mat4 model(1.0f);
-    
-    model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    Shader->setUniform("model", model);
-    Shader->setUniform("view", ScreenCamera->getViewMatrix());
-    Shader->setUniform("projection", ScreenCamera->getProjectionMatrix());
-
-    MainModel->Draw(*Shader);
-
     if (RCheck(Scene))
     {
         Scene->Render(DeltaTime);

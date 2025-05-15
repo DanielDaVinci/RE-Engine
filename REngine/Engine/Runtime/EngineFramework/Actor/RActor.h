@@ -17,6 +17,7 @@ public:
     RActor(const std::shared_ptr<RObject>& InOwner);
 
     // ------- Loop --------
+    void Construct() override;
     virtual void Initialize();
     virtual void BeginPlay();
     virtual void Tick(float DeltaTime);
@@ -26,7 +27,8 @@ public:
     void SetTransform(const FTransform& InTransform);
     FTransform GetTransform() const;
 
-    std::shared_ptr<RWorld> GetRWorld() const;
+    std::shared_ptr<RWorld> GetWorld() const;
+    std::shared_ptr<RSceneComponent> GetRootComponent() const;
     
 protected:
     std::shared_ptr<RSceneComponent> RootComponent;

@@ -5,13 +5,12 @@
 template <typename T, typename>
 std::shared_ptr<T> RWorld::SpawnActor(const FTransform& InTransform)
 {
-    std::shared_ptr<RActor> Actor = std::make_shared<T>(GetSharedThis());
+    std::shared_ptr<RActor> Actor = NewObject<T>();
     RCheckReturn(Actor, nullptr);
 
     Actor->SetWorld(GetSharedThis<RWorld>());
-    Actor->Initialize();
-    
     Actor->SetTransform(InTransform);
+    Actors.push_back(Actor);
     
-    return Actor;
+    return std::static_pointer_cast<T>(Actor);
 }

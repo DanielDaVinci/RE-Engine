@@ -31,5 +31,7 @@ private:
     std::vector<RStaticMesh> StaticMeshes;
     std::vector<FTexture> LoadedTextures;
     std::string MeshDirectory;
+
+    std::shared_ptr<FShader> Shader;
     
 };

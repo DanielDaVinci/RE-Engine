@@ -16,7 +16,7 @@ void RSceneComponent::AttachToComponent(const std::shared_ptr<RSceneComponent>& 
 
 void RSceneComponent::DetachFromParent()
 {
-    const auto ParentPtr = ParentComponent.lock();
+    const std::shared_ptr<RSceneComponent> ParentPtr = ParentComponent.lock();
     if (!ParentPtr)
     {
         return;
@@ -63,7 +63,6 @@ FTransform RSceneComponent::GetRelativeTransform() const
 
 void RSceneComponent::SetParentComponent(const std::shared_ptr<RSceneComponent>& Component)
 {
-    RCheckReturn(Component);
     ParentComponent = Component;
 }
 

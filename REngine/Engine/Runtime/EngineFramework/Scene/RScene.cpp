@@ -7,7 +7,6 @@ void RScene::Initialize()
     World = std::make_shared<RWorld>(GetSharedThis());
     RCheckReturn(World);
     World->Initialize();
-    
 }
 
 void RScene::Tick(float DeltaTime)

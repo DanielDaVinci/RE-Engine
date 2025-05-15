@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "GLM/fwd.hpp"
-#include "glm/vec3.hpp"
-#include "REngine/Engine/Runtime/EngineFramework/Math/Matrix/FMatrix.h"
+#include "GLM/vec3.hpp"
+
+struct FMatrix;
 
 struct FRotator : public glm::vec3
 {

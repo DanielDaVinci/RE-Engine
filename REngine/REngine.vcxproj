@@ -48,7 +48,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(SolutionDir)ThirdParty\ExternalIncludes;</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)/Libraries;$(SolutionDir)ThirdParty\ExternalLibraries;</LibraryPath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
@@ -65,12 +65,11 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Core.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Core.lib;ThirdParty.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)
        </AdditionalLibraryDirectories>
     </Link>
@@ -107,6 +106,7 @@
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\RWindow.cpp" />
     <ClCompile Include="Engine\REngine.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Actor\MeshActor\RMeshActor.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\FRotator\FRotator.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.cpp" />
@@ -277,6 +277,7 @@
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\RWindow.h" />
     <ClInclude Include="Engine\REngine.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Actor\MeshActor\RMeshActor.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.tpp" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\FRotator\FRotator.h" />

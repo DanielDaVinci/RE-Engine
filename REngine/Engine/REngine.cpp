@@ -5,6 +5,7 @@
 #include "Editor/REditor.h"
 #include "Runtime/EngineWindow/REngineWindow.h"
 
+std::shared_ptr<REngine> REngine::SingletonEngine = nullptr;
 REngine* REngine::FCallbackWrapper::StaticEngine = nullptr;
 
 REngine::REngine(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
@@ -16,17 +17,27 @@ REngine::~REngine()
 {
 }
 
+std::shared_ptr<REngine> REngine::GetEngine()
+{
+    if (!SingletonEngine)
+    {
+        SingletonEngine = std::make_shared<REngine>(nullptr);
+    }
+
+    return SingletonEngine;
+}
+
 bool REngine::IsEngineActive() const
 {
     return bIsEngineActive;
 }
 
-void REngine::PreInit()
+void REngine::PreInitialize()
 {
     
 }
 
-void REngine::Init()
+void REngine::Initialize()
 {
     glfwInit();
 
@@ -51,11 +62,11 @@ void REngine::Init()
     SetWindowCallbacks();
 
     // Engine editor
-    Editor = std::make_shared<REditor>(shared_from_this());
+    Editor = std::make_shared<REditor>(GetSharedThis());
     Editor->Initialize(EngineWindow->glfwWindow);
 }
 
-void REngine::PostInit()
+void REngine::PostInitialize()
 {
     DeltaTime = 0;
     CurrentTickTime = 0;

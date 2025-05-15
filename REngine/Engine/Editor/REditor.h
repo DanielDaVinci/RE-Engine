@@ -7,6 +7,7 @@
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
+class RMesh;
 class RScene;
 class RRootWindow;
 class RWidget;
@@ -51,10 +52,8 @@ protected:
 private:
     std::shared_ptr<RFrame> Frame;
     std::shared_ptr<FShader> FrameShader;
-    std::shared_ptr<FShader> Shader;
     std::shared_ptr<RCamera> ScreenCamera;
-
-    std::shared_ptr<RModel> MainModel;
+    
     std::shared_ptr<RRootWindow> RootWidget;
 
     std::shared_ptr<RScene> Scene;

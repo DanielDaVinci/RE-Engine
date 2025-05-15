@@ -5,12 +5,12 @@
 
 int main()
 {
-    Engine = std::make_shared<REngine>(nullptr);
+    const std::shared_ptr<REngine> Engine = REngine::GetEngine();
     RCheck(Engine);
     
-    Engine->PreInit();
-    Engine->Init();
-    Engine->PostInit();
+    Engine->PreInitialize();
+    Engine->Initialize();
+    Engine->PostInitialize();
 
     while (Engine->IsEngineActive())
     {

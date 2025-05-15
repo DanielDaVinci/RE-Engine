@@ -6,24 +6,65 @@
 #include "assimp/Importer.hpp"
 #include "assimp/postprocess.h"
 #include "DebugLog/Public/Check/Check.h"
+#include "GLM/trigonometric.hpp"
+#include "GLM/gtx/transform.hpp"
+#include "REngine/Engine/REngine.h"
+#include "REngine/Engine/Editor/REditor.h"
+#include "REngine/Engine/Editor/Display/Shader/FShader.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
 
 void RMesh::LoadMesh(const std::string& MeshPath)
 {
     Assimp::Importer Importer;
     
-    const aiScene* AssimpScene = Importer.ReadFile(MeshPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene* AssimpScene = Importer.ReadFile(MeshPath, aiProcess_Triangulate); // aiProcess_FlipUVs
     RCheckReturn(AssimpScene);
     RCheckReturn(AssimpScene->mRootNode);
     RCheckReturn(!(AssimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE));
 
     MeshDirectory = MeshPath.substr(0, MeshPath.find_last_of('/'));
+    
+    Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
+    RCheckReturn(Shader);
 
     LoadAssimpNode(AssimpScene->mRootNode, AssimpScene);
 }
 
 void RMesh::Render(float DeltaTime)
 {
+    RCheckReturn(Shader);
+    RCheckReturn(REngine::GetEngine());
+
+    auto Editor = REngine::GetEngine()->GetEditor();
+    RCheckReturn(Editor);
+
+    auto Camera = Editor->GetCamera();
+    RCheckReturn(Camera);
     
+    Shader->Use();
+    Shader->setUniform("pointLight.position", Camera->getPosition());
+    Shader->setUniform("pointLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
+    Shader->setUniform("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+    Shader->setUniform("pointLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+    Shader->setUniform("pointLight.constant", 1.0f);
+    Shader->setUniform("pointLight.linear", 0.22f);
+    Shader->setUniform("pointLight.constant", 0.20f);
+    Shader->setUniform("viewPos", Camera->getPosition());
+
+    glm::mat4 model(1.0f);
+    
+    model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    Shader->setUniform("model", model);
+    Shader->setUniform("view", Camera->getViewMatrix());
+    Shader->setUniform("projection", Camera->getProjectionMatrix());
+    
+    for (const RStaticMesh& StaticMesh : StaticMeshes)
+    {
+        StaticMesh.Render(Shader);
+    }
 }
 
 void RMesh::LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene)
@@ -41,11 +82,10 @@ void RMesh::LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene)
 
 RStaticMesh RMesh::LoadAssimpMesh(const aiMesh* AssimpMesh, const aiScene* AssimpScene)
 {
-    std::vector<FVertex> Vertices = LoadVerticesFromAssimpMesh(AssimpMesh);
-    std::vector<unsigned int> Indices = LoadIndicesFromAssimpMesh(AssimpMesh);
-    std::vector<FTexture> Textures = LoadTexturesFromAssimpMesh(AssimpMesh, AssimpScene);
-
-    return RStaticMesh(Vertices, Indices, Textures);
+    return RStaticMesh(
+        LoadVerticesFromAssimpMesh(AssimpMesh),
+        LoadIndicesFromAssimpMesh(AssimpMesh),
+        LoadTexturesFromAssimpMesh(AssimpMesh, AssimpScene));
 }
 
 std::vector<FVertex> RMesh::LoadVerticesFromAssimpMesh(const aiMesh* AssimpMesh)

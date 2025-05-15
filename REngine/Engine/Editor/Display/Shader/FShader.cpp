@@ -69,37 +69,37 @@ void FShader::Use()
 	glUseProgram(program);
 }
 
-GLuint FShader::getUniformLocation(const GLchar* name)
+GLuint FShader::getUniformLocation(const GLchar* name) const
 {
 	return glGetUniformLocation(program, name);
 }
 
-void FShader::setUniform(const GLchar* name, const GLfloat value)
+void FShader::setUniform(const GLchar* name, const GLfloat value) const
 {
 	glUniform1f(getUniformLocation(name), value);
 }
 
-void FShader::setUniform(const GLchar* name, const GLint value)
+void FShader::setUniform(const GLchar* name, const GLint value) const
 {
 	glUniform1i(getUniformLocation(name), value);
 }
 
-void FShader::setUniform(const GLchar* name, const GLuint value)
+void FShader::setUniform(const GLchar* name, const GLuint value) const
 {
 	glUniform1ui(getUniformLocation(name), value);
 }
 
-void FShader::setUniform(const GLchar* name, const GLfloat* value)
+void FShader::setUniform(const GLchar* name, const GLfloat* value) const
 {	
 	glUniform4fv(getUniformLocation(name), sizeof(value) / sizeof(GLfloat), value);
 }
 
-void FShader::setUniform(const GLchar* name, glm::vec3 value)
+void FShader::setUniform(const GLchar* name, glm::vec3 value) const
 {
 	glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
 }
 
-void FShader::setUniform(const GLchar* name, glm::mat4 value)
+void FShader::setUniform(const GLchar* name, glm::mat4 value) const
 {
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 }
