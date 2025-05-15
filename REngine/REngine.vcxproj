@@ -192,15 +192,17 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Vector\FVector.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\Vector\FVector2D.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Model\RModel.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Scene\World\RWorld.cpp" />
     <ClCompile Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.cpp" />
     <ClCompile Include="Engine\Runtime\EngineWindow\REngineWindow.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Mesh\RMesh.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Actor\RActor.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Camera\RCamera.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.cpp" />
-    <ClCompile Include="Engine\Runtime\EngineFramework\Model\RModel.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Scene\RScene.cpp" />
     <ClCompile Include="Launch.cpp" />
   </ItemGroup>
@@ -281,17 +283,19 @@
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Transform\FTransform.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Vector\FVector.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\Vector\FVector2D.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Model\RModel.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Scene\World\RWorld.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Scene\World\World.tpp" />
     <ClInclude Include="Engine\Runtime\EngineWindow\Data\FEngineWindowParameters.h" />
     <ClInclude Include="Engine\Runtime\EngineWindow\REngineWindow.h" />
     <ClInclude Include="Engine\Runtime\Engine\MeshLibrary.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Mesh\RMesh.h" />
     <ClInclude Include="Engine\Runtime\Engine\StatichMesh\RStaticMesh.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Camera\RCamera.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.h" />
-    <ClInclude Include="Engine\Runtime\EngineFramework\Model\RModel.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Scene\RScene.h" />
   </ItemGroup>
   <ItemGroup>

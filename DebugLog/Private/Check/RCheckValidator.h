@@ -30,4 +30,10 @@ struct RCheckValidator
     {
         return !!Value;
     }
+
+    template<typename TInner>
+    static bool IsValid(const TInner* Value)
+    {
+        return !!Value;
+    }
 };

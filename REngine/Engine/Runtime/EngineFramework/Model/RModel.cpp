@@ -54,13 +54,13 @@ void RModel::ProcessNode(aiNode* node, const aiScene* scene)
 
 RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
-	vector<Vertex> vertices;
+	vector<FVertex> vertices;
 	vector<unsigned int> indices;
-	vector<Texture> textures;
+	vector<FTexture> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		FVertex vertex;
 
 		vertex.Position = glm::vec3(
 			mesh->mVertices[i].x,
@@ -100,19 +100,19 @@ RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-		vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		vector<FTexture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-		vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		vector<FTexture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return RStaticMesh(vertices, indices, textures);
 }
 
-vector<Texture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)
+vector<FTexture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)
 {
-	vector<Texture> textures;
+	vector<FTexture> textures;
 	
 	for (unsigned int i = 0; i < material->GetTextureCount(type); i++)
 	{
@@ -121,11 +121,11 @@ vector<Texture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType
 
 		bool skip = false;
 
-		for (const Texture& Texture : LoadedTextures)
+		for (const FTexture& FTexture : LoadedTextures)
 		{
-			if (strcmp(Texture.path.C_Str(), path.C_Str()) == 0)
+			if (strcmp(FTexture.Path.c_str(), path.C_Str()) == 0)
 			{
-				textures.push_back(Texture);
+				textures.push_back(FTexture);
 				skip = true;
 				break;
 			}
@@ -139,7 +139,7 @@ vector<Texture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType
 		textures.emplace_back(
 			LoadTextureFromFile(path.C_Str(), directory),
 			typeName,
-			path
+			path.C_Str()
 		);
 		LoadedTextures.push_back(textures.back());
 	}
@@ -178,7 +178,7 @@ unsigned int RModel::LoadTextureFromFile(const char* path, const string& directo
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
+		std::cout << "FTexture failed to load at path: " << path << std::endl;
 	}
 
 	SOIL_free_image_data(data);

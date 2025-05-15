@@ -25,12 +25,12 @@ protected:
 	void LoadModel(std::string path);
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	RStaticMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+	std::vector<FTexture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
 	unsigned int LoadTextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 	
 private:
 	std::vector<RStaticMesh> StaticMeshes;
-	std::vector<Texture> LoadedTextures;
+	std::vector<FTexture> LoadedTextures;
 	std::string directory;
 
 };

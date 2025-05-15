@@ -2,20 +2,20 @@
 
 #include <string>
 
-#include "ThirdParty/ExternalIncludes/assimp/types.h"
-#include "ThirdParty/ExternalIncludes/GLM/vec2.hpp"
-#include "ThirdParty/ExternalIncludes/GLM/vec3.hpp"
+#include "GL/glew.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
 
-struct Vertex
+struct FVertex
 {
-    glm::vec3 Position;
-    glm::vec3 Normal;
-    glm::vec2 TexCoords;
+    FVector Position;
+    FVector Normal;
+    FVector2D TexCoords;
 };
 
-struct Texture
+struct FTexture
 {
-    unsigned int id;
-    std::string type;
-    aiString path;
+    GLuint Id;
+    std::string Type;
+    std::string Path;
 };
