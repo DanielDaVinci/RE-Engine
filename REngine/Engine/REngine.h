@@ -33,6 +33,7 @@ public:
     // ---------------------------------
 
     std::shared_ptr<REditor> GetEditor() const;
+    std::shared_ptr<REngineWindow> GetEngineWindow() const;
 
 protected:
     // ----------- Callbacks -----------

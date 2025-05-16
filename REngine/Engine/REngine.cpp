@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Editor/REditor.h"
-#include "Runtime/EngineWindow/REngineWindow.h"
+#include "Runtime/Engine/EngineWindow/REngineWindow.h"
 
 std::shared_ptr<REngine> REngine::SingletonEngine = nullptr;
 REngine* REngine::FCallbackWrapper::StaticEngine = nullptr;
@@ -49,9 +49,10 @@ void REngine::Initialize()
     WindowParameters.bCursorVisibility = GLFW_CURSOR_NORMAL;
     WindowParameters.SwapInterval = 1;
     
-    EngineWindow = std::make_shared<REngineWindow>(WindowParameters);
-    EngineWindow->Create();
-
+    EngineWindow = NewObject<REngineWindow>();
+    RCheckReturn(EngineWindow);
+    
+    EngineWindow->Create(WindowParameters);
     EngineWindow->SetWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     EngineWindow->SetWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     EngineWindow->SetWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -60,11 +61,10 @@ void REngine::Initialize()
     glewInit();
     
     SetWindowCallbacks();
-
-    // Engine editor
+    
     Editor = NewObject<REditor>();
     RCheckReturn(Editor);
-    Editor->Initialize(EngineWindow->glfwWindow);
+    Editor->Initialize();
 }
 
 void REngine::PostInitialize()
@@ -89,6 +89,17 @@ void REngine::PreTick()
 
 void REngine::Tick()
 {
+    RCheckReturn(Editor);
+
+    // TODO: Debug FPS, Remove for Release
+    static GLdouble PrevFPS = 0.0f;
+    if (CurrentTickTime - PrevFPS > 1.0f)
+    {
+        PrevFPS = CurrentTickTime;
+        RCheckReturn(EngineWindow);
+        EngineWindow->SetWindowName(std::to_string(floor(1.0f / DeltaTime)));
+    }
+    
     Editor->Tick(DeltaTime);
 }
 
@@ -101,13 +112,17 @@ void REngine::PostTick()
 
 void REngine::Exit()
 {
-    EngineWindow->Destroy();
     glfwTerminate();
 }
 
 std::shared_ptr<REditor> REngine::GetEditor() const
 {
     return Editor;
+}
+
+std::shared_ptr<REngineWindow> REngine::GetEngineWindow() const
+{
+    return EngineWindow;
 }
 
 void REngine::SetWindowCallbacks()

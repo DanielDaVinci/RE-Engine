@@ -10,6 +10,12 @@ struct FVector : public glm::vec3
     using glm::vec3::vec3;
     using glm::vec3::operator=;
 
+    static const FVector ZeroVector;
+    static const FVector OneVector;
+    static const FVector XVector;
+    static const FVector YVector;
+    static const FVector ZVector;
+
     FVector(const aiVector3D& AssimpVector);
 
     FMatrix GetTranslationMatrix() const;

@@ -7,6 +7,8 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
+    SetRotation(FRotator(90.0f, 90.0f, 360.0f));
+
     StaticMesh = NewObject<RMesh>();
     RCheckReturn(StaticMesh);
     StaticMesh->LoadMesh("Content/objects/backpack/backpack.obj");
@@ -18,6 +20,6 @@ void RStaticMeshComponent::Render(float DeltaTime)
 
     if (RCheck(StaticMesh))
     {
-        StaticMesh->Render(DeltaTime);
+        StaticMesh->Render(GetWorldTransformMatrix(), DeltaTime);
     }
 }

@@ -20,7 +20,7 @@ private:
 	std::vector<unsigned int> Indices;
 	std::vector<FTexture> Textures;
 
-	void UpdateBuffer();
+	void UpdateBuffers();
 
 };
 

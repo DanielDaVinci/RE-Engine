@@ -12,6 +12,7 @@
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Editor/Display/Shader/FShader.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
 void RMesh::LoadMesh(const std::string& MeshPath)
 {
@@ -30,7 +31,7 @@ void RMesh::LoadMesh(const std::string& MeshPath)
     LoadAssimpNode(AssimpScene->mRootNode, AssimpScene);
 }
 
-void RMesh::Render(float DeltaTime)
+void RMesh::Render(const FMatrix& Matrix, float DeltaTime)
 {
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
@@ -51,13 +52,8 @@ void RMesh::Render(float DeltaTime)
     Shader->setUniform("pointLight.constant", 0.20f);
     Shader->setUniform("viewPos", Camera->getPosition());
 
-    glm::mat4 model(1.0f);
-    
-    model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    Shader->setUniform("model", model);
+    Shader->setUniform("model", Matrix);
+    // Shader->setUniform("model", FTransform(Matrix).GetMatrix());
     Shader->setUniform("view", Camera->getViewMatrix());
     Shader->setUniform("projection", Camera->getProjectionMatrix());
     

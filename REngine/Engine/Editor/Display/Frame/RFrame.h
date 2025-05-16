@@ -1,37 +1,40 @@
 #pragma once
 
 #define GLEW_STATIC
+#include "Core/Public/Object/RObject.h"
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 
 class FShader;
 
-class RFrame
+class RFrame : public RObject
 {
-private:
-	GLuint width, height;
-
-	GLuint frameBuffer;
-	GLuint colorBuffer;
-
-	GLuint RBO;
-	GLuint VAO, VBO;
-
 public:
+	using RObject::RObject;
 
-	RFrame(GLuint width, GLuint height);
-
-	void Bind(GLint value = 1);
+	void Bind();
+	void UnBind();
 	void Draw(FShader shader);
-
-	void Resize(GLuint width, GLuint height);
+	
+	void SetFrameSize(GLuint InWidth, GLuint InHeight);
+	void SetFrameSize(std::pair<GLuint, GLuint> InSize);
 
 	GLuint getTextureID();
 
-private:
+protected:
+	void Construct() override;
 
-	void genColorBuffer(GLuint width, GLuint height);
-	void genRBO(GLuint width, GLuint height);
-	void genFrameTexture();
+private:
+	GLuint Width, Height;
+
+	GLuint FrameBuffer;
+	GLuint ColorBuffer;
+
+	GLuint RBO;
+	GLuint VAO, VBO;
+	
+	void GenerateColorBuffer();
+	void GenerateRBO();
+	void GenerateFrameTexture();
 
 };
 

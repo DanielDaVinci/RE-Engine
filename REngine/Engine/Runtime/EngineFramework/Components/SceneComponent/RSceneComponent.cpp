@@ -5,6 +5,15 @@
 #include "DebugLog/Public/Check/Check.h"
 #include "GLM/gtc/matrix_inverse.hpp"
 
+void RSceneComponent::Construct()
+{
+    RActorComponent::Construct();
+
+    SetPosition(FVector::ZeroVector);
+    SetRotation(FRotator::ZeroRotator);
+    SetScale(FVector::OneVector);
+}
+
 void RSceneComponent::AttachToComponent(const std::shared_ptr<RSceneComponent>& Component)
 {
     RCheckReturn(Component);
@@ -48,17 +57,27 @@ void RSceneComponent::SetScale(const FVector& InScale)
 
 FTransform RSceneComponent::GetWorldTransform() const
 {
-    if (auto Parent = GetParentComponent())
-    {
-        return Parent->GetWorldTransform() * GetRelativeTransform();
-    }
-
-    return GetRelativeTransform();
+    return GetWorldTransformMatrix();
 }
 
 FTransform RSceneComponent::GetRelativeTransform() const
 {
     return Transform;
+}
+
+FMatrix RSceneComponent::GetWorldTransformMatrix() const
+{
+    if (const std::shared_ptr<RSceneComponent> Parent = GetParentComponent())
+    {
+        return Parent->GetWorldTransformMatrix() * GetRelativeTransformMatrix();
+    }
+
+    return GetRelativeTransformMatrix();
+}
+
+FMatrix RSceneComponent::GetRelativeTransformMatrix() const
+{
+    return Transform.GetMatrix();
 }
 
 void RSceneComponent::SetParentComponent(const std::shared_ptr<RSceneComponent>& Component)

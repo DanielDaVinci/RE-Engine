@@ -9,6 +9,8 @@
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/quaternion_trigonometric.hpp"
 #include "glm/gtc/quaternion.hpp"
+#include "REngine/Engine/REngine.h"
+#include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
 #include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
@@ -31,7 +33,7 @@ REditor::~REditor()
 {
 }
 
-void REditor::Initialize(GLFWwindow* window)
+void REditor::Initialize()
 {
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -40,8 +42,9 @@ void REditor::Initialize(GLFWwindow* window)
 
     ImGui::StyleColorsDark();
 
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330 core");
+    std::shared_ptr<REngineWindow> EngineWindow = GetEngineWindow();
+    RCheckReturn(EngineWindow);
+    EngineWindow->InitForOpenGL();
     
     RootWidget = NewObject<RRootWindow>();
     RCheckReturn(RootWidget);
@@ -50,9 +53,10 @@ void REditor::Initialize(GLFWwindow* window)
     Scene = NewObject<RScene>();
     RCheckReturn(Scene);
     Scene->Initialize();
-
-    const std::pair<GLint, GLint>& WindowSize = GetGLFWWindowSize(window);
-    Frame = std::make_shared<RFrame>(WindowSize.first, WindowSize.second);
+    
+    Frame = NewObject<RFrame>();
+    RCheckReturn(Frame);
+    Frame->SetFrameSize(EngineWindow->GetWindowSize());
     
     FrameShader = std::make_shared<FShader>("Data/Shaders/frameShader.vs", "Data/Shaders/frameShader.frag");
 
@@ -103,7 +107,7 @@ void REditor::Render(GLdouble DeltaTime)
 
 void REditor::PostRender(GLdouble DeltaTime)
 {
-    Frame->Bind(0);
+    Frame->UnBind();
 }
 
 void REditor::DrawUI(GLdouble DeltaTime)
@@ -147,6 +151,14 @@ void REditor::OnMouseDown(int button, int mods)
 void REditor::OnMouseUp(int button, int mods)
 {
     
+}
+
+std::shared_ptr<REngineWindow> REditor::GetEngineWindow()
+{
+    auto Engine = REngine::GetEngine();
+    RCheckReturn(Engine, {});
+
+    return Engine->GetEngineWindow();
 }
 
 std::shared_ptr<RFrame> REditor::GetFrame() const

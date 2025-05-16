@@ -4,7 +4,10 @@
 
 void RWorld::Initialize()
 {
-    SpawnActor<RMeshActor>({});
+    SpawnActor<RMeshActor>(FTransform(
+        FVector(10.0f, 0.0f, 0.0f),
+        FRotator(-90.0f, -90.0f, 0.0f),
+        FVector::OneVector));
     
     for (const std::shared_ptr<RActor>& Actor : Actors)
     {

@@ -1,86 +1,90 @@
 #include "RFrame.h"
 #include "../Shader/FShader.h"
 
-RFrame::RFrame(GLuint width, GLuint height)
+void RFrame::Bind()
 {
-    this->width = width;
-    this->height = height;
-
-	glGenFramebuffers(1, &frameBuffer);
-    Bind();
-
-    genColorBuffer(width, height);
-    genRBO(width, height);
-
-    Bind(0);
-
-    genFrameTexture();
+    glBindFramebuffer(GL_FRAMEBUFFER, FrameBuffer);
 }
 
-void RFrame::Bind(GLint value)
+void RFrame::UnBind()
 {
-    if (value == 0)
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void RFrame::Draw(FShader shader)
 {
     shader.Use();
     glBindVertexArray(VAO);
-    glBindTexture(GL_TEXTURE_2D, colorBuffer);
+    glBindTexture(GL_TEXTURE_2D, ColorBuffer);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void RFrame::Resize(GLuint width, GLuint height)
+void RFrame::SetFrameSize(GLuint InWidth, GLuint InHeight)
 {
-    this->width = width;
-    this->height = height;
+    Width = InWidth;
+    Height = InHeight;
 
-    glBindTexture(GL_TEXTURE_2D, colorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glBindTexture(GL_TEXTURE_2D, ColorBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, InWidth, InHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBuffer, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ColorBuffer, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, InWidth, InHeight);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
+void RFrame::SetFrameSize(std::pair<GLuint, GLuint> InSize)
+{
+    SetFrameSize(InSize.first, InSize.second);
 }
 
 GLuint RFrame::getTextureID()
 {
-    return colorBuffer;
+    return ColorBuffer;
 }
 
-void RFrame::genColorBuffer(GLuint width, GLuint height)
+void RFrame::Construct()
 {
-    glGenTextures(1, &colorBuffer);
-    glBindTexture(GL_TEXTURE_2D, colorBuffer);
+    RObject::Construct();
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glGenFramebuffers(1, &FrameBuffer);
+    Bind();
+    {
+        GenerateColorBuffer();
+        GenerateRBO();
+    }
+    UnBind();
+
+    GenerateFrameTexture();
+}
+
+void RFrame::GenerateColorBuffer()
+{
+    glGenTextures(1, &ColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, ColorBuffer);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 0, 0, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBuffer, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ColorBuffer, 0);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void RFrame::genRBO(GLuint width, GLuint height)
+void RFrame::GenerateRBO()
 {
     glGenRenderbuffers(1, &RBO);
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 0, 0);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::cout << "ERROR::FRAMEBUFFER::Framebuffer is not complete" << std::endl;
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
-void RFrame::genFrameTexture()
+void RFrame::GenerateFrameTexture()
 {
     float vertices[] = {
         -1.0f,  1.0f,  0.0f, 1.0f,

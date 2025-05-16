@@ -1,17 +1,17 @@
 #include "REngineWindow.h"
 
-REngineWindow::REngineWindow(const FEngineWindowParameters& InWindowParameters)
-{
-    WindowParameters = InWindowParameters;
-}
+#include "imGUI/imgui_impl_glfw.h"
+#include "imGUI/imgui_impl_opengl3.h"
 
 REngineWindow::~REngineWindow()
 {
-    
+    Destroy();
 }
 
-void REngineWindow::Create()
+void REngineWindow::Create(const FEngineWindowParameters& InWindowParameters)
 {
+    WindowParameters = InWindowParameters;
+    
     glfwWindow = glfwCreateWindow(
         WindowParameters.Width,
         WindowParameters.Height,
@@ -20,6 +20,12 @@ void REngineWindow::Create()
         NULL);
     glfwMakeContextCurrent(glfwWindow);
     glfwSwapInterval(WindowParameters.SwapInterval);
+}
+
+void REngineWindow::InitForOpenGL()
+{
+    ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+    ImGui_ImplOpenGL3_Init("#version 330 core");
 }
 
 void REngineWindow::Destroy()
@@ -41,6 +47,13 @@ void REngineWindow::SetWindowName(const std::string& Name)
 {
     WindowParameters.Name = Name;
     glfwSetWindowTitle(glfwWindow, Name.c_str());
+}
+
+std::pair<int, int> REngineWindow::GetWindowSize() const
+{
+    GLint width, height;
+    glfwGetFramebufferSize(glfwWindow, &width, &height);
+    return std::make_pair(width, height);
 }
 
 void REngineWindow::SetKeyCallback(GLFWkeyfun Callback) const

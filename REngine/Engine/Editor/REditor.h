@@ -7,6 +7,7 @@
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
+class REngineWindow;
 class RMesh;
 class RScene;
 class RRootWindow;
@@ -22,7 +23,7 @@ public:
     explicit REditor(const std::shared_ptr<RObject>& InOwner);
     ~REditor();
     
-    void Initialize(GLFWwindow* window);
+    void Initialize();
     void Exit();
 
     void PreTick(GLdouble DeltaTime);
@@ -41,6 +42,7 @@ public:
     void OnMouseDown(int button, int mods);
     void OnMouseUp(int button, int mods);
 
+    static std::shared_ptr<REngineWindow> GetEngineWindow();
     std::shared_ptr<RFrame> GetFrame() const;
     std::shared_ptr<RCamera> GetCamera() const;
 

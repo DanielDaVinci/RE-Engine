@@ -5,13 +5,15 @@
 #include "Core/Public/Object/RObject.h"
 #include "REngine/Engine/Runtime/Engine/StatichMesh/RStaticMesh.h"
 
+struct FTransform;
+
 class RMesh : public RObject
 {
 public:
     using RObject::RObject;
 
     void LoadMesh(const std::string& MeshPath);
-    void Render(float DeltaTime);
+    void Render(const FMatrix& Matrix, float DeltaTime);
     
 protected:
     void LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene);

@@ -9,6 +9,8 @@ class RSceneComponent : public RActorComponent
 public:
     using RActorComponent::RActorComponent;
 
+    void Construct() override;
+
     void AttachToComponent(const std::shared_ptr<RSceneComponent>& Component);
     void DetachFromParent();
     
@@ -19,6 +21,9 @@ public:
 
     FTransform GetWorldTransform() const;
     FTransform GetRelativeTransform() const;
+
+    FMatrix GetWorldTransformMatrix() const;
+    FMatrix GetRelativeTransformMatrix() const;
     
 protected:
     FTransform Transform;

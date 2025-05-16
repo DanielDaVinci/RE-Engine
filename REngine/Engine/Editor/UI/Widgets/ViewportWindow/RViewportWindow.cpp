@@ -38,7 +38,7 @@ void RViewportWindow::DrawWindowContent() const
 
     std::shared_ptr<RFrame> Frame = Editor->GetFrame();
     RCheckReturn(Frame);
-    Frame->Resize(WindowSize.x, WindowSize.y);
+    Frame->SetFrameSize(WindowSize.x, WindowSize.y);
 
     std::shared_ptr<RCamera> Camera = Editor->GetCamera();
     RCheckReturn(Camera);

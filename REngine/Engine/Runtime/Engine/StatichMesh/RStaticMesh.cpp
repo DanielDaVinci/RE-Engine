@@ -10,13 +10,13 @@ using namespace std;
 RStaticMesh::RStaticMesh(vector<FVertex>&& InVertices, vector<unsigned int>&& InIndices, vector<FTexture>&& InTextures)
     : Vertices(std::move(InVertices)), Indices(std::move(InIndices)), Textures(std::move(InTextures))
 {
-	UpdateBuffer();
+	UpdateBuffers();
 }
 
 RStaticMesh::RStaticMesh(const std::vector<FVertex>& InVertices, const std::vector<unsigned int>& InIndices, const std::vector<FTexture>& InTextures)
     : Vertices(InVertices), Indices(InIndices), Textures(InTextures)
 {
-    UpdateBuffer();
+    UpdateBuffers();
 }
 
 
@@ -51,7 +51,7 @@ void RStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
     glBindVertexArray(0);
 }
 
-void RStaticMesh::UpdateBuffer()
+void RStaticMesh::UpdateBuffers()
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

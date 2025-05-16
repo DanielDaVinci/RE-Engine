@@ -7,7 +7,7 @@ class RStaticMeshComponent : public RSceneComponent
 {
 public:
     using RSceneComponent::RSceneComponent;
-
+    
     void Initialize() override;
     void Render(float DeltaTime) override;
 
