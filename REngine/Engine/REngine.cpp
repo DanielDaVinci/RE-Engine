@@ -4,9 +4,9 @@
 
 #include "Editor/REditor.h"
 #include "Runtime/Engine/EngineWindow/REngineWindow.h"
+#include "Runtime/EngineFramework/Math/Vector/FVector2D.h"
 
 std::shared_ptr<REngine> REngine::SingletonEngine = nullptr;
-REngine* REngine::FCallbackWrapper::StaticEngine = nullptr;
 
 REngine::REngine(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
@@ -127,23 +127,40 @@ std::shared_ptr<REngineWindow> REngine::GetEngineWindow() const
 
 void REngine::SetWindowCallbacks()
 {
-    FCallbackWrapper::StaticEngine = this;
+    RCheckReturn(EngineWindow);
     EngineWindow->SetKeyCallback(&FCallbackWrapper::OnKeyCallback);
     EngineWindow->SetMouseButtonCallback(&FCallbackWrapper::OnMouseButtonCallback);
+    EngineWindow->SetMouseMoveCallback(&FCallbackWrapper::OnMouseMoveCallback);
 }
 
 void REngine::FCallbackWrapper::OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    StaticEngine->OnKeyCallback(window, key, scancode, action, mode);
+    const std::shared_ptr<REngine> Engine = REngine::GetEngine();
+    RCheckReturn(Engine);
+    
+    Engine->OnKeyCallback(window, key, scancode, action, mode);
 }
 
 void REngine::FCallbackWrapper::OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-    StaticEngine->OnMouseButtonCallback(window, button, action, mods);
+    const std::shared_ptr<REngine> Engine = REngine::GetEngine();
+    RCheckReturn(Engine);
+    
+    Engine->OnMouseButtonCallback(window, button, action, mods);
 }
 
-void REngine::OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) const
+void REngine::FCallbackWrapper::OnMouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
 {
+    const std::shared_ptr<REngine> Engine = REngine::GetEngine();
+    RCheckReturn(Engine);
+    
+    Engine->OnMouseMoveCallback(window, xpos, ypos);
+}
+
+void REngine::OnKeyCallback(GLFWwindow* Window, int key, int scancode, int action, int mode) const
+{
+    RCheckReturn(Editor);
+    
     if (action == GLFW_PRESS)
     {
         Editor->OnKeyDown(key, scancode, mode);
@@ -154,14 +171,23 @@ void REngine::OnKeyCallback(GLFWwindow* window, int key, int scancode, int actio
     }
 }
 
-void REngine::OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) const
+void REngine::OnMouseButtonCallback(GLFWwindow* Window, int button, int action, int mods) const
 {
+    RCheckReturn(Editor);
+    RCheckReturn(EngineWindow);
+    
     if (action == GLFW_PRESS)
     {
-        Editor->OnMouseDown(button, mods);
+        Editor->OnMouseDown(button, mods, EngineWindow->GetCursorPosition());
     }
     else if (action == GLFW_RELEASE)
     {
-        Editor->OnMouseUp(button, mods);
+        Editor->OnMouseUp(button, mods, EngineWindow->GetCursorPosition());
     }
+}
+
+void REngine::OnMouseMoveCallback(GLFWwindow* Window, double XPosition, double YPosition) const
+{
+    RCheckReturn(Editor);
+    Editor->OnMouseMove(FVector2D(XPosition, YPosition));
 }

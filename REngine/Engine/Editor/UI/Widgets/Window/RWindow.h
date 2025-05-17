@@ -14,6 +14,9 @@ public:
     static void SetForceSize(const ImVec2& Size);
     static void SetForceViewport(const ImGuiID& ViewportID);
 
+    FVector2D GetWindowPosition() const;
+    FVector2D GetWindowSize() const;
+
     void SetWindowFlags(const ImGuiWindowFlags& Flags);
     void SetRounding(float Radius);
     void SetBorderSize(float Size);
@@ -24,6 +27,9 @@ public:
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
+    void OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition) override;
+    void OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition) override;
+    
 protected:
     void SetWindowName(const std::string& Name);
     std::string GetWindowName() const;

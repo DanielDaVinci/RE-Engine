@@ -25,6 +25,16 @@ void RWindow::SetForceViewport(const ImGuiID& ViewportID)
     ImGui::SetNextWindowViewport(ViewportID);
 }
 
+FVector2D RWindow::GetWindowPosition() const
+{
+    return WindowData.Position;
+}
+
+FVector2D RWindow::GetWindowSize() const
+{
+    return WindowData.Size;
+}
+
 void RWindow::SetWindowFlags(const ImGuiWindowFlags& Flags)
 {
     WindowData.WindowFlags |= Flags;
@@ -65,11 +75,37 @@ void RWindow::Draw()
     {
         InitDockspace();
     }
+    WindowData.Position = ImGui::GetWindowPos();
+    WindowData.Size = ImGui::GetWindowSize();
 
     DrawWindowContent();
     RContainerWidget::Draw();
     
     ImGui::End();
+}
+
+void RWindow::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
+{
+    const FVector2D WindowPosition = GetWindowPosition();
+    const FVector2D WindowSize = GetWindowSize();
+    
+    if (CursorPosition.x > WindowPosition.x && CursorPosition.x < WindowPosition.x + WindowSize.x
+        && CursorPosition.y > WindowPosition.y && CursorPosition.y < WindowPosition.y + WindowSize.y)
+    {
+        RContainerWidget::OnMouseDown(Button, Mods, CursorPosition);
+    }
+}
+
+void RWindow::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
+{
+    const FVector2D WindowPosition = GetWindowPosition();
+    const FVector2D WindowSize = GetWindowSize();
+    
+    if (CursorPosition.x > WindowPosition.x && CursorPosition.x < WindowPosition.x + WindowSize.x
+        && CursorPosition.y > WindowPosition.y && CursorPosition.y < WindowPosition.y + WindowSize.y)
+    {
+        RContainerWidget::OnMouseUp(Button, Mods, CursorPosition);
+    }
 }
 
 void RWindow::SetWindowName(const std::string& Name)

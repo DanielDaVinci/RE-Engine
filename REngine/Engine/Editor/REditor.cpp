@@ -133,24 +133,41 @@ void REditor::DrawMainMenuBar()
     }
 }
 
-void REditor::OnKeyDown(int key, int scancode, int mode)
+void REditor::OnKeyDown(int Key, int Scancode, int Mode)
 {
-    Keys[key] = GL_TRUE;
+    Keys[Key] = GL_TRUE;
 }
 
-void REditor::OnKeyUp(int key, int scancode, int mode)
+void REditor::OnKeyUp(int Key, int Scancode, int Mode)
 {
-    Keys[key] = GL_FALSE;
+    Keys[Key] = GL_FALSE;
 }
 
-void REditor::OnMouseDown(int button, int mods)
+void REditor::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
+    MouseButtons[Button] = GL_TRUE;
+    RootWidget->OnMouseDown(Button, Mods, CursorPosition);
+}
+
+void REditor::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
+{
+    MouseButtons[Button] = GL_FALSE;
+    RootWidget->OnMouseUp(Button, Mods, CursorPosition);
+}
+
+void REditor::OnMouseMove(const FVector2D& CursorPosition)
+{
+    if (MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+    {
+        static FVector2D LastCursorPosition = CursorPosition;
+
+        constexpr float Sensitivity = 0.05f;
+        const FVector2D Delta = (CursorPosition - LastCursorPosition) * Sensitivity;
     
-}
-
-void REditor::OnMouseUp(int button, int mods)
-{
-    
+        ScreenCamera->setPitch(ScreenCamera->getPitch() - Delta.y);
+        ScreenCamera->setYaw(ScreenCamera->getYaw() - Delta.x);
+        LastCursorPosition = CursorPosition;
+    }
 }
 
 std::shared_ptr<REngineWindow> REditor::GetEngineWindow()
@@ -197,6 +214,7 @@ void REditor::Move(GLdouble DeltaTime) const
     {
         ScreenCamera->setPosition(ScreenCamera->getPosition() + ScreenCamera->getRightDirection() * CameraSpeed);
     }
+    
 }
 
 void REditor::Exit()

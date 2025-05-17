@@ -13,6 +13,9 @@ public:
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
+    void OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition) override;
+    void OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition) override;
+
 protected:
     virtual void AddChild(const std::shared_ptr<RWidget>& InChild);
     virtual void DrawChildren();

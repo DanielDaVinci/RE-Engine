@@ -40,8 +40,6 @@ protected:
     class FCallbackWrapper
     {
     public:
-        static REngine* StaticEngine;
-        
         FCallbackWrapper() = delete;
         FCallbackWrapper(const FCallbackWrapper&) = delete;
         FCallbackWrapper(FCallbackWrapper&&) = delete;
@@ -49,11 +47,13 @@ protected:
 
         static void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
         static void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+        static void OnMouseMoveCallback(GLFWwindow* window, double xpos, double ypos);
     };
 
     void SetWindowCallbacks();
-    void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) const;
-    void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) const;
+    void OnKeyCallback(GLFWwindow* Window, int key, int scancode, int action, int mode) const;
+    void OnMouseButtonCallback(GLFWwindow* Window, int button, int action, int mods) const;
+    void OnMouseMoveCallback(GLFWwindow* Window, double XPosition, double YPosition) const;
     // ---------------------------------
     
 private:

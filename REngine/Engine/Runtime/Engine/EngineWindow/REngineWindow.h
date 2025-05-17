@@ -2,6 +2,8 @@
 #include "Core/Public/Object/RObject.h"
 #include "Data/FEngineWindowParameters.h"
 
+struct FVector2D;
+
 class REngineWindow : public RObject
 {
     friend class REngine;
@@ -17,14 +19,17 @@ public:
 
     bool IsWindowShouldClose() const;
     
-    
     static void SetWindowHint(GLint Hint, GLint Value);
     void SetWindowName(const std::string& Name);
     std::pair<int, int> GetWindowSize() const;
 
+    FVector2D GetCursorPosition() const;
+    
 protected:
     void SetKeyCallback(GLFWkeyfun Callback) const;
     void SetMouseButtonCallback(GLFWmousebuttonfun Callback) const;
+    void SetMouseMoveCallback(GLFWcursorposfun Callback) const;
+    
 
 private:
     GLFWwindow* glfwWindow = nullptr;

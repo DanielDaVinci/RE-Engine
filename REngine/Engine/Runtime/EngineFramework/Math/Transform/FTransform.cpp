@@ -1,9 +1,7 @@
 ﻿#include "FTransform.h"
 
-#include "GLM/gtx/euler_angles.hpp"
 #include "GLM/gtx/matrix_decompose.hpp"
 #include "GLM/gtx/rotate_normalized_axis.hpp"
-#include "GLM/gtx/rotate_vector.hpp"
 
 FTransform::FTransform(const FVector& InPosition, const FQuat& InQuaternion, const FVector& InScale)
     : Position(InPosition), Quaternion(InQuaternion), Scale(InScale)

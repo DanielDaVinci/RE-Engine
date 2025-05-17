@@ -2,6 +2,11 @@
 
 #include <cstdarg>
 #include <cstdio>
+#include <string>
+
+#include "glm/detail/qualifier.hpp"
+#include "glm/detail/setup.hpp"
+#include "dual_quaternion.hpp"
 
 namespace glm{
 namespace detail

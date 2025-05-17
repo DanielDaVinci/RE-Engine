@@ -2,6 +2,7 @@
 
 #include "imGUI/imgui_impl_glfw.h"
 #include "imGUI/imgui_impl_opengl3.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
 
 REngineWindow::~REngineWindow()
 {
@@ -56,6 +57,14 @@ std::pair<int, int> REngineWindow::GetWindowSize() const
     return std::make_pair(width, height);
 }
 
+FVector2D REngineWindow::GetCursorPosition() const
+{
+    double XPosition, YPosition;
+    glfwGetCursorPos(glfwWindow, &XPosition, &YPosition);
+
+    return FVector2D(XPosition, YPosition);
+}
+
 void REngineWindow::SetKeyCallback(GLFWkeyfun Callback) const
 {
     glfwSetKeyCallback(glfwWindow, Callback);
@@ -64,4 +73,9 @@ void REngineWindow::SetKeyCallback(GLFWkeyfun Callback) const
 void REngineWindow::SetMouseButtonCallback(GLFWmousebuttonfun Callback) const
 {
     glfwSetMouseButtonCallback(glfwWindow, Callback);
+}
+
+void REngineWindow::SetMouseMoveCallback(GLFWcursorposfun Callback) const
+{
+    glfwSetCursorPosCallback(glfwWindow, Callback);
 }

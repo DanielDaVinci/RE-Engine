@@ -7,6 +7,7 @@
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
 
+struct FVector2D;
 class REngineWindow;
 class RMesh;
 class RScene;
@@ -36,11 +37,13 @@ public:
     void DrawUI(GLdouble DeltaTime);
     void DrawMainMenuBar();
 
-    void OnKeyDown(int key, int scancode, int mode);
-    void OnKeyUp(int key, int scancode, int mode);
+    void OnKeyDown(int Key, int Scancode, int Mode);
+    void OnKeyUp(int Key, int Scancode, int Mode);
 
-    void OnMouseDown(int button, int mods);
-    void OnMouseUp(int button, int mods);
+    void OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition);
+    void OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition);
+
+    void OnMouseMove(const FVector2D& CursorPosition);
 
     static std::shared_ptr<REngineWindow> GetEngineWindow();
     std::shared_ptr<RFrame> GetFrame() const;
@@ -61,4 +64,5 @@ private:
     std::shared_ptr<RScene> Scene;
 
     GLboolean Keys[1024] = {};
+    GLboolean MouseButtons[1024] = {};
 };
