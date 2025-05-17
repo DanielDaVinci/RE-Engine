@@ -31,7 +31,7 @@ void RMesh::LoadMesh(const std::string& MeshPath)
     LoadAssimpNode(AssimpScene->mRootNode, AssimpScene);
 }
 
-void RMesh::Render(const FMatrix& Matrix, float DeltaTime)
+void RMesh::Render(const FTransform& Transform, float DeltaTime)
 {
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
@@ -51,9 +51,8 @@ void RMesh::Render(const FMatrix& Matrix, float DeltaTime)
     Shader->setUniform("pointLight.linear", 0.22f);
     Shader->setUniform("pointLight.constant", 0.20f);
     Shader->setUniform("viewPos", Camera->getPosition());
-
-    Shader->setUniform("model", Matrix);
-    // Shader->setUniform("model", FTransform(Matrix).GetMatrix()); TODO:
+    
+    Shader->setUniform("model", Transform.GetMatrix());
     Shader->setUniform("view", Camera->getViewMatrix());
     Shader->setUniform("projection", Camera->getProjectionMatrix());
     

@@ -11,7 +11,7 @@ struct FTransform
 
     FTransform() = default;
     FTransform(const FVector& InPosition, const FQuat& InQuaternion, const FVector& InScale);
-    FTransform(const FMatrix& InMatrix);
+    explicit FTransform(const FMatrix& InMatrix);
 
     FMatrix GetMatrix() const;
 

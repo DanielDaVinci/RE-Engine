@@ -13,7 +13,7 @@ public:
     using RObject::RObject;
 
     void LoadMesh(const std::string& MeshPath);
-    void Render(const FMatrix& Matrix, float DeltaTime);
+    void Render(const FTransform& Transform, float DeltaTime);
     
 protected:
     void LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene);

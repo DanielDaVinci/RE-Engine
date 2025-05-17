@@ -57,7 +57,7 @@ void RSceneComponent::SetScale(const FVector& InScale)
 
 FTransform RSceneComponent::GetWorldTransform() const
 {
-    return GetWorldTransformMatrix();
+    return FTransform(GetWorldTransformMatrix());
 }
 
 FTransform RSceneComponent::GetRelativeTransform() const

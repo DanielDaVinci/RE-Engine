@@ -7,7 +7,7 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    SetRotation(FQuat(90.0f, -90.0f, 90.0f));
+    SetRotation(FQuat(0.0f, 0.0f, 90.0f));
 
     StaticMesh = NewObject<RMesh>();
     RCheckReturn(StaticMesh);
@@ -20,6 +20,6 @@ void RStaticMeshComponent::Render(float DeltaTime)
     
     if (RCheck(StaticMesh))
     {
-        StaticMesh->Render(GetWorldTransformMatrix(), DeltaTime);
+        StaticMesh->Render(GetWorldTransform(), DeltaTime);
     }
 }

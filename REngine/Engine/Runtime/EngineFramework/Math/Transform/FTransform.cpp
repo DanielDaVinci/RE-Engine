@@ -48,5 +48,5 @@ FMatrix FTransform::GetMatrix() const
 
 FTransform FTransform::operator*(const FTransform& Other) const
 {
-    return FMatrix(GetMatrix() * Other.GetMatrix());
+    return FTransform(GetMatrix() * Other.GetMatrix());
 }
