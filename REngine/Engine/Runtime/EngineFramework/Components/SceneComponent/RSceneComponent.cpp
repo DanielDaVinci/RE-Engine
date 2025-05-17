@@ -45,9 +45,9 @@ void RSceneComponent::SetPosition(const FVector& InPosition)
     Transform.Position = InPosition;
 }
 
-void RSceneComponent::SetRotation(const FRotator& InRotation)
+void RSceneComponent::SetRotation(const FQuat& InQuaternion)
 {
-    Transform.Rotation = InRotation;
+    Transform.Quaternion = InQuaternion;
 }
 
 void RSceneComponent::SetScale(const FVector& InScale)

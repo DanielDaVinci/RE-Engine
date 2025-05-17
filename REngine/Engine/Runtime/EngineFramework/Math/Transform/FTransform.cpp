@@ -5,8 +5,8 @@
 #include "GLM/gtx/rotate_normalized_axis.hpp"
 #include "GLM/gtx/rotate_vector.hpp"
 
-FTransform::FTransform(const FVector& InPosition, const FRotator& InRotation, const FVector& InScale)
-    : Position(InPosition), Rotation(InRotation), Scale(InScale)
+FTransform::FTransform(const FVector& InPosition, const FQuat& InQuaternion, const FVector& InScale)
+    : Position(InPosition), Quaternion(InQuaternion), Scale(InScale)
 {
 }
 
@@ -18,14 +18,13 @@ FTransform::FTransform(const FMatrix& InMatrix)
     glm::vec3 DecomposeSkew;
     glm::vec4 DecomposePerspective;
     
-    // if (glm::decompose(InMatrix, DecomposeScale, DecomposeRotation, DecomposeTranslation, DecomposeSkew, DecomposePerspective))
-    // {
-    //     Position = DecomposeTranslation;
-    //     auto asd = glm::eulerAngles(DecomposeRotation);
-    //     Rotation = glm::degrees(glm::vec3(asd.y, asd.x, asd.z));
-    //     Scale = DecomposeScale;
-    //     return;
-    // }
+    if (glm::decompose(InMatrix, DecomposeScale, DecomposeRotation, DecomposeTranslation, DecomposeSkew, DecomposePerspective))
+    {
+        Position = DecomposeTranslation;
+        Quaternion = DecomposeRotation;
+        Scale = DecomposeScale;
+        return;
+    }
 
     Position = FVector(InMatrix[3]);
     Scale = FVector{
@@ -39,12 +38,12 @@ FTransform::FTransform(const FMatrix& InMatrix)
     RotationMatrix[1] = InMatrix[1] / Scale[1];
     RotationMatrix[2] = InMatrix[2] / Scale[2];
 
-    Rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(RotationMatrix)));
+    Quaternion = glm::quat_cast(RotationMatrix);
 }
 
 FMatrix FTransform::GetMatrix() const
 {
-    return Position.GetTranslationMatrix() * Rotation.GetRotationMatrix() * Scale.GetScaleMatrix();
+    return Position.GetTranslationMatrix() * Quaternion.GetMatrix() * Scale.GetScaleMatrix();
 }
 
 FTransform FTransform::operator*(const FTransform& Other) const

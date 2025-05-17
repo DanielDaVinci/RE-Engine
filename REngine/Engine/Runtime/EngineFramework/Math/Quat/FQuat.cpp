@@ -7,13 +7,12 @@
 
 FQuat::FQuat(float Pitch, float Yaw, float Roll)
 {
-    *this = glm::angleAxis(Yaw, FVector::YVector)
-        * glm::angleAxis(Pitch, FVector::XVector)
-        * glm::angleAxis(Roll, FVector::ZVector);
+    *this = glm::angleAxis(glm::radians(Yaw), FVector::ZVector) * glm::angleAxis(glm::radians(Pitch), FVector::XVector) * glm::angleAxis(glm::radians(Roll), FVector::XVector);
 }
 
 void FQuat::SetPitch(float Pitch)
 {
+    
     *this = FQuat(Pitch, GetYaw(), GetRoll());
 }
 

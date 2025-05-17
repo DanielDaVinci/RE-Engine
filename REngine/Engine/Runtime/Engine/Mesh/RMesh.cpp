@@ -53,7 +53,7 @@ void RMesh::Render(const FMatrix& Matrix, float DeltaTime)
     Shader->setUniform("viewPos", Camera->getPosition());
 
     Shader->setUniform("model", Matrix);
-    // Shader->setUniform("model", FTransform(Matrix).GetMatrix());
+    // Shader->setUniform("model", FTransform(Matrix).GetMatrix()); TODO:
     Shader->setUniform("view", Camera->getViewMatrix());
     Shader->setUniform("projection", Camera->getProjectionMatrix());
     

@@ -7,11 +7,10 @@ struct FTransform
 {
     FVector Position = FVector::ZeroVector;
     FQuat Quaternion = FQuat();
-    FRotator Rotation = FRotator::ZeroRotator;
     FVector Scale = FVector::OneVector;
 
     FTransform() = default;
-    FTransform(const FVector& InPosition, const FRotator& InRotation, const FVector& InScale);
+    FTransform(const FVector& InPosition, const FQuat& InQuaternion, const FVector& InScale);
     FTransform(const FMatrix& InMatrix);
 
     FMatrix GetMatrix() const;

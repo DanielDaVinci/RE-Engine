@@ -16,7 +16,7 @@ public:
     
     void SetTransform(const FTransform& InTransform);
     void SetPosition(const FVector& InPosition);
-    void SetRotation(const FRotator& InRotation);
+    void SetRotation(const FQuat& InQuaternion);
     void SetScale(const FVector& InScale);
 
     FTransform GetWorldTransform() const;
