@@ -4,10 +4,14 @@
 
 #include <memory>
 #include "Core/Public/Class/RClass.h"
+#include "Core/Public/Delegates/RMulticastDelegate.h"
 
 class DLL_API RObject : public RClass, public std::enable_shared_from_this<RObject>
 {
 public:
+    DECLARE_DELEGATE(FOnDestroyedSignature)
+    FOnDestroyedSignature OnDestroyed;
+    
     explicit RObject(const std::shared_ptr<RObject>& InOwner);
     ~RObject() override;
 

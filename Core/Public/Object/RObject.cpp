@@ -7,6 +7,7 @@ RObject::RObject(const std::shared_ptr<RObject>& InOwner)
 
 RObject::~RObject()
 {
+    OnDestroyed.Broadcast();
 }
 
 void RObject::Construct()
