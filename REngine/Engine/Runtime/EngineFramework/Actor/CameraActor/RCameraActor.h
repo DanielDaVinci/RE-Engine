@@ -1,16 +1,15 @@
 ﻿#pragma once
-
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
 
-class RStaticMeshComponent;
+class RCameraComponent;
 
-class RMeshActor : public RActor
+class RCameraActor : public RActor
 {
 public:
     using RActor::RActor;
 
 protected:
-    std::shared_ptr<RStaticMeshComponent> StaticMeshComponent;
-
+    std::shared_ptr<RCameraComponent> CameraComponent;
+    
     void Construct() override;
 };

@@ -5,7 +5,7 @@
 #include "glm/vec2.hpp"
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Editor/Display/Frame/RFrame.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 
 RViewportWindow::RViewportWindow(const std::shared_ptr<RObject>& InOwner) : RWindow(InOwner)
 {
@@ -40,17 +40,14 @@ void RViewportWindow::DrawWindowContent() const
     RCheckReturn(Frame);
     Frame->SetFrameSize(WindowSize.x, WindowSize.y);
 
-    std::shared_ptr<RCamera> Camera = Editor->GetCamera();
+    std::shared_ptr<RCameraComponent> Camera = REditor::GetCamera();
     RCheckReturn(Camera);
     
-    Camera->setScreenWidth(WindowSize.x);
-    Camera->setScreenHeight(WindowSize.y);
-    
-    const ImVec2 pos = ImGui::GetCursorScreenPos();
+    const ImVec2 WindowPosition = ImGui::GetCursorScreenPos();
     ImGui::GetWindowDrawList()->AddImage(
         Frame->getTextureID(),
-        ImVec2(pos.x, pos.y),
-        ImVec2(pos.x + WindowSize.x, pos.y + WindowSize.y),
+        ImVec2(WindowPosition.x, WindowPosition.y),
+        ImVec2(WindowPosition.x + WindowSize.x, WindowPosition.y + WindowSize.y),
         ImVec2(0, 1),
         ImVec2(1, 0)
     );

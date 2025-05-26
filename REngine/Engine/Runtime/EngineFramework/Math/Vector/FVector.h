@@ -12,10 +12,14 @@ struct FVector : public glm::vec3
 
     static const FVector ZeroVector;
     static const FVector OneVector;
-    static const FVector XVector;
-    static const FVector YVector;
-    static const FVector ZVector;
+    static const FVector ForwardVector;
+    static const FVector BackwardVector;
+    static const FVector RightVector;
+    static const FVector LeftVector;
+    static const FVector UpVector;
+    static const FVector DownVector;
 
+    FVector(const glm::vec3& Vector);
     FVector(const aiVector3D& AssimpVector);
 
     FMatrix GetTranslationMatrix() const;

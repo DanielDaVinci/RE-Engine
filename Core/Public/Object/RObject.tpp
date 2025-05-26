@@ -10,7 +10,12 @@ std::shared_ptr<T> RObject::GetSharedThis()
 template<std::derived_from<RObject> T>
 std::shared_ptr<T> RObject::GetOwner() const
 {
-    return std::static_pointer_cast<T>(Owner);
+    if (auto SharedOwner = Owner.lock())
+    {
+        return std::static_pointer_cast<T>(SharedOwner);
+    }
+    
+    return nullptr;
 }
 
 template <std::derived_from<RObject> T>

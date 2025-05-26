@@ -8,7 +8,7 @@ class DLL_API RClass
 {
 public:
     RClass();
-    virtual ~RClass() = default;
+    virtual ~RClass();
     
 protected:
     virtual void FillReflection();

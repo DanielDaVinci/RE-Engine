@@ -4,9 +4,17 @@
 
 const FVector FVector::ZeroVector = FVector(0.0f, 0.0f, 0.0f);
 const FVector FVector::OneVector = FVector(1.0f, 1.0f, 1.0f);
-const FVector FVector::XVector = FVector(1.0f, 0.0f, 0.0f);
-const FVector FVector::YVector = FVector(0.0f, 1.0f, 0.0f);
-const FVector FVector::ZVector = FVector(0.0f, 0.0f, 1.0f);
+const FVector FVector::ForwardVector = FVector(1.0f, 0.0f, 0.0f);
+const FVector FVector::BackwardVector = FVector(-1.0f, 0.0f, 0.0f);
+const FVector FVector::RightVector = FVector(0.0f, 1.0f, 0.0f);
+const FVector FVector::LeftVector = FVector(0.0f, -1.0f, 0.0f);
+const FVector FVector::UpVector = FVector(0.0f, 0.0f, 1.0f);
+const FVector FVector::DownVector = FVector(0.0f, 0.0f, -1.0f);
+
+FVector::FVector(const glm::vec3& Vector)
+{
+    *this = Vector;
+}
 
 FVector::FVector(const aiVector3D& AssimpVector)
 {

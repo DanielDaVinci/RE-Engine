@@ -42,6 +42,11 @@ void RFrame::SetFrameSize(std::pair<GLuint, GLuint> InSize)
     SetFrameSize(InSize.first, InSize.second);
 }
 
+std::pair<GLuint, GLuint> RFrame::GetFrameSize() const
+{
+    return { Width, Height };
+}
+
 GLuint RFrame::getTextureID()
 {
     return ColorBuffer;

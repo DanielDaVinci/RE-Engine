@@ -7,7 +7,7 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    SetRotation(FQuat(0.0f, 0.0f, 0.0f));
+    // SetRotation(FQuat(0.0f, 0.0f, 0.0f));
 
     StaticMesh = NewObject<RMesh>();
     RCheckReturn(StaticMesh);

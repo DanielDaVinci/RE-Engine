@@ -10,7 +10,7 @@ void RSceneComponent::Construct()
     RActorComponent::Construct();
 
     SetPosition(FVector::ZeroVector);
-    SetRotation(FRotator::ZeroRotator);
+    SetRotation(FQuat::ZeroQuat);
     SetScale(FVector::OneVector);
 }
 
@@ -65,6 +65,21 @@ FTransform RSceneComponent::GetRelativeTransform() const
     return Transform;
 }
 
+FVector RSceneComponent::GetWorldPosition() const
+{
+    return GetWorldTransform().Position;
+}
+
+FVector RSceneComponent::GetRelativePosition() const
+{
+    return Transform.Position;
+}
+
+FQuat RSceneComponent::GetRelativeRotation() const
+{
+    return Transform.Quaternion;
+}
+
 FMatrix RSceneComponent::GetWorldTransformMatrix() const
 {
     if (const std::shared_ptr<RSceneComponent> Parent = GetParentComponent())
@@ -78,6 +93,24 @@ FMatrix RSceneComponent::GetWorldTransformMatrix() const
 FMatrix RSceneComponent::GetRelativeTransformMatrix() const
 {
     return Transform.GetMatrix();
+}
+
+FVector RSceneComponent::GetForwardVector() const
+{
+    const FTransform WorldTransform = GetWorldTransform();
+    return WorldTransform.Quaternion * FVector::ForwardVector;
+}
+
+FVector RSceneComponent::GetUpVector() const
+{
+    const FTransform WorldTransform = GetWorldTransform();
+    return WorldTransform.Quaternion * FVector::UpVector;
+}
+
+FVector RSceneComponent::GetRightVector() const
+{
+    const FTransform WorldTransform = GetWorldTransform();
+    return WorldTransform.Quaternion * FVector::LeftVector;
 }
 
 void RSceneComponent::SetParentComponent(const std::shared_ptr<RSceneComponent>& Component)

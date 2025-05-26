@@ -17,6 +17,7 @@ public:
 	
 	void SetFrameSize(GLuint InWidth, GLuint InHeight);
 	void SetFrameSize(std::pair<GLuint, GLuint> InSize);
+	std::pair<GLuint, GLuint> GetFrameSize() const;
 
 	GLuint getTextureID();
 

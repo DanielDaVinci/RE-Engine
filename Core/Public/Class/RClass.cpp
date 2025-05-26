@@ -5,6 +5,11 @@ RClass::RClass()
     
 }
 
+RClass::~RClass()
+{
+    
+}
+
 void RClass::FillReflection()
 {
     

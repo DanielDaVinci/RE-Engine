@@ -1,10 +1,10 @@
-#include "RCamera.h"
+#include "RCameraLegacy.h"
 
 #include "ThirdParty/ExternalIncludes/GLM/ext/matrix_clip_space.hpp"
 #include "ThirdParty/ExternalIncludes/GLM/ext/matrix_transform.hpp"
 #include "ThirdParty/ExternalIncludes/GLM/gtx/extended_min_max.hpp"
 
-RCamera::RCamera(GLuint screenWidth, GLuint screenHeight, GLfloat FOV, glm::vec3 position, glm::vec3 angle)
+RCameraLegacy::RCameraLegacy(GLuint screenWidth, GLuint screenHeight, GLfloat FOV, glm::vec3 position, glm::vec3 angle)
 {
 	setScreenWidth(screenWidth);
 	setScreenHeight(screenHeight);
@@ -16,137 +16,137 @@ RCamera::RCamera(GLuint screenWidth, GLuint screenHeight, GLfloat FOV, glm::vec3
 	scale = { 1.0f, 1.0f, 1.0f};
 }
 
-void RCamera::setPosition(glm::vec3 position)
+void RCameraLegacy::setPosition(glm::vec3 position)
 {
 	this->position = position;
 }
 
-glm::vec3 RCamera::getPosition()
+glm::vec3 RCameraLegacy::getPosition()
 {
 	return position;
 }
 
-void RCamera::setX(GLfloat x)
+void RCameraLegacy::setX(GLfloat x)
 {
 	this->position.x = x;
 }
 
-GLfloat RCamera::getX()
+GLfloat RCameraLegacy::getX()
 {
 	return this->position.x;
 }
 
-void RCamera::setY(GLfloat y)
+void RCameraLegacy::setY(GLfloat y)
 {
 	this->position.y = y;
 }
 
-GLfloat RCamera::getY()
+GLfloat RCameraLegacy::getY()
 {
 	return this->position.y;
 }
 
-void RCamera::setZ(GLfloat z)
+void RCameraLegacy::setZ(GLfloat z)
 {
 	this->position.z = z;
 }
 
-GLfloat RCamera::getZ()
+GLfloat RCameraLegacy::getZ()
 {
 	return this->position.z;
 }
 
-void RCamera::setAngle(glm::vec3 angle)
+void RCameraLegacy::setAngle(glm::vec3 angle)
 {
 	this->angle = angle;
 }
 
-glm::vec3 RCamera::getAngle()
+glm::vec3 RCameraLegacy::getAngle()
 {
 	return angle;
 }
 
-void RCamera::setPitch(GLfloat angle)
+void RCameraLegacy::setPitch(GLfloat angle)
 {
 	this->angle.x = angle;
 }
 
-GLfloat RCamera::getPitch()
+GLfloat RCameraLegacy::getPitch()
 {
 	return angle.x;
 }
 
-void RCamera::setYaw(GLfloat angle)
+void RCameraLegacy::setYaw(GLfloat angle)
 {
 	this->angle.y = angle;
 }
 
-GLfloat RCamera::getYaw()
+GLfloat RCameraLegacy::getYaw()
 {
 	return angle.y;
 }
 
-void RCamera::setRoll(GLfloat angle)
+void RCameraLegacy::setRoll(GLfloat angle)
 {
 	this->angle.z = angle;
 }
 
-GLfloat RCamera::getRoll()
+GLfloat RCameraLegacy::getRoll()
 {
 	return angle.z;
 }
 
-void RCamera::setScale(glm::vec3 scale)
+void RCameraLegacy::setScale(glm::vec3 scale)
 {
 	this->scale = scale;
 }
 
-glm::vec3 RCamera::getScale()
+glm::vec3 RCameraLegacy::getScale()
 {
 	return scale;
 }
 
-void RCamera::setFOV(GLfloat FOV)
+void RCameraLegacy::setFOV(GLfloat FOV)
 {
 	this->FOV = glm::max(glm::min(FOV, 179.99f), 0.001f);
 }
 
-GLfloat RCamera::getFOV()
+GLfloat RCameraLegacy::getFOV()
 {
 	return FOV;
 }
 
-void RCamera::setScreenWidth(GLuint screenWidth)
+void RCameraLegacy::setScreenWidth(GLuint screenWidth)
 {
 	this->screenWidth = screenWidth;
 }
 
-GLuint RCamera::getScreenWidth()
+GLuint RCameraLegacy::getScreenWidth()
 {
 	return screenWidth;
 }
 
-void RCamera::setScreenHeight(GLuint screenHeight)
+void RCameraLegacy::setScreenHeight(GLuint screenHeight)
 {
 	this->screenHeight = screenHeight;
 }
 
-GLuint RCamera::getScreenHeight()
+GLuint RCameraLegacy::getScreenHeight()
 {
 	return screenHeight;
 }
 
-glm::mat4 RCamera::getViewMatrix()
+glm::mat4 RCameraLegacy::getViewMatrix()
 {
 	return glm::lookAt(getPosition(), getPosition() + getFrontDirection(), getUpDirection());
 }
 
-glm::mat4 RCamera::getProjectionMatrix()
+glm::mat4 RCameraLegacy::getProjectionMatrix()
 {
 	return glm::perspective(glm::radians(FOV), (GLfloat)screenWidth/screenHeight, 0.01f, 100.0f);
 }
 
-glm::vec3 RCamera::getFrontDirection()
+glm::vec3 RCameraLegacy::getFrontDirection()
 {
 	glm::vec3 direction;
 
@@ -157,12 +157,12 @@ glm::vec3 RCamera::getFrontDirection()
 	return direction;
 }
 
-glm::vec3 RCamera::getUpDirection()
+glm::vec3 RCameraLegacy::getUpDirection()
 {
 	return glm::cross(getRightDirection(), getFrontDirection());
 }
 
-glm::vec3 RCamera::getRightDirection()
+glm::vec3 RCameraLegacy::getRightDirection()
 {
 	return glm::cross(getFrontDirection(), { 0.0f, 0.0f, 1.0f });
 }

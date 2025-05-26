@@ -5,6 +5,11 @@
 
 const FRotator FRotator::ZeroRotator = FRotator(0.0f, 0.0f, 0.0f);
 
+FRotator::FRotator(const glm::vec3& Vector)
+{
+    *this = Vector;
+}
+
 void FRotator::SetPitch(float InPitch)
 {
     x = InPitch;

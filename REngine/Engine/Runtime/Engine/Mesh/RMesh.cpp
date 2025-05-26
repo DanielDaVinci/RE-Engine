@@ -11,7 +11,8 @@
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Editor/Display/Shader/FShader.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
+#include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
 void RMesh::LoadMesh(const std::string& MeshPath)
@@ -39,22 +40,24 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     auto Editor = REngine::GetEngine()->GetEditor();
     RCheckReturn(Editor);
 
-    auto Camera = Editor->GetCamera();
+    auto Camera = REditor::GetCamera();
     RCheckReturn(Camera);
+
+    auto CameraPosition = Camera->GetWorldPosition();
     
     Shader->Use();
-    Shader->setUniform("pointLight.position", Camera->getPosition());
+    Shader->setUniform("pointLight.position", CameraPosition);
     Shader->setUniform("pointLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
     Shader->setUniform("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
     Shader->setUniform("pointLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
     Shader->setUniform("pointLight.constant", 1.0f);
     Shader->setUniform("pointLight.linear", 0.22f);
     Shader->setUniform("pointLight.constant", 0.20f);
-    Shader->setUniform("viewPos", Camera->getPosition());
+    Shader->setUniform("viewPos", CameraPosition);
     
     Shader->setUniform("model", Transform.GetMatrix());
-    Shader->setUniform("view", Camera->getViewMatrix());
-    Shader->setUniform("projection", Camera->getProjectionMatrix());
+    Shader->setUniform("view", Camera->GetViewMatrix());
+    Shader->setUniform("projection", Camera->GetProjectionMatrix());
     
     for (const RStaticMesh& StaticMesh : StaticMeshes)
     {

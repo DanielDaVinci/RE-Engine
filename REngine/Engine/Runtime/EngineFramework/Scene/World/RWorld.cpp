@@ -1,13 +1,18 @@
 ﻿#include "RWorld.h"
 
+#include "REngine/Engine/Runtime/EngineFramework/Actor/CameraActor/RCameraActor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Actor/MeshActor/RMeshActor.h"
 
 void RWorld::Initialize()
 {
     SpawnActor<RMeshActor>(FTransform(
         FVector(10.0f, 0.0f, 0.0f),
-        FQuat(90.0f, -90.0f, 0.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
         FVector::OneVector));
+
+    SpawnActor<RCameraActor>(FTransform(
+        FVector(0.0f, 0.0f, 0.0f),
+        FQuat(0.0f, 0.0f, 0.0f)));
     
     for (const std::shared_ptr<RActor>& Actor : Actors)
     {

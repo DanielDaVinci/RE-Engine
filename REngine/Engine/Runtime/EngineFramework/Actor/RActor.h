@@ -15,6 +15,7 @@ public:
     using RObject::RObject;
 
     RActor(const std::shared_ptr<RObject>& InOwner);
+    ~RActor() override;
 
     // ------- Loop --------
     void Construct() override;
@@ -23,9 +24,19 @@ public:
     virtual void Tick(float DeltaTime);
     virtual void Render(float DeltaTime);
     virtual void EndPlay();
+    // ---------------------
 
     void SetTransform(const FTransform& InTransform);
+    void SetRelativePosition(const FVector& InPosition);
+    void SetRelativeRotation(const FQuat& InQuaternion);
+    
     FTransform GetTransform() const;
+    FVector GetRelativePosition() const;
+    FQuat GetRelativeRotation() const;
+
+    FVector GetForwardVector() const;
+    FVector GetRightVector() const;
+    FVector GetUpVector() const;
 
     std::shared_ptr<RWorld> GetWorld() const;
     std::shared_ptr<RSceneComponent> GetRootComponent() const;
@@ -36,8 +47,9 @@ protected:
 
     void SetRootComponent(const std::shared_ptr<RSceneComponent>& Component);
     
-    template<typename T, typename = std::is_base_of<RActorComponent, T>>
+    template<std::derived_from<RActorComponent> T = RActorComponent>
     std::shared_ptr<T> AddComponent();
+    void RemoveComponent(const std::shared_ptr<RActorComponent>& Component);
 
     bool ContainComponent(const std::shared_ptr<RActorComponent>& Component);
 

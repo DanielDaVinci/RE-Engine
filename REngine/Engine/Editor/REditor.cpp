@@ -12,7 +12,10 @@
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCamera.h"
+#include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
+#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraSubsystem.h"
+#include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
 #include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
@@ -23,15 +26,6 @@
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_glfw.h"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_opengl3.h"
 #include "UI/Widgets/RootWindow/RRootWindow.h"
-
-REditor::REditor(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
-{
-    
-}
-
-REditor::~REditor()
-{
-}
 
 void REditor::Initialize()
 {
@@ -59,9 +53,6 @@ void REditor::Initialize()
     Frame->SetFrameSize(EngineWindow->GetWindowSize());
     
     FrameShader = std::make_shared<FShader>("Data/Shaders/frameShader.vs", "Data/Shaders/frameShader.frag");
-
-    ScreenCamera = std::make_shared<RCamera>(800, 600, 45.0f);
-    ScreenCamera->setAngle({ 0.0f, 0.0f, 0.0f });
 }
 
 void REditor::Tick(GLdouble DeltaTime)
@@ -147,6 +138,7 @@ void REditor::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
     MouseButtons[Button] = GL_TRUE;
     RootWidget->OnMouseDown(Button, Mods, CursorPosition);
+    LastCursorPosition = CursorPosition;
 }
 
 void REditor::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
@@ -159,13 +151,21 @@ void REditor::OnMouseMove(const FVector2D& CursorPosition)
 {
     if (MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
     {
-        static FVector2D LastCursorPosition = CursorPosition;
-
         constexpr float Sensitivity = 0.05f;
-        const FVector2D Delta = (CursorPosition - LastCursorPosition) * Sensitivity;
-    
-        ScreenCamera->setPitch(ScreenCamera->getPitch() - Delta.y);
-        ScreenCamera->setYaw(ScreenCamera->getYaw() - Delta.x);
+        const FVector2D Delta = CursorPosition - LastCursorPosition;
+        const FVector2D Shift = Delta * Sensitivity;
+
+        const auto CameraComponent = REditor::GetCamera();
+        RCheckReturn(CameraComponent);
+
+        const auto CameraActor = CameraComponent->GetOwner<RActor>();
+        RCheckReturn(CameraActor);
+
+        FQuat CameraRotation = CameraActor->GetRelativeRotation();
+        CameraRotation.AddWorldYaw(-1.0f * Shift.x);
+        CameraRotation.AddPitch(Shift.y);
+
+        CameraActor->SetRelativeRotation(CameraRotation);
         LastCursorPosition = CursorPosition;
     }
 }
@@ -183,9 +183,12 @@ std::shared_ptr<RFrame> REditor::GetFrame() const
     return Frame;
 }
 
-std::shared_ptr<RCamera> REditor::GetCamera() const
+std::shared_ptr<RCameraComponent> REditor::GetCamera()
 {
-    return ScreenCamera;
+    auto CameraSubsystem = RCameraSubsystem::Get();
+    RCheckReturn(CameraSubsystem, {});
+    
+    return CameraSubsystem->GetSelectedCamera();
 }
 
 std::pair<GLint, GLint> REditor::GetGLFWWindowSize(GLFWwindow* window)
@@ -197,24 +200,29 @@ std::pair<GLint, GLint> REditor::GetGLFWWindowSize(GLFWwindow* window)
 
 void REditor::Move(GLdouble DeltaTime) const
 {
-    const GLfloat CameraSpeed = 5.0f * DeltaTime;
+    const GLfloat CameraShift = 5.0f * DeltaTime;
+    const auto CameraComponent = REditor::GetCamera();
+    RCheckReturn(CameraComponent);
+
+    const auto CameraActor = CameraComponent->GetOwner<RActor>();
+    RCheckReturn(CameraActor);
+    
     if (Keys[GLFW_KEY_W])
     {
-        ScreenCamera->setPosition(ScreenCamera->getPosition() + ScreenCamera->getFrontDirection() * CameraSpeed);
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetForwardVector() * CameraShift);
     }
     if (Keys[GLFW_KEY_S])
     {
-        ScreenCamera->setPosition(ScreenCamera->getPosition() - ScreenCamera->getFrontDirection() * CameraSpeed);
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetForwardVector() * CameraShift);
     }
     if (Keys[GLFW_KEY_A])
     {
-        ScreenCamera->setPosition(ScreenCamera->getPosition() - ScreenCamera->getRightDirection() * CameraSpeed);
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetRightVector() * CameraShift);
     }
     if (Keys[GLFW_KEY_D])
     {
-        ScreenCamera->setPosition(ScreenCamera->getPosition() + ScreenCamera->getRightDirection() * CameraSpeed);
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetRightVector() * CameraShift);
     }
-    
 }
 
 void REditor::Exit()

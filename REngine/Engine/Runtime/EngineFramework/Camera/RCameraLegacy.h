@@ -5,7 +5,7 @@
 #include "ThirdParty/ExternalIncludes/GLM/fwd.hpp"
 #include "ThirdParty/ExternalIncludes/GLM/vec3.hpp"
 
-class RCamera
+class RCameraLegacy
 {
 private:
 	glm::vec3 position;
@@ -16,7 +16,7 @@ private:
 
 	GLuint screenWidth, screenHeight;
 public:
-	RCamera(GLuint screenWidth, GLuint screenHeight, GLfloat FOV, glm::vec3 position = {0.0f, 0.0f, 0.0f}, glm::vec3 angle = {0.0f, 0.0f, 0.0f});
+	RCameraLegacy(GLuint screenWidth, GLuint screenHeight, GLfloat FOV, glm::vec3 position = {0.0f, 0.0f, 0.0f}, glm::vec3 angle = {0.0f, 0.0f, 0.0f});
 
 	void setPosition(glm::vec3 position);
 	glm::vec3 getPosition();

@@ -11,6 +11,8 @@ struct FRotator : public glm::vec3
 
     static const FRotator ZeroRotator;
 
+    FRotator(const glm::vec3& Vector);
+
     void SetPitch(float InPitch);
     float GetPitch() const;
     float GetPitchRadians() const;

@@ -22,8 +22,16 @@ public:
     FTransform GetWorldTransform() const;
     FTransform GetRelativeTransform() const;
 
+    FVector GetWorldPosition() const;
+    FVector GetRelativePosition() const;
+    FQuat GetRelativeRotation() const;
+
     FMatrix GetWorldTransformMatrix() const;
     FMatrix GetRelativeTransformMatrix() const;
+
+    FVector GetForwardVector() const;
+    FVector GetUpVector() const;
+    FVector GetRightVector() const;
     
 protected:
     FTransform Transform;
