@@ -28,6 +28,39 @@ void RContainerWidget::Draw()
     DrawChildren();
 }
 
+void RContainerWidget::Tick(float DeltaTime)
+{
+    RWidget::Tick(DeltaTime);
+
+    for (const std::shared_ptr<RWidget>& Child : ChildrenWidgets)
+    {
+        RCheckContinue(Child);
+        Child->Tick(DeltaTime);
+    }
+}
+
+void RContainerWidget::OnKeyDown(int Key, int Scancode, int Mode)
+{
+    RWidget::OnKeyDown(Key, Scancode, Mode);
+
+    for (const std::shared_ptr<RWidget>& Child : ChildrenWidgets)
+    {
+        RCheckContinue(Child);
+        Child->OnKeyDown(Key, Scancode, Mode);
+    }
+}
+
+void RContainerWidget::OnKeyUp(int Key, int Scancode, int Mode)
+{
+    RWidget::OnKeyUp(Key, Scancode, Mode);
+
+    for (const std::shared_ptr<RWidget>& Child : ChildrenWidgets)
+    {
+        RCheckContinue(Child);
+        Child->OnKeyUp(Key, Scancode, Mode);
+    }
+}
+
 void RContainerWidget::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
     RWidget::OnMouseDown(Button, Mods, CursorPosition);
@@ -46,7 +79,18 @@ void RContainerWidget::OnMouseUp(int Button, int Mods, const FVector2D& CursorPo
     for (const std::shared_ptr<RWidget>& Child : ChildrenWidgets)
     {
         RCheckContinue(Child);
-        Child->OnMouseDown(Button, Mods, CursorPosition);
+        Child->OnMouseUp(Button, Mods, CursorPosition);
+    }
+}
+
+void RContainerWidget::OnMouseMove(const FVector2D& CursorPosition)
+{
+    RWidget::OnMouseMove(CursorPosition);
+
+    for (const std::shared_ptr<RWidget>& Child : ChildrenWidgets)
+    {
+        RCheckContinue(Child);
+        Child->OnMouseMove(CursorPosition);
     }
 }
 

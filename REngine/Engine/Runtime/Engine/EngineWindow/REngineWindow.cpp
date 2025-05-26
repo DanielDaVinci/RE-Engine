@@ -50,6 +50,26 @@ void REngineWindow::SetWindowName(const std::string& Name)
     glfwSetWindowTitle(glfwWindow, Name.c_str());
 }
 
+void REngineWindow::SetInputMode(int mode, int value) const
+{
+    glfwSetInputMode(glfwWindow, mode, value);
+}
+
+void REngineWindow::EnableCursor() const
+{
+    SetInputMode(GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void REngineWindow::DisableCursor() const
+{
+    SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void REngineWindow::HiddenCursor() const
+{
+    SetInputMode(GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
 std::pair<int, int> REngineWindow::GetWindowSize() const
 {
     GLint width, height;

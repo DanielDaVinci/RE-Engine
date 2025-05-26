@@ -21,15 +21,19 @@ public:
     
     static void SetWindowHint(GLint Hint, GLint Value);
     void SetWindowName(const std::string& Name);
+    
+    void SetInputMode(int mode, int value) const;
+    void EnableCursor() const;
+    void DisableCursor() const;
+    void HiddenCursor() const;
+    
     std::pair<int, int> GetWindowSize() const;
-
     FVector2D GetCursorPosition() const;
     
 protected:
     void SetKeyCallback(GLFWkeyfun Callback) const;
     void SetMouseButtonCallback(GLFWmousebuttonfun Callback) const;
     void SetMouseMoveCallback(GLFWcursorposfun Callback) const;
-    
 
 private:
     GLFWwindow* glfwWindow = nullptr;

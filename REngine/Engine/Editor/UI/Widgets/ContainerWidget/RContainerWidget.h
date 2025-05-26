@@ -12,9 +12,14 @@ public:
 
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
+    void Tick(float DeltaTime) override;
+
+    void OnKeyDown(int Key, int Scancode, int Mode) override;
+    void OnKeyUp(int Key, int Scancode, int Mode) override;
 
     void OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition) override;
     void OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition) override;
+    void OnMouseMove(const FVector2D& CursorPosition) override;
 
 protected:
     virtual void AddChild(const std::shared_ptr<RWidget>& InChild);

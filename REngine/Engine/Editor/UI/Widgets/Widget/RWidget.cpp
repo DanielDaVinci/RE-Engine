@@ -1,7 +1,6 @@
 #include "RWidget.h"
-#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
-
-#include <iostream>
+#include "REngine/Engine/REngine.h"
+#include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 
 RWidget::RWidget(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
@@ -28,6 +27,18 @@ void RWidget::Initialize(const std::shared_ptr<REditor>& InEditor)
     SetEditor(InEditor);
 }
 
+void RWidget::Tick(float DeltaTime)
+{
+}
+
+void RWidget::OnKeyDown(int Key, int Scancode, int Mode)
+{
+}
+
+void RWidget::OnKeyUp(int Key, int Scancode, int Mode)
+{
+}
+
 void RWidget::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
     
@@ -36,4 +47,31 @@ void RWidget::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 void RWidget::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
 {
     
+}
+
+void RWidget::OnMouseMove(const FVector2D& CursorPosition)
+{
+    
+}
+
+void RWidget::EnableCursor()
+{
+    auto Engine = REngine::GetEngine();
+    RCheckReturn(Engine);
+
+    auto EngineWindow = Engine->GetEngineWindow();
+    RCheckReturn(EngineWindow);
+
+    EngineWindow->EnableCursor();
+}
+
+void RWidget::DisableCursor()
+{
+    auto Engine = REngine::GetEngine();
+    RCheckReturn(Engine);
+
+    auto EngineWindow = Engine->GetEngineWindow();
+    RCheckReturn(EngineWindow);
+
+    EngineWindow->DisableCursor();
 }

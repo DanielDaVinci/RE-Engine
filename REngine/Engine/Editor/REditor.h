@@ -59,8 +59,6 @@ public:
 
 protected:
     static std::pair<GLint, GLint> GetGLFWWindowSize(GLFWwindow* window);
-
-    void Move(GLdouble DeltaTime) const;
     
 private:
     std::unordered_map<std::string, std::shared_ptr<RSubsystem>> Subsystems;

@@ -64,6 +64,10 @@ void REditor::Tick(GLdouble DeltaTime)
     {
         Scene->Tick(DeltaTime);
     }
+    if (RCheck(RootWidget))
+    {
+        RootWidget->Tick(DeltaTime);
+    }
 
     ImGui::NewFrame();
     DrawMainMenuBar();
@@ -103,7 +107,10 @@ void REditor::PostRender(GLdouble DeltaTime)
 
 void REditor::DrawUI(GLdouble DeltaTime)
 {
-    RootWidget->Draw();
+    if (RCheck(RootWidget))
+    {
+        RootWidget->Draw();
+    }
 
     ImGui::ShowDemoWindow();
 }
@@ -127,46 +134,44 @@ void REditor::DrawMainMenuBar()
 void REditor::OnKeyDown(int Key, int Scancode, int Mode)
 {
     Keys[Key] = GL_TRUE;
+    if (RCheck(RootWidget))
+    {
+        RootWidget->OnKeyDown(Key, Scancode, Mode);
+    }
 }
 
 void REditor::OnKeyUp(int Key, int Scancode, int Mode)
 {
     Keys[Key] = GL_FALSE;
+    if (RCheck(RootWidget))
+    {
+        RootWidget->OnKeyUp(Key, Scancode, Mode);
+    }
 }
 
 void REditor::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
     MouseButtons[Button] = GL_TRUE;
-    RootWidget->OnMouseDown(Button, Mods, CursorPosition);
-    LastCursorPosition = CursorPosition;
+    if (RCheck(RootWidget))
+    {
+        RootWidget->OnMouseDown(Button, Mods, CursorPosition);
+    }
 }
 
 void REditor::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
 {
     MouseButtons[Button] = GL_FALSE;
-    RootWidget->OnMouseUp(Button, Mods, CursorPosition);
+    if (RCheck(RootWidget))
+    {
+        RootWidget->OnMouseUp(Button, Mods, CursorPosition);
+    }
 }
 
 void REditor::OnMouseMove(const FVector2D& CursorPosition)
 {
-    if (MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+    if (RCheck(RootWidget))
     {
-        constexpr float Sensitivity = 0.05f;
-        const FVector2D Delta = CursorPosition - LastCursorPosition;
-        const FVector2D Shift = Delta * Sensitivity;
-
-        const auto CameraComponent = REditor::GetCamera();
-        RCheckReturn(CameraComponent);
-
-        const auto CameraActor = CameraComponent->GetOwner<RActor>();
-        RCheckReturn(CameraActor);
-
-        FQuat CameraRotation = CameraActor->GetRelativeRotation();
-        CameraRotation.AddWorldYaw(-1.0f * Shift.x);
-        CameraRotation.AddPitch(Shift.y);
-
-        CameraActor->SetRelativeRotation(CameraRotation);
-        LastCursorPosition = CursorPosition;
+        RootWidget->OnMouseMove(CursorPosition);
     }
 }
 
@@ -198,33 +203,6 @@ std::pair<GLint, GLint> REditor::GetGLFWWindowSize(GLFWwindow* window)
     return std::make_pair(width, height);
 }
 
-void REditor::Move(GLdouble DeltaTime) const
-{
-    const GLfloat CameraShift = 5.0f * DeltaTime;
-    const auto CameraComponent = REditor::GetCamera();
-    RCheckReturn(CameraComponent);
-
-    const auto CameraActor = CameraComponent->GetOwner<RActor>();
-    RCheckReturn(CameraActor);
-    
-    if (Keys[GLFW_KEY_W])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetForwardVector() * CameraShift);
-    }
-    if (Keys[GLFW_KEY_S])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetForwardVector() * CameraShift);
-    }
-    if (Keys[GLFW_KEY_A])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetRightVector() * CameraShift);
-    }
-    if (Keys[GLFW_KEY_D])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetRightVector() * CameraShift);
-    }
-}
-
 void REditor::Exit()
 {
     ImGui_ImplOpenGL3_Shutdown();
@@ -234,5 +212,4 @@ void REditor::Exit()
 
 void REditor::PreTick(GLdouble DeltaTime)
 {
-    Move(DeltaTime);
 }

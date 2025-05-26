@@ -22,6 +22,8 @@ public:
     void SetBorderSize(float Size);
     void SetPaddingSize(const ImVec2& PaddingSize);
 
+    bool IsPointInside(const FVector2D& Point) const;
+
     virtual bool IsNeedDockspace() const;
 
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;

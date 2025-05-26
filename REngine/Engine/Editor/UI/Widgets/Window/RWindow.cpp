@@ -55,6 +55,17 @@ void RWindow::SetPaddingSize(const ImVec2& PaddingSize)
     WindowData.PaddingSize = PaddingSize;
 }
 
+bool RWindow::IsPointInside(const FVector2D& Point) const
+{
+    const FVector2D WindowPosition = GetWindowPosition();
+    const FVector2D WindowSize = GetWindowSize();
+
+    bool bIsInsideX = Point.x > WindowPosition.x && Point.x < WindowPosition.x + WindowSize.x;
+    bool bIsIndexY = Point.y > WindowPosition.y && Point.y < WindowPosition.y + WindowSize.y;
+    
+    return bIsInsideX && bIsIndexY;
+}
+
 bool RWindow::IsNeedDockspace() const
 {
     return true;
@@ -86,26 +97,12 @@ void RWindow::Draw()
 
 void RWindow::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)
 {
-    const FVector2D WindowPosition = GetWindowPosition();
-    const FVector2D WindowSize = GetWindowSize();
-    
-    if (CursorPosition.x > WindowPosition.x && CursorPosition.x < WindowPosition.x + WindowSize.x
-        && CursorPosition.y > WindowPosition.y && CursorPosition.y < WindowPosition.y + WindowSize.y)
-    {
-        RContainerWidget::OnMouseDown(Button, Mods, CursorPosition);
-    }
+    RContainerWidget::OnMouseDown(Button, Mods, CursorPosition);
 }
 
 void RWindow::OnMouseUp(int Button, int Mods, const FVector2D& CursorPosition)
 {
-    const FVector2D WindowPosition = GetWindowPosition();
-    const FVector2D WindowSize = GetWindowSize();
-    
-    if (CursorPosition.x > WindowPosition.x && CursorPosition.x < WindowPosition.x + WindowSize.x
-        && CursorPosition.y > WindowPosition.y && CursorPosition.y < WindowPosition.y + WindowSize.y)
-    {
-        RContainerWidget::OnMouseUp(Button, Mods, CursorPosition);
-    }
+    RContainerWidget::OnMouseUp(Button, Mods, CursorPosition);
 }
 
 void RWindow::SetWindowName(const std::string& Name)
