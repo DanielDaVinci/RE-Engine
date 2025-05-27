@@ -1,15 +1,5 @@
 #include "RWindow.h"
 
-RWindow::RWindow(const std::shared_ptr<RObject>& InOwner) : RContainerWidget(InOwner)
-{
-    WindowStyleNums = 0;
-}
-
-RWindow::~RWindow()
-{
-    
-}
-
 void RWindow::SetForcePosition(const ImVec2& Position)
 {
     ImGui::SetNextWindowPos(Position);
@@ -71,6 +61,13 @@ bool RWindow::IsNeedDockspace() const
     return true;
 }
 
+void RWindow::Construct()
+{
+    RContainerWidget::Construct();
+
+    WindowStyleNums = 0;
+}
+
 void RWindow::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
     RContainerWidget::Initialize(InEditor);
@@ -81,6 +78,8 @@ void RWindow::Draw()
     PushWindowStyle();
     ImGui::Begin(WindowData.Name.c_str(), nullptr, WindowData.WindowFlags);
     PopWindowStyle();
+
+    DrawWindowContent();
     
     if (IsNeedDockspace())
     {
@@ -89,7 +88,6 @@ void RWindow::Draw()
     WindowData.Position = ImGui::GetWindowPos();
     WindowData.Size = ImGui::GetWindowSize();
 
-    DrawWindowContent();
     RContainerWidget::Draw();
     
     ImGui::End();

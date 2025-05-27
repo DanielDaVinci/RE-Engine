@@ -7,8 +7,7 @@
 class RWindow : public RContainerWidget
 {
 public:
-    explicit RWindow(const std::shared_ptr<RObject>& InOwner);
-    ~RWindow() override;
+    using RContainerWidget::RContainerWidget;
 
     static void SetForcePosition(const ImVec2& Position);
     static void SetForceSize(const ImVec2& Size);
@@ -26,6 +25,7 @@ public:
 
     virtual bool IsNeedDockspace() const;
 
+    void Construct() override;
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;
 
@@ -43,7 +43,6 @@ protected:
     
     virtual void InitDockspace();
     virtual void DrawWindowContent() const;
-
     
 private:
     FWindowData WindowData;

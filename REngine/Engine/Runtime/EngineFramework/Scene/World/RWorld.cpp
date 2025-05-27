@@ -3,6 +3,11 @@
 #include "REngine/Engine/Runtime/EngineFramework/Actor/CameraActor/RCameraActor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Actor/MeshActor/RMeshActor.h"
 
+const std::vector<std::shared_ptr<RActor>>& RWorld::GetActors() const
+{
+    return Actors;
+}
+
 void RWorld::Initialize()
 {
     SpawnActor<RMeshActor>(FTransform(

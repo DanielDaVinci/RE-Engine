@@ -8,6 +8,9 @@ class RScene : public RObject
 public:
     using RObject::RObject;
 
+    static std::shared_ptr<RScene> GetScene();
+    std::shared_ptr<RWorld> GetWorld() const;
+
     void Initialize();
     void Tick(float DeltaTime);
     void Render(float DeltaTime);

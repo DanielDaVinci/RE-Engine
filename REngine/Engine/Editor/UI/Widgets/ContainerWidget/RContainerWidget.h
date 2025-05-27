@@ -22,6 +22,9 @@ public:
     void OnMouseMove(const FVector2D& CursorPosition) override;
 
 protected:
+    template<std::derived_from<RWidget> T = RWidget>
+    std::shared_ptr<T> AddWidget();
+    
     virtual void AddChild(const std::shared_ptr<RWidget>& InChild);
     virtual void DrawChildren();
 
@@ -29,3 +32,5 @@ private:
     std::vector<std::shared_ptr<RWidget>> ChildrenWidgets;
     
 };
+
+#include "RContainerWidget.tpp"

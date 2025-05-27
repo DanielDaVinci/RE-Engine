@@ -33,7 +33,10 @@ void REditor::Initialize()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
+    
+    io.FontGlobalScale = 1.1f; // Scale text
+    ImGui::GetStyle().ScaleAllSizes(1.1f);
+    
     ImGui::StyleColorsDark();
 
     std::shared_ptr<REngineWindow> EngineWindow = GetEngineWindow();
@@ -87,6 +90,7 @@ void REditor::PreRender(GLdouble DeltaTime)
     Frame->Bind();
 
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -186,6 +190,11 @@ std::shared_ptr<REngineWindow> REditor::GetEngineWindow()
 std::shared_ptr<RFrame> REditor::GetFrame() const
 {
     return Frame;
+}
+
+std::shared_ptr<RScene> REditor::GetScene() const
+{
+    return Scene;
 }
 
 std::shared_ptr<RCameraComponent> REditor::GetCamera()

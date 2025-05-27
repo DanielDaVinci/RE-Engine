@@ -12,6 +12,7 @@ RObject::~RObject()
 
 void RObject::Construct()
 {
+    
 }
 
 void RObject::SetOwner(const std::shared_ptr<RObject>& InOwner)

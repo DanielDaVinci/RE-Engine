@@ -2,22 +2,17 @@
 
 #include "DebugLog/Public/Check/Check.h"
 #include "REngine/Engine/Editor/UI/Widgets/ViewportWindow/RViewportWindow.h"
-
-RRootWindow::RRootWindow(const std::shared_ptr<RObject>& InOwner) : RWindow(InOwner)
-{
-}
-
-RRootWindow::~RRootWindow()
-{
-}
+#include "REngine/Engine/Editor/UI/Widgets/WorldTreeWindow/RWorldTreeWindow.h"
 
 void RRootWindow::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
-    ViewportWindow = NewObject<RViewportWindow>();
-    RCheckReturn(ViewportWindow);
-    AddChild(ViewportWindow);
-    
     RWindow::Initialize(InEditor);
+
+    ViewportWindow = AddWidget<RViewportWindow>();
+    RCheckReturn(ViewportWindow);
+
+    WorldTreeWindow = AddWidget<RWorldTreeWindow>();
+    RCheckReturn(WorldTreeWindow);
 }
 
 void RRootWindow::Draw()

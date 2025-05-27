@@ -52,6 +52,7 @@ public:
 
     static std::shared_ptr<REngineWindow> GetEngineWindow();
     std::shared_ptr<RFrame> GetFrame() const;
+    std::shared_ptr<RScene> GetScene() const;
     static std::shared_ptr<RCameraComponent> GetCamera();
 
     template<std::derived_from<RSubsystem> T = RSubsystem>
@@ -71,8 +72,6 @@ private:
 
     GLboolean Keys[1024] = {};
     GLboolean MouseButtons[1024] = {};
-
-    FVector2D LastCursorPosition;
 };
 
 #include "REdtior.tpp"

@@ -14,6 +14,8 @@ public:
     template<typename T, typename  = std::is_base_of<RActor, T>>
     std::shared_ptr<T> SpawnActor(const FTransform& InTransform);
 
+    const std::vector<std::shared_ptr<RActor>>& GetActors() const;
+
     void Initialize();
     void Tick(float DeltaTime);
     void Render(float DeltaTime);

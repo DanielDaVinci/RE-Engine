@@ -4,7 +4,27 @@
 #include "Core/Public/Object/RObject.h"
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 
+struct FVector2D;
 class FShader;
+
+struct FPixel
+{
+	union 
+	{
+		struct 
+		{
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
+		};
+		unsigned char rgba[4];
+	};
+
+	FPixel() = default;
+
+	bool IsVoid() const;
+};
 
 class RFrame : public RObject
 {
@@ -19,12 +39,16 @@ public:
 	void SetFrameSize(std::pair<GLuint, GLuint> InSize);
 	std::pair<GLuint, GLuint> GetFrameSize() const;
 
-	GLuint getTextureID();
+	GLuint GetTextureID() const;
+
+	FPixel GetPixelAt(const FVector2D& Position) const;
+	float GetDepthAt(const FVector2D& Position) const;
 
 protected:
 	void Construct() override;
 
 private:
+	bool bIsBinded = false;
 	GLuint Width, Height;
 
 	GLuint FrameBuffer;

@@ -105,12 +105,14 @@
     <ClCompile Include="Engine\Editor\UI\Widgets\Widget\RWidget.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\RWindow.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\WorldTreeWindow\RWorldTreeWindow.cpp" />
     <ClCompile Include="Engine\REngine.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Actor\CameraActor\RCameraActor.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Actor\MeshActor\RMeshActor.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Camera\RCameraSubsystem.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\CameraComponent\RCameraComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Math\FMath.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Quat\FQuat.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Rotator\FRotator.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.cpp" />
@@ -357,11 +359,13 @@
     <ClInclude Include="Engine\Editor\REditor.h" />
     <ClInclude Include="Engine\Editor\REdtior.tpp" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.tpp" />
     <ClInclude Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Widget\RWidget.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Window\RWindow.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\WorldTreeWindow\RWorldTreeWindow.h" />
     <ClInclude Include="Engine\REngine.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\CameraActor\RCameraActor.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\MeshActor\RMeshActor.h" />
@@ -369,6 +373,7 @@
     <ClInclude Include="Engine\Runtime\EngineFramework\Camera\RCameraSubsystem.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\CameraComponent\RCameraComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Math\FMath.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Quat\FQuat.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Rotator\FRotator.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Matrix\FMatrix.h" />

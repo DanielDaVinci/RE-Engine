@@ -1,14 +1,26 @@
 #include "RFrame.h"
-#include "../Shader/FShader.h"
+
+#include "REngine/Engine/Editor/Display/Shader/FShader.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
+
+bool FPixel::IsVoid() const
+{
+    return r == 0 && g == 0 && b == 0 && a == 0;
+}
 
 void RFrame::Bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, FrameBuffer);
+    bIsBinded = true;
 }
 
 void RFrame::UnBind()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    if (bIsBinded)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        bIsBinded = false;
+    }
 }
 
 void RFrame::Draw(FShader shader)
@@ -47,9 +59,48 @@ std::pair<GLuint, GLuint> RFrame::GetFrameSize() const
     return { Width, Height };
 }
 
-GLuint RFrame::getTextureID()
+GLuint RFrame::GetTextureID() const
 {
     return ColorBuffer;
+}
+
+FPixel RFrame::GetPixelAt(const FVector2D& Position) const
+{
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, FrameBuffer);
+    glReadBuffer(GL_COLOR_ATTACHMENT0);
+    
+    FPixel Pixel;
+    glReadPixels(
+        static_cast<int>(Position.x),
+        static_cast<int>(Position.y),
+        1,
+        1,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        Pixel.rgba);
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+    return Pixel;
+}
+
+float RFrame::GetDepthAt(const FVector2D& Position) const
+{
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, FrameBuffer);
+    
+    float Depth;
+    glReadPixels(
+        static_cast<int>(Position.x),
+        static_cast<int>(Position.y),
+        1,
+        1,
+        GL_DEPTH_COMPONENT,
+        GL_FLOAT,
+        &Depth);
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+    return Depth;
 }
 
 void RFrame::Construct()

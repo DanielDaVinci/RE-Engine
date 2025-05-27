@@ -10,19 +10,17 @@
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
-
-RViewportWindow::RViewportWindow(const std::shared_ptr<RObject>& InOwner) : RWindow(InOwner)
-{
-    SetWindowName("Scene");
-}
-
-RViewportWindow::~RViewportWindow()
-{
-}
+#include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
 
 bool RViewportWindow::IsNeedDockspace() const
 {
     return false;
+}
+
+void RViewportWindow::Construct()
+{
+    RWindow::Construct();
+    SetWindowName("Scene");
 }
 
 void RViewportWindow::Draw()
@@ -78,7 +76,7 @@ void RViewportWindow::DrawWindowContent() const
     
     const ImVec2 WindowPosition = ImGui::GetCursorScreenPos();
     ImGui::GetWindowDrawList()->AddImage(
-        Frame->getTextureID(),
+        Frame->GetTextureID(),
         ImVec2(WindowPosition.x, WindowPosition.y),
         ImVec2(WindowPosition.x + WindowSize.x, WindowPosition.y + WindowSize.y),
         ImVec2(0, 1),
@@ -104,11 +102,19 @@ void RViewportWindow::OnMouseDown(int Button, int Mods, const FVector2D& CursorP
 {
     RWindow::OnMouseDown(Button, Mods, CursorPosition);
 
-    if (IsPointInside(CursorPosition) && Button == GLFW_MOUSE_BUTTON_RIGHT)
+    if (IsPointInside(CursorPosition))
     {
-        bIsControlling = true;
-        CursorLastPosition = CursorPosition;
-        DisableCursor();
+        if (Button == GLFW_MOUSE_BUTTON_RIGHT)
+        {
+            bIsControlling = true;
+            CursorLastPosition = CursorPosition;
+            DisableCursor();
+        }
+
+        if (Button == GLFW_MOUSE_BUTTON_LEFT)
+        {
+            PickObject(CursorPosition);
+        }
     }
 }
 
@@ -148,6 +154,12 @@ void RViewportWindow::OnMouseMove(const FVector2D& CursorPosition)
     }
 }
 
+std::shared_ptr<RFrame> RViewportWindow::GetFrame() const
+{
+    RCheckReturn(GetEditor(), {});
+    return GetEditor()->GetFrame();
+}
+
 void RViewportWindow::PushWindowStyle()
 {
     RWindow::PushWindowStyle();
@@ -156,4 +168,28 @@ void RViewportWindow::PushWindowStyle()
 void RViewportWindow::PopWindowStyle()
 {
     RWindow::PopWindowStyle();
+}
+
+void RViewportWindow::PickObject(const FVector2D& CursorPosition)
+{
+    const auto WindowPosition = GetWindowPosition();
+    const auto WindowSize = GetWindowSize();
+    FVector2D RelativeCursorPosition = CursorPosition - WindowPosition;
+    RelativeCursorPosition.y = WindowSize.y - RelativeCursorPosition.y;
+
+    auto Frame = GetFrame();
+    RCheckReturn(Frame);
+
+    float Depth = Frame->GetDepthAt(RelativeCursorPosition);
+    if (FMath::IsNearlyEqual(Depth, 1.0f))
+    {
+        return;
+    }
+            
+    FVector2D NDC = {
+        2.0f * RelativeCursorPosition.x / WindowSize.x - 1.0f,
+        2.0f * RelativeCursorPosition.y / WindowSize.y - 1.0f
+    };
+
+    
 }
