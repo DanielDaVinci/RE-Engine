@@ -12,6 +12,8 @@ class RMesh : public RObject
 public:
     using RObject::RObject;
 
+    void Construct() override;
+
     void LoadMesh(const std::string& MeshPath);
     void Render(const FTransform& Transform, float DeltaTime);
 

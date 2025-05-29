@@ -2,14 +2,17 @@
 
 #include "DebugLog/Public/Check/Check.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
+#include "REngine/Engine/Runtime/Engine/Mesh/RMeshSubsystem.h"
 
 void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    StaticMesh = NewObject<RMesh>();
+    auto MeshSubsystem = RMeshSubsystem::Get();
+    RCheckReturn(MeshSubsystem);
+    
+    StaticMesh = MeshSubsystem->GetMesh("Content/objects/backpack/backpack.obj");
     RCheckReturn(StaticMesh);
-    StaticMesh->LoadMesh("Content/objects/backpack/backpack.obj");
 }
 
 void RStaticMeshComponent::Render(float DeltaTime)

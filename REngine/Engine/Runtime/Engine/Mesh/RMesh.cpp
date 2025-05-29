@@ -15,6 +15,14 @@
 #include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
+void RMesh::Construct()
+{
+    RObject::Construct();
+
+    Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
+    RCheckReturn(Shader);
+}
+
 void RMesh::LoadMesh(const std::string& MeshPath)
 {
     Assimp::Importer Importer;
@@ -25,9 +33,6 @@ void RMesh::LoadMesh(const std::string& MeshPath)
     RCheckReturn(!(AssimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE));
 
     MeshDirectory = MeshPath.substr(0, MeshPath.find_last_of('/'));
-    
-    Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
-    RCheckReturn(Shader);
 
     LoadAssimpNode(AssimpScene->mRootNode, AssimpScene);
     BoundingBox = CalcBoundingBox();
