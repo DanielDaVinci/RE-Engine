@@ -4,6 +4,7 @@
 #include "Core/Public/Object/RObject.h"
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 
+struct FIntVector;
 struct FVector2D;
 class FShader;
 
@@ -37,7 +38,7 @@ public:
 	
 	void SetFrameSize(GLuint InWidth, GLuint InHeight);
 	void SetFrameSize(std::pair<GLuint, GLuint> InSize);
-	std::pair<GLuint, GLuint> GetFrameSize() const;
+	FIntVector GetFrameSize() const;
 
 	GLuint GetTextureID() const;
 

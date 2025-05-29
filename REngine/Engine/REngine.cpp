@@ -8,15 +8,6 @@
 
 std::shared_ptr<REngine> REngine::SingletonEngine = nullptr;
 
-REngine::REngine(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
-{
-    
-}
-
-REngine::~REngine()
-{
-}
-
 std::shared_ptr<REngine> REngine::GetEngine()
 {
     if (!SingletonEngine)

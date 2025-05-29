@@ -29,7 +29,7 @@ protected:
     void PushWindowStyle() override;
     void PopWindowStyle() override;
 
-    void PickObject(const FVector2D& CursorPosition);
+    void PickObject(const FVector2D& CursorPosition) const;
 
 private:
     bool InputKeys[1024] = {};

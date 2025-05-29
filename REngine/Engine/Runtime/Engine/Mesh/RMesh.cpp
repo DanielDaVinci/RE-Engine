@@ -11,8 +11,8 @@
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Editor/Display/Shader/FShader.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
 void RMesh::LoadMesh(const std::string& MeshPath)
@@ -30,6 +30,7 @@ void RMesh::LoadMesh(const std::string& MeshPath)
     RCheckReturn(Shader);
 
     LoadAssimpNode(AssimpScene->mRootNode, AssimpScene);
+    BoundingBox = CalcBoundingBox();
 }
 
 void RMesh::Render(const FTransform& Transform, float DeltaTime)
@@ -59,10 +60,26 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     Shader->setUniform("view", Camera->GetViewMatrix());
     Shader->setUniform("projection", Camera->GetProjectionMatrix());
     
-    for (const RStaticMesh& StaticMesh : StaticMeshes)
+    for (const FStaticMesh& StaticMesh : StaticMeshes)
     {
         StaticMesh.Render(Shader);
     }
+}
+
+FBox RMesh::CalcBoundingBox() const
+{
+    FBox Bound;
+    for (const FStaticMesh& StaticMesh : StaticMeshes)
+    {
+        Bound += StaticMesh.GetBoundingBox();
+    }
+
+    return Bound;
+}
+
+FBox RMesh::GetBoundingBox() const
+{
+    return BoundingBox;
 }
 
 void RMesh::LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene)
@@ -78,9 +95,9 @@ void RMesh::LoadAssimpNode(const aiNode* AssimpNode, const aiScene* AssimpScene)
     }
 }
 
-RStaticMesh RMesh::LoadAssimpMesh(const aiMesh* AssimpMesh, const aiScene* AssimpScene)
+FStaticMesh RMesh::LoadAssimpMesh(const aiMesh* AssimpMesh, const aiScene* AssimpScene)
 {
-    return RStaticMesh(
+    return FStaticMesh(
         LoadVerticesFromAssimpMesh(AssimpMesh),
         LoadIndicesFromAssimpMesh(AssimpMesh),
         LoadTexturesFromAssimpMesh(AssimpMesh, AssimpScene));

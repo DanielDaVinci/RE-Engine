@@ -13,8 +13,7 @@ class REngine : public RObject
 {
     using ThisClass = REngine;
 public:
-    explicit REngine(const std::shared_ptr<RObject>& InOwner);
-    ~REngine();
+    using RObject::RObject;
 
     static std::shared_ptr<REngine> GetEngine();
 

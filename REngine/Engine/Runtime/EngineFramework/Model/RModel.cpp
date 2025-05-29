@@ -5,7 +5,7 @@
 #include <assimp/postprocess.h>
 
 #include "REngine/Engine/Editor/Display/Shader/FShader.h"
-#include "REngine/Engine/Runtime/Engine/StatichMesh/RStaticMesh.h"
+#include "REngine/Engine/Runtime/Engine/StatichMesh/FStaticMesh.h"
 #include "SOIL/SOIL.h"
 
 using namespace std;
@@ -17,7 +17,7 @@ RModel::RModel(string path)
 
 void RModel::Draw(FShader shader)
 {
-	for (RStaticMesh& Mesh : StaticMeshes)
+	for (FStaticMesh& Mesh : StaticMeshes)
 	{
 		// Mesh.Draw(shader);
 	}
@@ -52,7 +52,7 @@ void RModel::ProcessNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+FStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	vector<FVertex> vertices;
 	vector<unsigned int> indices;
@@ -107,7 +107,7 @@ RStaticMesh RModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return RStaticMesh(std::move(vertices), std::move(indices), std::move(textures));
+	return FStaticMesh(std::move(vertices), std::move(indices), std::move(textures));
 }
 
 vector<FTexture> RModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName)

@@ -13,6 +13,8 @@ public:
     
     ~REngineWindow() override;
 
+    static std::shared_ptr<REngineWindow> GetEngineWindow();
+
     void Create(const FEngineWindowParameters& InWindowParameters);
     void InitForOpenGL();
     void Destroy();

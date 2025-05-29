@@ -7,8 +7,6 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    // SetRotation(FQuat(0.0f, 0.0f, 0.0f));
-
     StaticMesh = NewObject<RMesh>();
     RCheckReturn(StaticMesh);
     StaticMesh->LoadMesh("Content/objects/backpack/backpack.obj");
@@ -22,4 +20,15 @@ void RStaticMeshComponent::Render(float DeltaTime)
     {
         StaticMesh->Render(GetWorldTransform(), DeltaTime);
     }
+}
+
+FBox RStaticMeshComponent::GetWorldBoundingBox() const
+{
+    return GetWorldTransformMatrix() * GetLocalBoundingBox();
+}
+
+FBox RStaticMeshComponent::GetLocalBoundingBox() const
+{
+    RCheckReturn(StaticMesh, {});
+    return StaticMesh->GetBoundingBox();
 }

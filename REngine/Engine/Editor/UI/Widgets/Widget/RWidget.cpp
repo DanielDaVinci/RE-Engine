@@ -2,16 +2,6 @@
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 
-RWidget::RWidget(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
-{
-    
-}
-
-RWidget::~RWidget()
-{
-    
-}
-
 void RWidget::SetEditor(const std::shared_ptr<REditor>& InEditor)
 {
     WeakEditor = InEditor;

@@ -19,4 +19,16 @@ public:
     {
         return fabs(Value);
     }
+    
+    template<typename T>
+    static T Min(const T& Left, const T& Right)
+    {
+        return Left < Right ? Left : Right;
+    }
+
+    template<typename T>
+    static T Max(const T& Left, const T& Right)
+    {
+        return Left > Right ? Left : Right;
+    }
 };

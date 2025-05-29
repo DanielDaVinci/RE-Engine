@@ -7,8 +7,7 @@ class REditor;
 class RWidget : public RObject
 {
 public:
-    explicit RWidget(const std::shared_ptr<RObject>& InOwner);
-    ~RWidget() override;
+    using RObject::RObject;
 
     void SetEditor(const std::shared_ptr<REditor>& InEditor);
     std::shared_ptr<REditor> GetEditor() const;

@@ -10,10 +10,17 @@ const FVector FVector::RightVector = FVector(0.0f, 1.0f, 0.0f);
 const FVector FVector::LeftVector = FVector(0.0f, -1.0f, 0.0f);
 const FVector FVector::UpVector = FVector(0.0f, 0.0f, 1.0f);
 const FVector FVector::DownVector = FVector(0.0f, 0.0f, -1.0f);
+const FVector FVector::MaxVector = FVector(FLT_MAX);
+const FVector FVector::MinVector = FVector(-FLT_MAX);
 
 FVector::FVector(const glm::vec3& Vector)
 {
     *this = Vector;
+}
+
+FVector::FVector(const glm::vec4& Vector)
+{
+    *this = glm::vec3(Vector);
 }
 
 FVector::FVector(const aiVector3D& AssimpVector)
@@ -31,4 +38,35 @@ FMatrix FVector::GetTranslationMatrix() const
 FMatrix FVector::GetScaleMatrix() const
 {
     return glm::scale(FMatrix(1.0f), *this);
+}
+
+FVector& FVector::operator=(const glm::vec4& Vector)
+{
+    *this = glm::vec3(Vector);
+    return *this;
+}
+
+bool FVector::operator>=(const FVector& OtherVector) const
+{
+    return x >= OtherVector.x && y >= OtherVector.y && z >= OtherVector.z;
+}
+
+bool FVector::operator>(const FVector& OtherVector) const
+{
+    return x > OtherVector.x && y > OtherVector.y && z > OtherVector.z;
+}
+
+bool FVector::operator<=(const FVector& OtherVector) const
+{
+    return x <= OtherVector.x && y <= OtherVector.y && z <= OtherVector.z;
+}
+
+bool FVector::operator<(const FVector& OtherVector) const
+{
+    return x < OtherVector.x && y < OtherVector.y && z < OtherVector.z;
+}
+
+FVector::operator glm::vec4() const
+{
+    return glm::vec4(*this, 1.0f);
 }

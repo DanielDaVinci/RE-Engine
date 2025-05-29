@@ -1,6 +1,7 @@
 #include "RFrame.h"
 
 #include "REngine/Engine/Editor/Display/Shader/FShader.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FIntVector.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
 
 bool FPixel::IsVoid() const
@@ -54,9 +55,9 @@ void RFrame::SetFrameSize(std::pair<GLuint, GLuint> InSize)
     SetFrameSize(InSize.first, InSize.second);
 }
 
-std::pair<GLuint, GLuint> RFrame::GetFrameSize() const
+FIntVector RFrame::GetFrameSize() const
 {
-    return { Width, Height };
+    return { Width, Height, 0 };
 }
 
 GLuint RFrame::GetTextureID() const

@@ -31,7 +31,12 @@ void RWorldTreeWindow::DrawWindowContent() const
 
         const int Index = std::distance(Actors.begin(), It);
 
-        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf; // ImGuiTreeNodeFlags_Selected;
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf;
+        if (Actor->IsSelected())
+        {
+            flags |= ImGuiTreeNodeFlags_Selected;
+        }
+        
         if (ImGui::TreeNodeEx((void*)(intptr_t)Index, flags, "Actor %d", Index))
         {
             if (ImGui::IsItemClicked())

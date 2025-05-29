@@ -4,6 +4,8 @@
 
 #include "DebugLog/Public/Check/Check.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/SceneComponent/RSceneComponent.h"
+#include "REngine/Engine/Runtime/EngineFramework/Components/StaticMeshComponent/RStaticMeshComponent.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Box/FBox.h"
 
 RActor::RActor(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
 {
@@ -117,6 +119,30 @@ std::shared_ptr<RSceneComponent> RActor::GetRootComponent() const
     return RootComponent;
 }
 
+FBox RActor::GetBoundingBox() const
+{
+    FBox BoundBox;
+    for (const auto& Component : Components)
+    {
+        if (const auto StaticMeshComponent = std::dynamic_pointer_cast<RStaticMeshComponent>(Component))
+        {
+            BoundBox += StaticMeshComponent->GetWorldBoundingBox();
+        }
+    }
+
+    return BoundBox;
+}
+
+void RActor::SetAsSelected(float InIsSelected)
+{
+    bIsSelected = InIsSelected;
+}
+
+bool RActor::IsSelected() const
+{
+    return bIsSelected;
+}
+
 void RActor::SetRootComponent(const std::shared_ptr<RSceneComponent>& Component)
 {
     RCheckReturn(Component);
@@ -138,5 +164,5 @@ bool RActor::ContainComponent(const std::shared_ptr<RActorComponent>& Component)
 void RActor::SetWorld(const std::shared_ptr<RWorld>& InWorld)
 {
     RCheckReturn(InWorld);
-    World = InWorld;;
+    World = InWorld;
 }

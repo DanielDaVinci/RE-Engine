@@ -2,11 +2,20 @@
 
 #include "imGUI/imgui_impl_glfw.h"
 #include "imGUI/imgui_impl_opengl3.h"
+#include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector2D.h"
 
 REngineWindow::~REngineWindow()
 {
     Destroy();
+}
+
+std::shared_ptr<REngineWindow> REngineWindow::GetEngineWindow()
+{
+    auto Engine = REngine::GetEngine();
+    RCheckReturn(Engine, {});
+
+    return Engine->GetEngineWindow();
 }
 
 void REngineWindow::Create(const FEngineWindowParameters& InWindowParameters)

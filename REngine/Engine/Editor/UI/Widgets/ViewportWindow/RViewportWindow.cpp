@@ -11,6 +11,7 @@
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
+#include "REngine/Engine/Runtime/EngineFramework/Scene/ActorPicker/RActorPicker.h"
 
 bool RViewportWindow::IsNeedDockspace() const
 {
@@ -170,26 +171,15 @@ void RViewportWindow::PopWindowStyle()
     RWindow::PopWindowStyle();
 }
 
-void RViewportWindow::PickObject(const FVector2D& CursorPosition)
+void RViewportWindow::PickObject(const FVector2D& CursorPosition) const
 {
     const auto WindowPosition = GetWindowPosition();
     const auto WindowSize = GetWindowSize();
     FVector2D RelativeCursorPosition = CursorPosition - WindowPosition;
     RelativeCursorPosition.y = WindowSize.y - RelativeCursorPosition.y;
 
-    auto Frame = GetFrame();
-    RCheckReturn(Frame);
+    const std::shared_ptr<RActorPicker> ActorPicker = RActorPicker::GetActorPicker();
+    RCheckReturn(ActorPicker);
 
-    float Depth = Frame->GetDepthAt(RelativeCursorPosition);
-    if (FMath::IsNearlyEqual(Depth, 1.0f))
-    {
-        return;
-    }
-            
-    FVector2D NDC = {
-        2.0f * RelativeCursorPosition.x / WindowSize.x - 1.0f,
-        2.0f * RelativeCursorPosition.y / WindowSize.y - 1.0f
-    };
-
-    
+    ActorPicker->SelectActorAtCursor(RelativeCursorPosition);
 }

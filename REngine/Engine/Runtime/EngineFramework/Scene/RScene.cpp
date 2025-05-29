@@ -1,18 +1,21 @@
 #include "RScene.h"
 
+#include "ActorPicker/RActorPicker.h"
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Editor/REditor.h"
 #include "World/RWorld.h"
 
-std::shared_ptr<RScene> RScene::GetScene()
+std::shared_ptr<RScene> RScene::GetEditorScene()
 {
-    auto Engine = REngine::GetEngine();
-    RCheckReturn(Engine, {});
-
-    auto Editor = Engine->GetEditor();
+    auto Editor = REditor::GetEngineEditor();
     RCheckReturn(Editor, {});
 
     return Editor->GetScene();
+}
+
+std::shared_ptr<RActorPicker> RScene::GetActorPicker() const
+{
+    return ActorPicker;
 }
 
 std::shared_ptr<RWorld> RScene::GetWorld() const
@@ -25,6 +28,11 @@ void RScene::Initialize()
     World = NewObject<RWorld>();
     RCheckReturn(World);
     World->Initialize();
+    
+    ActorPicker = NewObject<RActorPicker>();
+    RCheckReturn(ActorPicker);
+    ActorPicker->SetScene(GetSharedThis<RScene>());
+    
 }
 
 void RScene::Tick(float DeltaTime)

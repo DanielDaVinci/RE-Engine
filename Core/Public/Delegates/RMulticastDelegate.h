@@ -126,7 +126,7 @@ public:
         Delegates.clear();
     }
     
-    void Broadcast(TArgs... Args)
+    void Broadcast(TArgs&&... Args)
     {
         for (auto& It : Delegates)
         {

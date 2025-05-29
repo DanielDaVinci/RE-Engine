@@ -4,7 +4,7 @@
 #include <string>
 
 #include "REngine/Engine/Runtime/Engine/MeshLibrary.h"
-#include "REngine/Engine/Runtime/Engine/StatichMesh/RStaticMesh.h"
+#include "REngine/Engine/Runtime/Engine/StatichMesh/FStaticMesh.h"
 #include "ThirdParty/ExternalIncludes/assimp/material.h"
 
 
@@ -24,12 +24,12 @@ public:
 protected:
 	void LoadModel(std::string path);
 	void ProcessNode(aiNode* node, const aiScene* scene);
-	RStaticMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	FStaticMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 	std::vector<FTexture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
 	unsigned int LoadTextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 	
 private:
-	std::vector<RStaticMesh> StaticMeshes;
+	std::vector<FStaticMesh> StaticMeshes;
 	std::vector<FTexture> LoadedTextures;
 	std::string directory;
 

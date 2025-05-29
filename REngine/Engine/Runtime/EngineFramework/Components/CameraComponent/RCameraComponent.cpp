@@ -2,6 +2,7 @@
 
 #include "REngine/Engine/Editor/Display/Frame/RFrame.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraSubsystem.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FIntVector.h"
 
 void RCameraComponent::Construct()
 {
@@ -30,8 +31,8 @@ FMatrix RCameraComponent::GetProjectionMatrix() const
     auto Frame = Editor->GetFrame();
     RCheckReturn(Frame, {});
 
-    const std::pair<GLuint, GLuint> FrameSize = Frame->GetFrameSize();
-    const GLfloat FrameRatio = static_cast<GLfloat>(FrameSize.first) / static_cast<GLfloat>(FrameSize.second);
+    const FIntVector FrameSize = Frame->GetFrameSize();
+    const GLfloat FrameRatio = static_cast<GLfloat>(FrameSize.x) / static_cast<GLfloat>(FrameSize.y);
     
     return glm::perspective(glm::radians(FOV), FrameRatio, 0.1f, 100.0f);
 }

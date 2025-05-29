@@ -4,6 +4,7 @@
 #include "Core/Public/Object/RObject.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
+class FBox;
 class RSceneComponent;
 class RActorComponent;
 
@@ -40,6 +41,11 @@ public:
 
     std::shared_ptr<RWorld> GetWorld() const;
     std::shared_ptr<RSceneComponent> GetRootComponent() const;
+
+    FBox GetBoundingBox() const;
+
+    void SetAsSelected(float InIsSelected);
+    bool IsSelected() const;
     
 protected:
     std::shared_ptr<RSceneComponent> RootComponent;
@@ -55,6 +61,7 @@ protected:
 
 private:
     std::weak_ptr<RWorld> World;
+    bool bIsSelected = false;
 
     void SetWorld(const std::shared_ptr<RWorld>& InWorld);
     

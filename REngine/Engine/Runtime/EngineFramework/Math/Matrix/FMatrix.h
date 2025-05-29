@@ -7,4 +7,5 @@ struct FMatrix : public glm::mat4
     using glm::mat4::operator=;
 
     FMatrix(const glm::mat4& Matrix);
+    FMatrix GetInverse() const;
 };

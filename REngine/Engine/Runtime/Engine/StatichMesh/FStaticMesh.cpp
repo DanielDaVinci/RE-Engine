@@ -1,4 +1,4 @@
-#include "RStaticMesh.h"
+#include "FStaticMesh.h"
 
 #include <sstream>
 
@@ -7,20 +7,22 @@
 
 using namespace std;
 
-RStaticMesh::RStaticMesh(vector<FVertex>&& InVertices, vector<unsigned int>&& InIndices, vector<FTexture>&& InTextures)
+FStaticMesh::FStaticMesh(vector<FVertex>&& InVertices, vector<unsigned int>&& InIndices, vector<FTexture>&& InTextures)
     : Vertices(std::move(InVertices)), Indices(std::move(InIndices)), Textures(std::move(InTextures))
 {
 	UpdateBuffers();
+    BoundingBox = CalcBoundingBox();
 }
 
-RStaticMesh::RStaticMesh(const std::vector<FVertex>& InVertices, const std::vector<unsigned int>& InIndices, const std::vector<FTexture>& InTextures)
+FStaticMesh::FStaticMesh(const std::vector<FVertex>& InVertices, const std::vector<unsigned int>& InIndices, const std::vector<FTexture>& InTextures)
     : Vertices(InVertices), Indices(InIndices), Textures(InTextures)
 {
     UpdateBuffers();
+    BoundingBox = CalcBoundingBox();
 }
 
 
-void RStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
+void FStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
 {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
@@ -51,7 +53,23 @@ void RStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
     glBindVertexArray(0);
 }
 
-void RStaticMesh::UpdateBuffers()
+FBox FStaticMesh::CalcBoundingBox() const
+{
+    FBox Bound;
+    for (const auto& Vertex : Vertices)
+    {
+        Bound.Expand(Vertex.Position);
+    }
+
+    return Bound;
+}
+
+FBox FStaticMesh::GetBoundingBox() const
+{
+    return BoundingBox;
+}
+
+void FStaticMesh::UpdateBuffers()
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

@@ -28,6 +28,8 @@ class REditor : public RObject
 {
 public:
     using RObject::RObject;
+
+    static std::shared_ptr<REditor> GetEngineEditor();
     
     void Initialize();
     void Exit();

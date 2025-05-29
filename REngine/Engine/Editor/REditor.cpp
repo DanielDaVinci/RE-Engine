@@ -27,6 +27,14 @@
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_opengl3.h"
 #include "UI/Widgets/RootWindow/RRootWindow.h"
 
+std::shared_ptr<REditor> REditor::GetEngineEditor()
+{
+    auto Engine = REngine::GetEngine();
+    RCheckReturn(Engine, {});
+
+    return Engine->GetEditor();
+}
+
 void REditor::Initialize()
 {
     ImGui::CreateContext();
