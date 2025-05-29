@@ -42,6 +42,15 @@ void RActor::Tick(float DeltaTime)
     }
 }
 
+void RActor::PreRender(float DeltaTime)
+{
+    for (const std::shared_ptr<RActorComponent>& Component : Components)
+    {
+        RCheckContinue(Component);
+        Component->PreRender(DeltaTime);
+    }
+}
+
 void RActor::Render(float DeltaTime)
 {
     for (const std::shared_ptr<RActorComponent>& Component : Components)

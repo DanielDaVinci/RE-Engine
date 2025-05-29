@@ -44,8 +44,8 @@ void RMesh::LoadMesh(const std::string& MeshPath)
 
 void RMesh::Render(const FTransform& Transform, float DeltaTime)
 {
-    glStencilFunc(GL_ALWAYS, 1, 0xFF); 
-    glStencilMask(0xFF); 
+    // glStencilFunc(GL_ALWAYS, 1, 0xFF); 
+    // glStencilMask(0xFF);
     
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
@@ -76,13 +76,12 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     {
         StaticMesh.Render(Shader);
     }
-
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glStencilMask(0x00); 
 }
 
 void RMesh::RenderStroke(const FTransform& Transform, float DeltaTime)
 {
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00); 
     glDisable(GL_DEPTH_TEST);
     
     RCheckReturn(Shader);
@@ -93,8 +92,7 @@ void RMesh::RenderStroke(const FTransform& Transform, float DeltaTime)
 
     auto Camera = REditor::GetCamera();
     RCheckReturn(Camera);
-
-    auto CameraPosition = Camera->GetWorldPosition();
+    
     StrokeShader->Use();
     StrokeShader->setUniform("model", Transform.GetMatrix());
     StrokeShader->setUniform("view", Camera->GetViewMatrix());
@@ -105,6 +103,7 @@ void RMesh::RenderStroke(const FTransform& Transform, float DeltaTime)
         StaticMesh.Render(StrokeShader);
     }
 
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); 
     glStencilMask(0xFF);
     glEnable(GL_DEPTH_TEST);
 }

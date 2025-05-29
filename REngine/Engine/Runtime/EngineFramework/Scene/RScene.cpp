@@ -43,6 +43,14 @@ void RScene::Tick(float DeltaTime)
     }
 }
 
+void RScene::PreRender(float DeltaTime)
+{
+    if (RCheck(World))
+    {
+        World->PreRender(DeltaTime);
+    }
+}
+
 void RScene::Render(float DeltaTime)
 {
     if (RCheck(World))

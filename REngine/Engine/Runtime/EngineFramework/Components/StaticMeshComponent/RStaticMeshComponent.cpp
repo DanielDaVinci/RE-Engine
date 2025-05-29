@@ -16,10 +16,9 @@ void RStaticMeshComponent::Initialize()
     RCheckReturn(StaticMesh);
 }
 
-void RStaticMeshComponent::Render(float DeltaTime)
+void RStaticMeshComponent::PreRender(float DeltaTime)
 {
-    RSceneComponent::Render(DeltaTime);
-    RCheck(StaticMesh);
+    RSceneComponent::PreRender(DeltaTime);
 
     const std::shared_ptr<RActor> OwnerActor = GetOwner<RActor>();
     RCheckReturn(OwnerActor);
@@ -30,8 +29,14 @@ void RStaticMeshComponent::Render(float DeltaTime)
     {
         StaticMesh->RenderStroke(WorldTransform, DeltaTime);
     }
+}
+
+void RStaticMeshComponent::Render(float DeltaTime)
+{
+    RSceneComponent::Render(DeltaTime);
     
-    StaticMesh->Render(WorldTransform, DeltaTime);
+    RCheck(StaticMesh);
+    StaticMesh->Render(GetWorldTransform(), DeltaTime);
 }
 
 FBox RStaticMeshComponent::GetWorldBoundingBox() const

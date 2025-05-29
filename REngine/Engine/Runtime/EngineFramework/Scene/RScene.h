@@ -16,6 +16,7 @@ public:
 
     void Initialize();
     void Tick(float DeltaTime);
+    void PreRender(float DeltaTime);
     void Render(float DeltaTime);
     
 protected:

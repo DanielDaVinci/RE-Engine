@@ -15,6 +15,11 @@ void RActorComponent::Tick(float DeltaTime)
     
 }
 
+void RActorComponent::PreRender(float DeltaTime)
+{
+    
+}
+
 void RActorComponent::Render(float DeltaTime)
 {
     

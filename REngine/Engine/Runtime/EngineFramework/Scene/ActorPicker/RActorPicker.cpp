@@ -17,10 +17,8 @@ std::shared_ptr<RActorPicker> RActorPicker::GetActorPicker()
     return Scene->GetActorPicker();
 }
 
-void RActorPicker::SelectActorAtCursor(const FVector2D& CursorPosition)
+void RActorPicker::SelectActor(const std::shared_ptr<RActor>& PickedActor)
 {
-    auto PickedActor = GetActorAtCursor(CursorPosition);
-
     if (auto SelectedActor = WeakSelectedActor.lock())
     {
         SelectedActor->SetAsSelected(false);
@@ -32,6 +30,11 @@ void RActorPicker::SelectActorAtCursor(const FVector2D& CursorPosition)
     {
         SelectedActor->SetAsSelected(true);
     }
+}
+
+void RActorPicker::SelectActorAtCursor(const FVector2D& CursorPosition)
+{
+    SelectActor(GetActorAtCursor(CursorPosition));
 }
 
 std::shared_ptr<RActor> RActorPicker::GetActorAtCursor(const FVector2D& CursorPosition) const

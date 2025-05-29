@@ -20,6 +20,7 @@ public:
 
     static std::shared_ptr<RActorPicker> GetActorPicker();
 
+    void SelectActor(const std::shared_ptr<RActor>& PickedActor);
     void SelectActorAtCursor(const FVector2D& CursorPosition);
 
     std::shared_ptr<RActor> GetActorAtCursor(const FVector2D& CursorPosition) const;

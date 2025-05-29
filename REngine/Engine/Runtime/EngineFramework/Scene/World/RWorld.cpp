@@ -45,6 +45,15 @@ void RWorld::Tick(float DeltaTime)
     }
 }
 
+void RWorld::PreRender(float DeltaTime)
+{
+    for (const std::shared_ptr<RActor>& Actor : Actors)
+    {
+        RCheckContinue(Actor);
+        Actor->PreRender(DeltaTime);
+    }
+}
+
 void RWorld::Render(float DeltaTime)
 {
     for (const std::shared_ptr<RActor>& Actor : Actors)

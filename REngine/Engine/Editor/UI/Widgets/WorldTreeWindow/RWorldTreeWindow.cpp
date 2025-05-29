@@ -2,6 +2,7 @@
 
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
+#include "REngine/Engine/Runtime/EngineFramework/Scene/ActorPicker/RActorPicker.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/World/RWorld.h"
 
 void RWorldTreeWindow::Construct()
@@ -13,15 +14,15 @@ void RWorldTreeWindow::Construct()
 void RWorldTreeWindow::DrawWindowContent() const
 {
     RWindow::DrawWindowContent();
-
-    auto Editor = GetEditor();
-    RCheckReturn(Editor);
     
-    auto Scene = Editor->GetScene();
+    auto Scene = RScene::GetEditorScene();
     RCheckReturn(Scene);
 
     auto World = Scene->GetWorld();
     RCheckReturn(World);
+
+    auto ActorPicker = RActorPicker::GetActorPicker();
+    RCheckReturn(ActorPicker);
 
     const auto& Actors =  World->GetActors();
     for (auto It = Actors.begin(); It != Actors.end(); ++It)
@@ -41,7 +42,7 @@ void RWorldTreeWindow::DrawWindowContent() const
         {
             if (ImGui::IsItemClicked())
             {
-            
+                ActorPicker->SelectActor(Actor);
             }
             
             ImGui::TreePop();

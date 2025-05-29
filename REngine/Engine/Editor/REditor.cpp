@@ -98,6 +98,7 @@ void REditor::PreRender(GLdouble DeltaTime)
     Frame->Bind();
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_STENCIL_TEST);
     glDepthFunc(GL_LESS);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);  
 
@@ -105,6 +106,11 @@ void REditor::PreRender(GLdouble DeltaTime)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     glStencilMask(0x00);
+
+    if (RCheck(Scene))
+    {
+        Scene->PreRender(DeltaTime);
+    }
 }
 
 void REditor::Render(GLdouble DeltaTime)

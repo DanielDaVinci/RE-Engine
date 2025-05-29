@@ -10,6 +10,7 @@ public:
     using RSceneComponent::RSceneComponent;
     
     void Initialize() override;
+    void PreRender(float DeltaTime) override;
     void Render(float DeltaTime) override;
 
     FBox GetWorldBoundingBox() const;
