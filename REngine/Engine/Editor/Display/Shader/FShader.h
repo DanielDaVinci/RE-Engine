@@ -38,7 +38,7 @@ public:
 	void setVertex(const GLchar* path);
 	void setFragment(const GLchar* path);
 
-	void Use();
+	void Use() const;
 
 	GLuint getUniformLocation(const GLchar* name) const;
 	void setUniform(const GLchar* name, const GLfloat value) const;

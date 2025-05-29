@@ -64,7 +64,7 @@ void FShader::setFragment(const GLchar* path)
 	fragmentShader = getShader(GL_FRAGMENT_SHADER, fragmentCode.c_str());
 }
 
-void FShader::Use()
+void FShader::Use() const
 {
 	glUseProgram(program);
 }

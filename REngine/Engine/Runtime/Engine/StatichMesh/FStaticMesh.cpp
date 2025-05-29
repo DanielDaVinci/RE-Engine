@@ -41,8 +41,7 @@ void FStaticMesh::Render(const std::shared_ptr<FShader>& Shader) const
         {
             number = to_string(specularNr++);
         }
-
-
+        
         Shader->setUniform(("material." + name + number).c_str(), i);
         glBindTexture(GL_TEXTURE_2D, Textures[i].Id);
     }

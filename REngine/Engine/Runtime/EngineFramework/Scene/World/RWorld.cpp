@@ -20,6 +20,11 @@ void RWorld::Initialize()
         FQuat(0.0f, -90.0f, 90.0f),
         FVector::OneVector));
 
+    SpawnActor<RMeshActor>(FTransform(
+        FVector(10.0f, -10.0f, 0.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector::OneVector));
+
     SpawnActor<RCameraActor>(FTransform(
         FVector(0.0f, 0.0f, 0.0f),
         FQuat(0.0f, 0.0f, 0.0f)));

@@ -21,6 +21,10 @@ void RMesh::Construct()
 
     Shader = std::make_shared<FShader>("Data/Shaders/shader.vs", "Data/Shaders/shader.frag");
     RCheckReturn(Shader);
+
+    StrokeShader = std::make_shared<FShader>("Data/Shaders/strokeShader.vs", "Data/Shaders/strokeShader.frag");
+    RCheckReturn(StrokeShader);
+    
 }
 
 void RMesh::LoadMesh(const std::string& MeshPath)
@@ -40,6 +44,9 @@ void RMesh::LoadMesh(const std::string& MeshPath)
 
 void RMesh::Render(const FTransform& Transform, float DeltaTime)
 {
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); 
+    glStencilMask(0xFF); 
+    
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
 
@@ -69,6 +76,37 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     {
         StaticMesh.Render(Shader);
     }
+
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00); 
+}
+
+void RMesh::RenderStroke(const FTransform& Transform, float DeltaTime)
+{
+    glDisable(GL_DEPTH_TEST);
+    
+    RCheckReturn(Shader);
+    RCheckReturn(REngine::GetEngine());
+
+    auto Editor = REngine::GetEngine()->GetEditor();
+    RCheckReturn(Editor);
+
+    auto Camera = REditor::GetCamera();
+    RCheckReturn(Camera);
+
+    auto CameraPosition = Camera->GetWorldPosition();
+    StrokeShader->Use();
+    StrokeShader->setUniform("model", Transform.GetMatrix());
+    StrokeShader->setUniform("view", Camera->GetViewMatrix());
+    StrokeShader->setUniform("projection", Camera->GetProjectionMatrix());
+
+    for (const FStaticMesh& StaticMesh : StaticMeshes)
+    {
+        StaticMesh.Render(StrokeShader);
+    }
+
+    glStencilMask(0xFF);
+    glEnable(GL_DEPTH_TEST);
 }
 
 FBox RMesh::CalcBoundingBox() const

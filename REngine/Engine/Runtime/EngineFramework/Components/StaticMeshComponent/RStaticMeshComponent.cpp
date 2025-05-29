@@ -3,6 +3,7 @@
 #include "DebugLog/Public/Check/Check.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMeshSubsystem.h"
+#include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
 
 void RStaticMeshComponent::Initialize()
 {
@@ -18,11 +19,19 @@ void RStaticMeshComponent::Initialize()
 void RStaticMeshComponent::Render(float DeltaTime)
 {
     RSceneComponent::Render(DeltaTime);
-    
-    if (RCheck(StaticMesh))
+    RCheck(StaticMesh);
+
+    const std::shared_ptr<RActor> OwnerActor = GetOwner<RActor>();
+    RCheckReturn(OwnerActor);
+
+    FTransform WorldTransform = GetWorldTransform();
+
+    if (OwnerActor->IsSelected())
     {
-        StaticMesh->Render(GetWorldTransform(), DeltaTime);
+        StaticMesh->RenderStroke(WorldTransform, DeltaTime);
     }
+    
+    StaticMesh->Render(WorldTransform, DeltaTime);
 }
 
 FBox RStaticMeshComponent::GetWorldBoundingBox() const

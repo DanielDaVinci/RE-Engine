@@ -16,6 +16,7 @@ public:
 
     void LoadMesh(const std::string& MeshPath);
     void Render(const FTransform& Transform, float DeltaTime);
+    void RenderStroke(const FTransform& Transform, float DeltaTime);
 
     FBox CalcBoundingBox() const;
     FBox GetBoundingBox() const;
@@ -41,5 +42,6 @@ private:
     std::vector<FTexture> LoadedTextures;
     std::string MeshDirectory;
     std::shared_ptr<FShader> Shader;
+    std::shared_ptr<FShader> StrokeShader;
     
 };
