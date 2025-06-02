@@ -64,6 +64,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)ExternalIncludes;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -203,6 +204,19 @@
     <ClInclude Include="ExternalIncludes\assimp\XmlParser.h" />
     <ClInclude Include="ExternalIncludes\assimp\XMLTools.h" />
     <ClInclude Include="ExternalIncludes\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\BuildSystem.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXCompilationDatabase.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXDiagnostic.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXErrorCode.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXFile.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXSourceLocation.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\CXString.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\Documentation.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\ExternC.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\FatalErrorHandler.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\Index.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\Platform.h" />
+    <ClInclude Include="ExternalIncludes\clang-c\Rewrite.h" />
     <ClInclude Include="ExternalIncludes\GLFW\glfw3.h" />
     <ClInclude Include="ExternalIncludes\GLFW\glfw3native.h" />
     <ClInclude Include="ExternalIncludes\GLM\common.hpp" />
@@ -636,6 +650,36 @@
     <ClInclude Include="ExternalIncludes\imGUI\imstb_rectpack.h" />
     <ClInclude Include="ExternalIncludes\imGUI\imstb_textedit.h" />
     <ClInclude Include="ExternalIncludes\imGUI\imstb_truetype.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Analysis.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\BitReader.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\BitWriter.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\blake3.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Comdat.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Core.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\DataTypes.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\DebugInfo.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Deprecated.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Disassembler.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\DisassemblerTypes.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Error.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\ErrorHandling.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\ExecutionEngine.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\ExternC.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\IRReader.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Linker.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\LLJIT.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\LLJITUtils.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\lto.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Object.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Orc.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\OrcEE.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Remarks.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Support.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Target.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\TargetMachine.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Transforms\PassBuilder.h" />
+    <ClInclude Include="ExternalIncludes\llvm-c\Types.h" />
+    <ClInclude Include="ExternalIncludes\Refl\refl.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

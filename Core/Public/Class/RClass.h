@@ -3,17 +3,21 @@
 #include <memory>
 
 #include "Core/Public/DynLib.h"
+#include "MetaReflection/MetaReflection.h"
+#include "Generated/RClass.generated.h"
 
-class DLL_API RClass
+class DLL_API CLASS() RClass
 {
+    GENERATED_BODY()
+    
 public:
     RClass();
     virtual ~RClass();
+
+    PROPERTY()
+    int x;
     
 protected:
     virtual void FillReflection();
     
-private:
-    // std::vector<RField> Fields;
-    // std::vector<RFunction> Functions;
 };

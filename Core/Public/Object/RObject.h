@@ -5,9 +5,12 @@
 #include <memory>
 #include "Core/Public/Class/RClass.h"
 #include "Core/Public/Delegates/RMulticastDelegate.h"
+#include "Generated/RObject.generated.h"
 
-class DLL_API RObject : public RClass, public std::enable_shared_from_this<RObject>
+class DLL_API CLASS() RObject : public std::enable_shared_from_this<RObject>, public RClass
 {
+    GENERATED_BODY()
+    
 public:
     DECLARE_DELEGATE(FOnDestroyedSignature)
     FOnDestroyedSignature OnDestroyed;
@@ -35,6 +38,8 @@ private:
 
     void SetOwner(const std::shared_ptr<RObject>& InOwner);
 };
+
+META_REFLECT()
 
 #include "RObject.tpp"
 #pragma warning(pop)
