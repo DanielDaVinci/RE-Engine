@@ -94,8 +94,8 @@ void ClassParser::FillFile(std::ofstream& File) const
     File << "#include \"MetaReflection/MetaReflection.h\"" << std::endl;
     File << std::endl;
 
-    File << "#ifdef GENERATED_BODY(...)" << std::endl;
-    File << "#undef GENERATED_BODY(...)" << std::endl;
+    File << "#ifdef GENERATED_BODY" << std::endl;
+    File << "#undef GENERATED_BODY" << std::endl;
     File << "#endif" << std::endl;
     File << std::endl;
 
@@ -120,8 +120,8 @@ void ClassParser::FillFile(std::ofstream& File) const
     }
     File << std::endl;
 
-    File << "#ifdef META_REFLECT(...)" << std::endl;
-    File << "#undef META_REFLECT(...)" << std::endl;
+    File << "#ifdef META_REFLECT" << std::endl;
+    File << "#undef META_REFLECT" << std::endl;
     File << "#endif" << std::endl;
     File << std::endl;
 

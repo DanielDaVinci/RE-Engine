@@ -1,23 +1,21 @@
 ﻿#pragma once
 
 #include <vector>
-#include "Core/Public/Object/RObject.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
+#include "Core/Public/Object/RObject.h"
+#include "Generated/RActor.generated.h"
 
 class FBox;
 class RSceneComponent;
 class RActorComponent;
 
-class RActor : public RObject
+class CLASS() RActor : public RObject
 {
+    GENERATED_BODY()
+    
     friend class RWorld;
     
 public:
-    using RObject::RObject;
-
-    RActor(const std::shared_ptr<RObject>& InOwner);
-    ~RActor() override;
-
     // ------- Loop --------
     void Construct() override;
     virtual void Initialize();
@@ -67,5 +65,7 @@ private:
     void SetWorld(const std::shared_ptr<RWorld>& InWorld);
     
 };
+
+META_REFLECT()
 
 #include "RActor.tpp"

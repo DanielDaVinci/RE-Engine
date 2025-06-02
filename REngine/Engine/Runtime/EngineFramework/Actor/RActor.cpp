@@ -7,14 +7,6 @@
 #include "REngine/Engine/Runtime/EngineFramework/Components/StaticMeshComponent/RStaticMeshComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Box/FBox.h"
 
-RActor::RActor(const std::shared_ptr<RObject>& InOwner) : RObject(InOwner)
-{
-}
-
-RActor::~RActor()
-{
-}
-
 void RActor::Construct()
 {
     SetRootComponent(AddComponent<RSceneComponent>());
