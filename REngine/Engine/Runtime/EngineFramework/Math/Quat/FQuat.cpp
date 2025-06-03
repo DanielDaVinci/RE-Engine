@@ -15,10 +15,10 @@ FQuat::FQuat(const glm::quat& InQuat)
 
 FQuat::FQuat(float Pitch, float Yaw, float Roll)
 {
-    *this =
+    *this = glm::normalize(
         glm::angleAxis(glm::radians(Yaw), FVector::UpVector)
         * glm::angleAxis(glm::radians(Pitch), FVector::RightVector)
-        * glm::angleAxis(glm::radians(Roll), FVector::ForwardVector);
+        * glm::angleAxis(glm::radians(Roll), FVector::ForwardVector));
 
     UpdateEditorAngles();
 }
@@ -35,13 +35,13 @@ float FQuat::GetPitch() const
 
 void FQuat::AddPitch(float Pitch)
 {
-    *this = glm::normalize(*this * glm::angleAxis(glm::radians(Pitch), FVector::RightVector));
+    *this = *this * glm::angleAxis(glm::radians(Pitch), FVector::RightVector);
     UpdateEditorAngles();
 }
 
 void FQuat::AddWorldPitch(float Pitch)
 {
-    *this = glm::normalize(glm::angleAxis(glm::radians(Pitch), FVector::RightVector) * *this);
+    *this = glm::angleAxis(glm::radians(Pitch), FVector::RightVector) * *this;
     UpdateEditorAngles();
 }
 
@@ -108,11 +108,5 @@ void FQuat::UpdateEditorAngles()
 
 void FQuat::OnEditorValueChanged()
 {
-    const float TargetPitch = EditorPitch;
-    const float TargetYaw = EditorYaw;
-    const float TargetRoll = EditorRoll;
-    
-    AddWorldPitch(TargetPitch - GetPitch());
-    AddWorldYaw(TargetYaw - GetYaw());
-    AddRoll(TargetRoll - GetRoll());
+    *this = FQuat(EditorPitch, EditorYaw, EditorRoll);
 }
