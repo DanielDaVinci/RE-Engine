@@ -9,8 +9,3 @@ RClass::~RClass()
 {
     
 }
-
-void RClass::FillReflection()
-{
-    
-}

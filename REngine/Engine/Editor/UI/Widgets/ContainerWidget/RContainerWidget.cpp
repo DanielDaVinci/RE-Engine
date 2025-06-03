@@ -3,15 +3,6 @@
 #include "DebugLog/Public/Check/Check.h"
 #include "GLM/gtx/string_cast.inl"
 
-RContainerWidget::RContainerWidget(const std::shared_ptr<RObject>& InOwner) : RWidget(InOwner)
-{
-    
-}
-
-RContainerWidget::~RContainerWidget()
-{
-}
-
 void RContainerWidget::Initialize(const std::shared_ptr<REditor>& InEditor)
 {
     RWidget::Initialize(InEditor);

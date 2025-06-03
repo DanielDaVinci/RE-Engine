@@ -19,10 +19,8 @@ FQuat::FQuat(float Pitch, float Yaw, float Roll)
         glm::angleAxis(glm::radians(Yaw), FVector::UpVector)
         * glm::angleAxis(glm::radians(Pitch), FVector::RightVector)
         * glm::angleAxis(glm::radians(Roll), FVector::ForwardVector);
-}
 
-FQuat::FQuat(const FRotator& InRotator) : FQuat(InRotator.GetPitch(), InRotator.GetYaw(), InRotator.GetRoll())
-{
+    UpdateEditorAngles();
 }
 
 void FQuat::SetPitch(float Pitch)
@@ -32,17 +30,19 @@ void FQuat::SetPitch(float Pitch)
 
 float FQuat::GetPitch() const
 {
-    return GetEulerAngles().x;
+    return GetEulerAngles().y;
 }
 
 void FQuat::AddPitch(float Pitch)
 {
-    *this *= glm::angleAxis(glm::radians(Pitch), FVector::RightVector);
+    *this = glm::normalize(*this * glm::angleAxis(glm::radians(Pitch), FVector::RightVector));
+    UpdateEditorAngles();
 }
 
 void FQuat::AddWorldPitch(float Pitch)
 {
-    *this = glm::angleAxis(glm::radians(Pitch), FVector::RightVector) * *this;
+    *this = glm::normalize(glm::angleAxis(glm::radians(Pitch), FVector::RightVector) * *this);
+    UpdateEditorAngles();
 }
 
 void FQuat::SetYaw(float Yaw)
@@ -52,17 +52,19 @@ void FQuat::SetYaw(float Yaw)
 
 float FQuat::GetYaw() const
 {
-    return GetEulerAngles().y;
+    return GetEulerAngles().z;
 }
 
 void FQuat::AddYaw(float Yaw)
 {
-    *this *= glm::angleAxis(glm::radians(Yaw), FVector::UpVector);
+    *this = glm::normalize(*this * glm::angleAxis(glm::radians(Yaw), FVector::UpVector));
+    UpdateEditorAngles();
 }
 
 void FQuat::AddWorldYaw(float Yaw)
 {
-    *this = glm::angleAxis(glm::radians(Yaw), FVector::UpVector) * *this;
+    *this = glm::normalize(glm::angleAxis(glm::radians(Yaw), FVector::UpVector) * *this);
+    UpdateEditorAngles();
 }
 
 void FQuat::SetRoll(float Roll)
@@ -72,26 +74,45 @@ void FQuat::SetRoll(float Roll)
 
 float FQuat::GetRoll() const
 {
-    return GetEulerAngles().z;
+    return GetEulerAngles().x;
 }
 
 void FQuat::AddRoll(float Roll)
 {
-    *this *= glm::angleAxis(glm::radians(Roll), FVector::ForwardVector);
+    *this = glm::normalize(*this * glm::angleAxis(glm::radians(Roll), FVector::ForwardVector));
+    UpdateEditorAngles();
 }
 
 void FQuat::AddWorldRoll(float Roll)
 {
-    *this = glm::angleAxis(glm::radians(Roll), FVector::ForwardVector) * *this;
+    *this = glm::normalize(glm::angleAxis(glm::radians(Roll), FVector::ForwardVector) * *this);
+    UpdateEditorAngles();
 }
 
 FVector FQuat::GetEulerAngles() const
 {
-    // const glm::vec3 Angles = glm::degrees(glm::eulerAngles(*this));
     return glm::degrees(glm::eulerAngles(*this));
 }
 
 FMatrix FQuat::GetMatrix() const
 {
     return glm::toMat4(*this);
+}
+
+void FQuat::UpdateEditorAngles()
+{
+    EditorPitch = GetPitch();
+    EditorYaw = GetYaw();
+    EditorRoll = GetRoll();
+}
+
+void FQuat::OnEditorValueChanged()
+{
+    const float TargetPitch = EditorPitch;
+    const float TargetYaw = EditorYaw;
+    const float TargetRoll = EditorRoll;
+    
+    AddWorldPitch(TargetPitch - GetPitch());
+    AddWorldYaw(TargetYaw - GetYaw());
+    AddRoll(TargetRoll - GetRoll());
 }

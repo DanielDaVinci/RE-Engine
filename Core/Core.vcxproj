@@ -22,7 +22,7 @@
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -95,17 +95,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Public\Class\Field\RField.cpp" />
-    <ClCompile Include="Public\Class\Function\RFunction.cpp" />
     <ClCompile Include="Public\Class\RClass.cpp" />
     <ClCompile Include="Public\Object\RObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Public\Class\Field\RField.h" />
-    <ClInclude Include="Public\Class\Function\RFunction.h" />
     <ClInclude Include="Public\Class\RClass.h" />
     <ClInclude Include="Public\Delegates\RMulticastDelegate.h" />
-    <ClInclude Include="Public\DynLib.h" />
     <ClInclude Include="Public\Object\RObject.h" />
     <ClInclude Include="Public\Object\RObject.tpp" />
   </ItemGroup>

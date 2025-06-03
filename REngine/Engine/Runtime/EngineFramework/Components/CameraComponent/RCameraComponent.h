@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "REngine/Engine/Runtime/EngineFramework/Components/SceneComponent/RSceneComponent.h"
+#include "Generated/RCameraComponent.generated.h"
 
-class RCameraComponent : public RSceneComponent
+class CLASS() RCameraComponent : public RSceneComponent
 {
+    GENERATED_BODY()
+    
 public:
-    using RSceneComponent::RSceneComponent;
-
     void Construct() override;
 
     FMatrix GetViewMatrix() const;
@@ -15,6 +16,11 @@ public:
     float GetFOV() const;
 
 protected:
+    PROPERTY()
     float FOV = 90.0f;
+
+    void Tick(float DeltaTime) override;
     
 };
+
+META_REFLECT()

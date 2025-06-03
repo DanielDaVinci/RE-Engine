@@ -7,7 +7,7 @@
 #include "Core/Public/Delegates/RMulticastDelegate.h"
 #include "Generated/RObject.generated.h"
 
-class DLL_API CLASS() RObject : public std::enable_shared_from_this<RObject>, public RClass
+class CLASS() RObject : public std::enable_shared_from_this<RObject>, public RClass
 {
     GENERATED_BODY()
     

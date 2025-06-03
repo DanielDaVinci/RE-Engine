@@ -1,11 +1,22 @@
 ﻿#pragma once
+#include "MetaReflection/MetaReflection.h"
+
 #include "REngine/Engine/Runtime/EngineFramework/Math/Quat/FQuat.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector.h"
+#include "Generated/FTransform.generated.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/Rotator/FRotator.h"
 
-struct FTransform
+struct STRUCT() FTransform
 {
+    GENERATED_BODY()
+
+    PROPERTY()
     FVector Position = FVector::ZeroVector;
+
+    PROPERTY()
     FQuat Quaternion = FQuat::ZeroQuat;
+
+    PROPERTY()
     FVector Scale = FVector::OneVector;
 
     FTransform() = default;
@@ -16,3 +27,5 @@ struct FTransform
 
     FTransform operator * (const FTransform& Other) const;
 };
+
+META_REFLECT()

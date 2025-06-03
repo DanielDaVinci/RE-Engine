@@ -1,9 +1,8 @@
 ﻿#pragma once
 #include <functional>
 #include <memory>
-#include "Core/Public/DynLib.h"
 
-class DLL_API FDelegateHandle
+class FDelegateHandle
 {
 public:
     FDelegateHandle() : Id(0) {}
@@ -18,7 +17,7 @@ private:
 };
 
 template<typename... TArgs>
-class DLL_API RMulticastDelegate
+class RMulticastDelegate
 {
 public:
     using FuncType = std::function<void(TArgs...)>;

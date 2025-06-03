@@ -1,11 +1,13 @@
 #include "ClassParser.h"
 
 #include <direct.h>
+#include <format>
 #include <fstream>
 #include <iostream>
 
 #include "DebugLog/Public/Check/Check.h"
 #include "MetaReflection/MetaReflection.h"
+#include "MetaReflectionGenerator/Generator/ReflectionGenerator.h"
 #include "MetaReflectionGenerator/Parsers/FunctionParser/FunctionParser.h"
 #include "MetaReflectionGenerator/Parsers/PropertyParser/PropertyParser.h"
 
@@ -15,6 +17,7 @@ bool ClassParser::Parse(CXCursor Cursor)
 {
     std::cout << "------- PARSED CLASS -------" << std::endl;
     
+    bIsStructure = clang_getCursorKind(Cursor) == CXCursor_StructDecl;
     FilePath = GetFilePath(Cursor);
     ClassName = clang_getCString(clang_getCursorDisplayName(Cursor));
     std::cout << "Class: " << ClassName << std::endl;
@@ -28,7 +31,8 @@ bool ClassParser::Parse(CXCursor Cursor)
 
 bool ClassParser::CanParse(CXCursor Cursor) const
 {
-    return clang_getCursorKind(Cursor) == CXCursor_ClassDecl && GetAttributeName(Cursor).starts_with(ATTRIBUTE_CLASS_NAME);
+    return clang_getCursorKind(Cursor) == CXCursor_ClassDecl && GetAttributeName(Cursor).starts_with(ATTRIBUTE_CLASS_NAME) ||
+        clang_getCursorKind(Cursor) == CXCursor_StructDecl && GetAttributeName(Cursor).starts_with(ATTRIBUTE_STRUCT_NAME);
 }
 
 void ClassParser::SetSolutionPath(const std::string& InSolutionPath)
@@ -68,17 +72,17 @@ CXChildVisitResult ClassParser::VisitChildRecursive(CXCursor Cursor, CXCursor Pa
     return CXChildVisit_Continue;
 }
 
-void ClassParser::Generate()
+void ClassParser::Generate() const
 {
     std::cout << "------- GENERATED CLASS -------" << std::endl;
     
     const std::string FileName = GetFileNameFromPath(FilePath);
-    const std::string GeneratedDirectoryPath = SolutionPath + GenerateDirectoryName + "\\";
-    const std::string GeneratedFilePath = GeneratedDirectoryPath + FileName + "." + GeneratedFileExtension;
+    const std::string GeneratedDirectoryPath = SolutionPath + ReflectionGenerator::GenerateDirectoryName + "\\";
+    const std::string GeneratedFilePath = GeneratedDirectoryPath + FileName + "." + ReflectionGenerator::GeneratedFileExtension;
     std::cout << "File Path: " << FilePath << std::endl;
     std::cout << "Generated File Path: " << GeneratedFilePath << std::endl;
 
-    CreateDirectoryIfNoExists(GeneratedDirectoryPath);
+    ReflectionGenerator::CreateDirectoryIfNoExists(GeneratedDirectoryPath);
     std::ofstream GeneratedFile(GeneratedFilePath, std::ios::trunc);
     RCheckReturn(GeneratedFile.is_open());
     FillFile(GeneratedFile);
@@ -104,19 +108,38 @@ void ClassParser::FillFile(std::ofstream& File) const
     File << "public:" << "\\" << std::endl;
     if (!ParentClassName.empty())
     {
-        File << "\t" << "using " << ParentClassName << "::" << ParentClassName << ";\\" << std::endl;
-    }
-    
-    File << "private:" << "\\" << std::endl;
-    File << "\t" << "using ThisClass = " << ClassName << ";";
-    if (!ParentClassName.empty())
-    {
-        File << "\\" << std::endl;
-        File << "\t" << "using SuperClass = " << ParentClassName << ";" << std::endl;
+        std::string SecondPart = ParentClassName;
+        auto Index = SecondPart.rfind(':');
+        if (Index != -1)
+        {
+            SecondPart = SecondPart.substr(Index + 1, SecondPart.size() - Index - 1);
+        }
+        
+        File << "\t" << std::format("using {}::{};", ParentClassName, SecondPart) << "\\" << std::endl;
+        File << "\t" << "std::string GetClassName() const override { return \"" << ClassName << "\" ; }" << "\\" << std::endl;
     }
     else
     {
-        File << std::endl;
+        File << "\t" << "virtual std::string GetClassName() const { return \"" << ClassName << "\" ; }" << "\\" << std::endl;
+    }
+    File << "\t" << "static std::string GetStaticClassName() { return \"" << ClassName << "\" ; }" << "\\" << std::endl;
+    
+    File << "private:" << "\\" << std::endl;
+    File << "\t" << std::format("using ThisClass = {};", ClassName);
+    if (!ParentClassName.empty())
+    {
+        File << "\\" << std::endl;
+        File << "\t" << std::format("using SuperClass = {};", ParentClassName);
+    }
+    File << "\\" << std::endl;
+    File << "\t" << std::format("friend struct refl_impl::metadata::type_info__<{}>;", ClassName) << "\\" << std::endl;
+    if (bIsStructure)
+    {
+        File << "public:" << std::endl;
+    }
+    else
+    {
+        File << "private:" << std::endl;
     }
     File << std::endl;
 
@@ -167,23 +190,4 @@ std::string ClassParser::GetFileNameFromPath(const std::string& FullPath)
     const auto IndexStart = FullPath.rfind("\\");
     const auto IndexEnd = FullPath.rfind(".");
     return FullPath.substr(IndexStart + 1, IndexEnd - IndexStart - 1);
-}
-
-void ClassParser::CreateDirectoryIfNoExists(const std::string& Path)
-{
-    struct stat info;
-    
-    if (stat(Path.c_str(), &info) != 0)
-    {
-#ifdef _WIN32
-        int result = _mkdir(Path.c_str());
-#else
-        int result = mkdir(path.c_str(), 0777);
-#endif
-        RCheckReturn(result == 0);
-    }
-    else if (!(info.st_mode & S_IFDIR))
-    {
-        std::cerr << "Path exists but is not a directory: " << Path << std::endl;
-    }
 }

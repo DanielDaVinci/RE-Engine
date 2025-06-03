@@ -40,6 +40,7 @@ public:
 
     std::shared_ptr<RWorld> GetWorld() const;
     std::shared_ptr<RSceneComponent> GetRootComponent() const;
+    std::vector<std::shared_ptr<RActorComponent>> GetAllComponents() const;
 
     FBox GetBoundingBox() const;
 

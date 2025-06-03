@@ -39,6 +39,11 @@ void RStaticMeshComponent::Render(float DeltaTime)
     StaticMesh->Render(GetWorldTransform(), DeltaTime);
 }
 
+void RStaticMeshComponent::Tick(float DeltaTime)
+{
+    // RSceneComponent::Tick(DeltaTime);
+}
+
 FBox RStaticMeshComponent::GetWorldBoundingBox() const
 {
     return GetWorldTransformMatrix() * GetLocalBoundingBox();

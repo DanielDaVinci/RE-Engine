@@ -1,6 +1,8 @@
 ﻿#include "ReflectionGenerator.h"
 
+#include <direct.h>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 
 #include "clang-c/Index.h"
@@ -14,6 +16,25 @@ void ReflectionGenerator::Generate(const std::string& InSolutionPath)
 
     ParseFiles();
     GenerateFiles();
+}
+
+void ReflectionGenerator::CreateDirectoryIfNoExists(const std::string& Path)
+{
+    struct stat info;
+    
+    if (stat(Path.c_str(), &info) != 0)
+    {
+#ifdef _WIN32
+        int result = _mkdir(Path.c_str());
+#else
+        int result = mkdir(path.c_str(), 0777);
+#endif
+        RCheckReturn(result == 0);
+    }
+    else if (!(info.st_mode & S_IFDIR))
+    {
+        std::cerr << "Path exists but is not a directory: " << Path << std::endl;
+    }
 }
 
 void ReflectionGenerator::ParseFiles()
@@ -60,6 +81,29 @@ void ReflectionGenerator::ParseFile(const std::string& InFilePath)
     clang_disposeIndex(Index);
 }
 
+void ReflectionGenerator::GenerateCommonFile() const
+{
+    std::cout << "------- GENERATED COMMON CLASS -------" << std::endl;
+    
+    const std::string GeneratedDirectoryPath = SolutionPath + GenerateDirectoryName + "\\";
+    const std::string GeneratedFilePath = GeneratedDirectoryPath + "ReflectionCommon" + "." + GeneratedFileExtension;
+    std::cout << "Generated File Path: " << GeneratedFilePath << std::endl;
+    
+    CreateDirectoryIfNoExists(GeneratedDirectoryPath);
+    std::ofstream GeneratedFile(GeneratedFilePath, std::ios::trunc);
+    RCheckReturn(GeneratedFile.is_open());
+    
+    GeneratedFile.close();
+    
+    std::cout << "-------------------------------" << std::endl;
+}
+
+// void ReflectionGenerator::FillCommonFile(std::ofstream& File) const
+// {
+//     File << "#pragma once" << std::endl;
+//     File << 
+// }
+
 void ReflectionGenerator::GenerateFiles() const
 {
     for (const std::shared_ptr<ClassParser>& ClassParser : ClassParsers)
@@ -80,16 +124,12 @@ CXChildVisitResult ReflectionGenerator::VisitRecursive(CXCursor Cursor, CXCursor
         return CXChildVisit_Continue;
     }
     
-    const CXCursorKind CursorKind = clang_getCursorKind( Cursor );
-    if (CursorKind == CXCursor_ClassDecl)
+    std::shared_ptr<ClassParser> Parser = std::make_shared<ClassParser>();
+    if (Parser->CanParse(Cursor))
     {
-        std::shared_ptr<ClassParser> Parser = std::make_shared<ClassParser>();
-        if (Parser->CanParse(Cursor))
-        {
-            Parser->SetSolutionPath(This->SolutionPath);
-            Parser->Parse(Cursor);
-            This->ClassParsers.push_back(Parser);
-        }
+        Parser->SetSolutionPath(This->SolutionPath);
+        Parser->Parse(Cursor);
+        This->ClassParsers.push_back(Parser);
     }
     
     clang_visitChildren( Cursor, VisitRecursive, This );

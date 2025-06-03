@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Core/Public/Delegates/RMulticastDelegate.h"
 #include "GLM/fwd.hpp"
 #include "GLM/vec3.hpp"
 

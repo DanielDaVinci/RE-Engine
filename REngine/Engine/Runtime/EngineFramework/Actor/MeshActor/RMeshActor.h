@@ -13,4 +13,5 @@ protected:
     std::shared_ptr<RStaticMeshComponent> StaticMeshComponent;
 
     void Construct() override;
+    void Tick(float DeltaTime) override;
 };

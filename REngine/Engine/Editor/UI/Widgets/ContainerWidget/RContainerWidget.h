@@ -7,8 +7,7 @@
 class RContainerWidget : public RWidget
 {
 public:
-    explicit RContainerWidget(const std::shared_ptr<RObject>& InOwner);
-    ~RContainerWidget() override;
+    using RWidget::RWidget;
 
     void Initialize(const std::shared_ptr<REditor>& InEditor) override;
     void Draw() override;

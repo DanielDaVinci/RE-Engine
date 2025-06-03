@@ -1,6 +1,7 @@
 #include "RRootWindow.h"
 
 #include "DebugLog/Public/Check/Check.h"
+#include "REngine/Engine/Editor/UI/Widgets/DetailsView/RDetailsView.h"
 #include "REngine/Engine/Editor/UI/Widgets/ViewportWindow/RViewportWindow.h"
 #include "REngine/Engine/Editor/UI/Widgets/WorldTreeWindow/RWorldTreeWindow.h"
 
@@ -13,6 +14,10 @@ void RRootWindow::Initialize(const std::shared_ptr<REditor>& InEditor)
 
     WorldTreeWindow = AddWidget<RWorldTreeWindow>();
     RCheckReturn(WorldTreeWindow);
+    
+    DetailsView = AddWidget<RDetailsView>();
+    RCheckReturn(DetailsView);
+    
 }
 
 void RRootWindow::Draw()

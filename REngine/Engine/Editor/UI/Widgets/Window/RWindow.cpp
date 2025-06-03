@@ -77,7 +77,6 @@ void RWindow::Draw()
 {
     PushWindowStyle();
     ImGui::Begin(WindowData.Name.c_str(), nullptr, WindowData.WindowFlags);
-    PopWindowStyle();
 
     DrawWindowContent();
     
@@ -91,6 +90,7 @@ void RWindow::Draw()
     RContainerWidget::Draw();
     
     ImGui::End();
+    PopWindowStyle();
 }
 
 void RWindow::OnMouseDown(int Button, int Mods, const FVector2D& CursorPosition)

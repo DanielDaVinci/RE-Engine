@@ -17,6 +17,11 @@ std::shared_ptr<RActorPicker> RActorPicker::GetActorPicker()
     return Scene->GetActorPicker();
 }
 
+std::shared_ptr<RActor> RActorPicker::GetSelectedActor() const
+{
+    return WeakSelectedActor.lock();
+}
+
 void RActorPicker::SelectActor(const std::shared_ptr<RActor>& PickedActor)
 {
     if (auto SelectedActor = WeakSelectedActor.lock())

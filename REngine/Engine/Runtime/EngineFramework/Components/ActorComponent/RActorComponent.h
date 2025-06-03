@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "Core/Public/Object/RObject.h"
+#include "Generated/RActorComponent.generated.h"
 
-class RActorComponent : public RObject
+class CLASS() RActorComponent : public RObject
 {
+    GENERATED_BODY()
+    
 public:
-    using RObject::RObject;
-
     virtual void Initialize();
     virtual void BeginPlay();
     virtual void Tick(float DeltaTime);
@@ -13,3 +14,5 @@ public:
     virtual void Render(float DeltaTime);
     virtual void EndPlay();
 };
+
+META_REFLECT()

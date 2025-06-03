@@ -8,6 +8,11 @@ struct FMatrix;
 
 struct FQuat : public glm::quat
 {
+    struct 
+    {
+        float EditorPitch, EditorYaw, EditorRoll;
+    };
+    
     using glm::quat::quat;
     using glm::quat::operator=;
 
@@ -15,7 +20,6 @@ struct FQuat : public glm::quat
 
     FQuat(const glm::quat& InQuat);
     FQuat(float Pitch, float Yaw, float Roll);
-    FQuat(const FRotator& InRotator);
 
     void SetPitch(float Pitch);
     float GetPitch() const;
@@ -34,4 +38,7 @@ struct FQuat : public glm::quat
 
     FVector GetEulerAngles() const;
     FMatrix GetMatrix() const;
+
+    void UpdateEditorAngles();
+    void OnEditorValueChanged();
 };

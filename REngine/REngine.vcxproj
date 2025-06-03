@@ -100,10 +100,10 @@
     <ClCompile Include="Engine\Editor\Display\Shader\FShader.cpp" />
     <ClCompile Include="Engine\Editor\REditor.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.cpp" />
+    <ClCompile Include="Engine\Editor\UI\Widgets\DetailsView\RDetailsView.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Widget\RWidget.cpp" />
-    <ClCompile Include="Engine\Editor\UI\Widgets\Window\Data\FWindowData.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\Window\RWindow.cpp" />
     <ClCompile Include="Engine\Editor\UI\Widgets\WorldTreeWindow\RWorldTreeWindow.cpp" />
     <ClCompile Include="Engine\REngine.cpp" />
@@ -364,6 +364,8 @@
     <ClInclude Include="Engine\Editor\REdtior.tpp" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ContainerWidget\RContainerWidget.tpp" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\DetailsView\RDetailsView.h" />
+    <ClInclude Include="Engine\Editor\UI\Widgets\DetailsView\RDetailsView.tpp" />
     <ClInclude Include="Engine\Editor\UI\Widgets\RootWindow\RRootWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\ViewportWindow\RViewportWindow.h" />
     <ClInclude Include="Engine\Editor\UI\Widgets\Widget\RWidget.h" />

@@ -138,3 +138,8 @@ void RSceneComponent::RemoveComponent(const std::shared_ptr<RSceneComponent>& Co
     auto It = std::ranges::remove(ChildrenComponents, Component);
     ChildrenComponents.erase(It.begin(), It.end());
 }
+
+void RSceneComponent::Tick(float DeltaTime)
+{
+    RActorComponent::Tick(DeltaTime);
+}

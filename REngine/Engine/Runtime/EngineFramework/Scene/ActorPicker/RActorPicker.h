@@ -9,8 +9,6 @@ class RActor;
 struct FVector2D;
 class RScene;
 
-template class DLL_API RMulticastDelegate<int>;
-
 class RActorPicker : public RObject
 {
     friend class RScene;
@@ -19,6 +17,8 @@ public:
     using RObject::RObject;
 
     static std::shared_ptr<RActorPicker> GetActorPicker();
+
+    std::shared_ptr<RActor> GetSelectedActor() const;
 
     void SelectActor(const std::shared_ptr<RActor>& PickedActor);
     void SelectActorAtCursor(const FVector2D& CursorPosition);

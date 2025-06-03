@@ -2,6 +2,7 @@
 
 #include "REngine/Engine/Editor/UI/Widgets/Window/RWindow.h"
 
+class RDetailsView;
 class RWorldTreeWindow;
 class RViewportWindow;
 
@@ -16,5 +17,6 @@ public:
 protected:
     std::shared_ptr<RViewportWindow> ViewportWindow;
     std::shared_ptr<RWorldTreeWindow> WorldTreeWindow;
+    std::shared_ptr<RDetailsView> DetailsView;
     
 };

@@ -3,12 +3,13 @@
 
 #include "REngine/Engine/Runtime/EngineFramework/Components/ActorComponent/RActorComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
+#include "Generated/RSceneComponent.generated.h"
 
-class RSceneComponent : public RActorComponent
+class CLASS() RSceneComponent : public RActorComponent
 {
+    GENERATED_BODY()
+    
 public:
-    using RActorComponent::RActorComponent;
-
     void Construct() override;
 
     void AttachToComponent(const std::shared_ptr<RSceneComponent>& Component);
@@ -34,6 +35,7 @@ public:
     FVector GetRightVector() const;
     
 protected:
+    PROPERTY()
     FTransform Transform;
 
     void SetParentComponent(const std::shared_ptr<RSceneComponent>& Component);
@@ -41,9 +43,13 @@ protected:
     
     void AddComponent(const std::shared_ptr<RSceneComponent>& Component);
     void RemoveComponent(const std::shared_ptr<RSceneComponent>& Component);
+
+    void Tick(float DeltaTime) override;
     
 private:
     std::weak_ptr<RSceneComponent> ParentComponent;
     std::vector<std::shared_ptr<RSceneComponent>> ChildrenComponents;
-    
+
 };
+
+META_REFLECT()

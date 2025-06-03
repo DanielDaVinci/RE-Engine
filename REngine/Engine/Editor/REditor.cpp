@@ -133,7 +133,7 @@ void REditor::DrawUI(GLdouble DeltaTime)
         RootWidget->Draw();
     }
 
-    ImGui::ShowDemoWindow();
+    ImGui::ShowDebugLogWindow();
 }
 
 void REditor::DrawMainMenuBar()
@@ -142,7 +142,7 @@ void REditor::DrawMainMenuBar()
     {
         if (ImGui::BeginMenu("Settings"))
         {
-            if (ImGui::MenuItem("Test"))
+            if (ImGui::MenuItem("Import file"))
             {
                 
             }

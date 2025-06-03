@@ -46,3 +46,8 @@ float RCameraComponent::GetFOV() const
 {
     return FOV;
 }
+
+void RCameraComponent::Tick(float DeltaTime)
+{
+    // RSceneComponent::Tick(DeltaTime);
+}

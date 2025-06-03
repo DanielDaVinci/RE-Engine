@@ -144,6 +144,11 @@ bool RActor::IsSelected() const
     return bIsSelected;
 }
 
+std::vector<std::shared_ptr<RActorComponent>> RActor::GetAllComponents() const
+{
+    return Components;
+}
+
 void RActor::SetRootComponent(const std::shared_ptr<RSceneComponent>& Component)
 {
     RCheckReturn(Component);
