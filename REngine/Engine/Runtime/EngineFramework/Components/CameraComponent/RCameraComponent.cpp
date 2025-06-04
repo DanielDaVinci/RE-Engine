@@ -2,6 +2,7 @@
 
 #include "REngine/Engine/Editor/Display/Frame/RFrame.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraSubsystem.h"
+#include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FIntVector.h"
 
 void RCameraComponent::Construct()
@@ -39,7 +40,7 @@ FMatrix RCameraComponent::GetProjectionMatrix() const
 
 void RCameraComponent::SetFOV(float InFOV)
 {
-    FOV = glm::max(glm::min(InFOV, 179.99f), 0.001f);
+    FOV = FMath::Clamp(InFOV, 0.001f, 179.99f);
 }
 
 float RCameraComponent::GetFOV() const
@@ -47,7 +48,12 @@ float RCameraComponent::GetFOV() const
     return FOV;
 }
 
-void RCameraComponent::Tick(float DeltaTime)
+void RCameraComponent::SetSpeed(float InSpeed)
 {
-    // RSceneComponent::Tick(DeltaTime);
+    Speed = InSpeed;
+}
+
+float RCameraComponent::GetSpeed() const
+{
+    return Speed;
 }

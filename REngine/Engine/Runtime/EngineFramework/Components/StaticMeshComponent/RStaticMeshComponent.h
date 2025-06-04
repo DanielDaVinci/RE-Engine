@@ -13,7 +13,6 @@ public:
     void Initialize() override;
     void PreRender(float DeltaTime) override;
     void Render(float DeltaTime) override;
-    void Tick(float DeltaTime) override;
 
     FBox GetWorldBoundingBox() const;
     FBox GetLocalBoundingBox() const;

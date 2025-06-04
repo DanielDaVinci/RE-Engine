@@ -59,9 +59,6 @@ public:
 
     template<std::derived_from<RSubsystem> T = RSubsystem>
     std::shared_ptr<T> GetSubsystem();
-
-protected:
-    static std::pair<GLint, GLint> GetGLFWWindowSize(GLFWwindow* window);
     
 private:
     std::unordered_map<std::string, std::shared_ptr<RSubsystem>> Subsystems;

@@ -1,15 +1,17 @@
 ﻿#pragma once
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
+#include "Generated/RCameraActor.generated.h"
 
 class RCameraComponent;
 
-class RCameraActor : public RActor
+class CLASS() RCameraActor : public RActor
 {
-public:
-    using RActor::RActor;
-
+    GENERATED_BODY()
+    
 protected:
     std::shared_ptr<RCameraComponent> CameraComponent;
     
     void Construct() override;
 };
+
+META_REFLECT()

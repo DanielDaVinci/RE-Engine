@@ -1,13 +1,13 @@
 ﻿#pragma once
 
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
+#include "Generated/RMeshActor.generated.h"
 
 class RStaticMeshComponent;
 
-class RMeshActor : public RActor
+class CLASS() RMeshActor : public RActor
 {
-public:
-    using RActor::RActor;
+    GENERATED_BODY()
 
 protected:
     std::shared_ptr<RStaticMeshComponent> StaticMeshComponent;
@@ -15,3 +15,5 @@ protected:
     void Construct() override;
     void Tick(float DeltaTime) override;
 };
+
+META_REFLECT()

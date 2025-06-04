@@ -15,11 +15,15 @@ public:
     void SetFOV(float InFOV);
     float GetFOV() const;
 
+    void SetSpeed(float InSpeed);
+    float GetSpeed() const;
+
 protected:
     PROPERTY()
     float FOV = 90.0f;
 
-    void Tick(float DeltaTime) override;
+    PROPERTY()
+    float Speed = 5.0f;
     
 };
 

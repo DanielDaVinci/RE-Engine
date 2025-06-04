@@ -30,6 +30,7 @@ protected:
     void PopWindowStyle() override;
 
     void PickObject(const FVector2D& CursorPosition) const;
+    void MoveSelectedActor(float DeltaTime) const;
 
 private:
     bool InputKeys[1024] = {};

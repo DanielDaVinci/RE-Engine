@@ -8,7 +8,6 @@
 #include "REngine/Engine/Editor/Display/Frame/RFrame.h"
 #include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/FMath.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/ActorPicker/RActorPicker.h"
@@ -33,29 +32,7 @@ void RViewportWindow::Tick(float DeltaTime)
 {
     RWindow::Tick(DeltaTime);
 
-    const GLfloat CameraShift = 5.0f * DeltaTime;
-    const auto CameraComponent = REditor::GetCamera();
-    RCheckReturn(CameraComponent);
-
-    const auto CameraActor = CameraComponent->GetOwner<RActor>();
-    RCheckReturn(CameraActor);
-    
-    if (InputKeys[GLFW_KEY_W])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetForwardVector() * CameraShift);
-    }
-    if (InputKeys[GLFW_KEY_S])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetForwardVector() * CameraShift);
-    }
-    if (InputKeys[GLFW_KEY_A])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetRightVector() * CameraShift);
-    }
-    if (InputKeys[GLFW_KEY_D])
-    {
-        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetRightVector() * CameraShift);
-    }
+    MoveSelectedActor(DeltaTime);
 }
 
 void RViewportWindow::DrawWindowContent() const
@@ -182,4 +159,37 @@ void RViewportWindow::PickObject(const FVector2D& CursorPosition) const
     RCheckReturn(ActorPicker);
 
     ActorPicker->SelectActorAtCursor(RelativeCursorPosition);
+}
+
+void RViewportWindow::MoveSelectedActor(float DeltaTime) const
+{
+    if (!bIsControlling)
+    {
+        return;
+    }
+    
+    const auto CameraComponent = REditor::GetCamera();
+    RCheckReturn(CameraComponent);
+
+    const auto CameraActor = CameraComponent->GetOwner<RActor>();
+    RCheckReturn(CameraActor);
+
+    const GLfloat CameraShift = DeltaTime * CameraComponent->GetSpeed();
+    
+    if (InputKeys[GLFW_KEY_W])
+    {
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetForwardVector() * CameraShift);
+    }
+    if (InputKeys[GLFW_KEY_S])
+    {
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetForwardVector() * CameraShift);
+    }
+    if (InputKeys[GLFW_KEY_A])
+    {
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() - CameraActor->GetRightVector() * CameraShift);
+    }
+    if (InputKeys[GLFW_KEY_D])
+    {
+        CameraActor->SetRelativePosition(CameraActor->GetRelativePosition() + CameraActor->GetRightVector() * CameraShift);
+    }
 }

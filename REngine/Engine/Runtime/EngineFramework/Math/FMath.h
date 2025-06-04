@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <cmath>
 
+#include "GLM/common.hpp"
+
 class FMath
 {
 public:
@@ -30,5 +32,11 @@ public:
     static T Max(const T& Left, const T& Right)
     {
         return Left > Right ? Left : Right;
+    }
+
+    template<typename T>
+    static T Clamp(const T& Value, const T& Min, const T& Max)
+    {
+        return glm::max(glm::min(Value, Max), Min);
     }
 };

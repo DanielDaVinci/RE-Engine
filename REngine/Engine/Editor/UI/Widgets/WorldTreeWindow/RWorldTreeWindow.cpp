@@ -1,5 +1,7 @@
 ﻿#include "RWorldTreeWindow.h"
 
+#include <format>
+
 #include "REngine/Engine/Editor/REditor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/ActorPicker/RActorPicker.h"
@@ -37,8 +39,9 @@ void RWorldTreeWindow::DrawWindowContent() const
         {
             flags |= ImGuiTreeNodeFlags_Selected;
         }
-        
-        if (ImGui::TreeNodeEx((void*)(intptr_t)Index, flags, "Actor %d", Index))
+
+        std::string NodeName = std::format("%d. {}", Actor->GetClassName());
+        if (ImGui::TreeNodeEx((void*)(intptr_t)Index, flags, NodeName.c_str(), Index + 1))
         {
             if (ImGui::IsItemClicked())
             {

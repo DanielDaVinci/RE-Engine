@@ -291,7 +291,6 @@
     <ClCompile Include="Engine\Runtime\Engine\Mesh\RMeshSubsystem.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\StatichMesh\FStaticMesh.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Actor\RActor.cpp" />
-    <ClCompile Include="Engine\Runtime\EngineFramework\Camera\RCameraLegacy.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Scene\RScene.cpp" />
@@ -400,7 +399,6 @@
     <ClInclude Include="Engine\Runtime\Engine\Mesh\RMeshSubsystem.h" />
     <ClInclude Include="Engine\Runtime\Engine\StatichMesh\FStaticMesh.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.h" />
-    <ClInclude Include="Engine\Runtime\EngineFramework\Camera\RCameraLegacy.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\ActorComponent\RActorComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\SceneComponent\RSceneComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Scene\RScene.h" />

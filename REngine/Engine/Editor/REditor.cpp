@@ -1,27 +1,16 @@
 #include "REditor.h"
 
-#include <string>
-
-
 #include "DebugLog/Public/Check/Check.h"
 #include "Display/Frame/RFrame.h"
 #include "Display/Shader/FShader.h"
-#include "glm/detail/type_quat.hpp"
-#include "glm/ext/quaternion_trigonometric.hpp"
-#include "glm/gtc/quaternion.hpp"
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
 #include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
-#include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraLegacy.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraSubsystem.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
 #include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
-#include "ThirdParty/ExternalIncludes/GLFW/glfw3.h"
-#include "ThirdParty/ExternalIncludes/GLM/fwd.hpp"
-#include "ThirdParty/ExternalIncludes/GLM/vec3.hpp"
-#include "ThirdParty/ExternalIncludes/GLM/ext/matrix_transform.hpp"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui.h"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_glfw.h"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_opengl3.h"
@@ -220,13 +209,6 @@ std::shared_ptr<RCameraComponent> REditor::GetCamera()
     RCheckReturn(CameraSubsystem, {});
     
     return CameraSubsystem->GetSelectedCamera();
-}
-
-std::pair<GLint, GLint> REditor::GetGLFWWindowSize(GLFWwindow* window)
-{
-    GLint width, height;
-    glfwGetFramebufferSize(window, &width, &height);
-    return std::make_pair(width, height);
 }
 
 void REditor::Exit()

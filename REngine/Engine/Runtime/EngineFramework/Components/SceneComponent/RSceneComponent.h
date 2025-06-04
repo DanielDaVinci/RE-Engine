@@ -43,8 +43,6 @@ protected:
     
     void AddComponent(const std::shared_ptr<RSceneComponent>& Component);
     void RemoveComponent(const std::shared_ptr<RSceneComponent>& Component);
-
-    void Tick(float DeltaTime) override;
     
 private:
     std::weak_ptr<RSceneComponent> ParentComponent;
