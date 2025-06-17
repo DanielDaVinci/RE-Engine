@@ -111,6 +111,7 @@
     <ClCompile Include="Engine\Runtime\EngineFramework\Actor\MeshActor\RMeshActor.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Camera\RCameraSubsystem.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\CameraComponent\RCameraComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineFramework\Components\LightComponent\RLightComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\Box\FBox.cpp" />
     <ClCompile Include="Engine\Runtime\EngineFramework\Math\FMath.cpp" />
@@ -377,6 +378,7 @@
     <ClInclude Include="Engine\Runtime\EngineFramework\Actor\RActor.tpp" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Camera\RCameraSubsystem.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\CameraComponent\RCameraComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineFramework\Components\LightComponent\RLightComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Components\StaticMeshComponent\RStaticMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\Box\FBox.h" />
     <ClInclude Include="Engine\Runtime\EngineFramework\Math\FMath.h" />

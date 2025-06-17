@@ -40,6 +40,11 @@ FMatrix FVector::GetScaleMatrix() const
     return glm::scale(FMatrix(1.0f), *this);
 }
 
+float FVector::Distance(const FVector& Left, const FVector& Right)
+{
+    return (Right - Left).length();
+}
+
 FVector& FVector::operator=(const glm::vec4& Vector)
 {
     *this = glm::vec3(Vector);

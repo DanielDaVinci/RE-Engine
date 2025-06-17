@@ -49,6 +49,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 uniform DirLight dirLight;
 uniform PointLight pointLight;
 uniform SpotLight spotLight;
+uniform bool bIsSelected;
 
 in vec3 FragPos;  
 in vec3 Normal;
@@ -84,7 +85,12 @@ void main()
 
     result += max(CalcDirLight(dirLight, norm, viewDir), 0);
     result += max(CalcPointLight(pointLight, norm, FragPos, viewDir), 0);    
-    result += max(CalcSpotLight(spotLight, norm, FragPos, viewDir), 0);    
+    result += max(CalcSpotLight(spotLight, norm, FragPos, viewDir), 0);
+    
+    if (bIsSelected)
+    {
+        result *= vec3(0.5f, 0.5f, 1.0f);
+    }    
     
     color = vec4(result, 1.0);
 } 

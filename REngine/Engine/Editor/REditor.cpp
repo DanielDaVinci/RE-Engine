@@ -86,6 +86,9 @@ void REditor::PreRender(GLdouble DeltaTime)
 {
     Frame->Bind();
 
+    glfwWindowHint(GLFW_SAMPLES, 32);
+
+    glEnable(GL_MULTISAMPLE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_STENCIL_TEST);
     glDepthFunc(GL_LESS);

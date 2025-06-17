@@ -28,6 +28,8 @@ struct FVector : public glm::vec3
     FMatrix GetTranslationMatrix() const;
     FMatrix GetScaleMatrix() const;
 
+    static float Distance(const FVector& Left, const FVector& Right);
+
     FVector& operator = (const glm::vec4& Vector);
     bool operator >= (const FVector& OtherVector) const;
     bool operator > (const FVector& OtherVector) const;

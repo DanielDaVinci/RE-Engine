@@ -34,6 +34,8 @@ public:
     FVector GetRelativePosition() const;
     FQuat GetRelativeRotation() const;
 
+    FVector GetActorPosition() const;
+
     FVector GetForwardVector() const;
     FVector GetRightVector() const;
     FVector GetUpVector() const;
@@ -41,6 +43,9 @@ public:
     std::shared_ptr<RWorld> GetWorld() const;
     std::shared_ptr<RSceneComponent> GetRootComponent() const;
     std::vector<std::shared_ptr<RActorComponent>> GetAllComponents() const;
+
+    template<std::derived_from<RActorComponent> T = RActorComponent>
+    std::shared_ptr<T> GetComponent();
 
     FBox GetBoundingBox() const;
 

@@ -30,8 +30,14 @@ void RMesh::Construct()
 void RMesh::LoadMesh(const std::string& MeshPath)
 {
     Assimp::Importer Importer;
+
+    unsigned int ImporterFlags = aiProcess_Triangulate;
+    if (MeshPath != "Content/objects/backpack/backpack.obj")
+    {
+        ImporterFlags |= aiProcess_FlipUVs;
+    }
     
-    const aiScene* AssimpScene = Importer.ReadFile(MeshPath, aiProcess_Triangulate); // aiProcess_FlipUVs
+    const aiScene* AssimpScene = Importer.ReadFile(MeshPath, ImporterFlags);
     RCheckReturn(AssimpScene);
     RCheckReturn(AssimpScene->mRootNode);
     RCheckReturn(!(AssimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE));
@@ -42,7 +48,7 @@ void RMesh::LoadMesh(const std::string& MeshPath)
     BoundingBox = CalcBoundingBox();
 }
 
-void RMesh::Render(const FTransform& Transform, float DeltaTime)
+void RMesh::Render(const FTransform& Transform, bool bIsSelected, float DeltaTime)
 {
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
@@ -54,6 +60,10 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     RCheckReturn(Camera);
 
     auto CameraPosition = Camera->GetWorldPosition();
+
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
     
     Shader->Use();
     Shader->setUniform("pointLight.position", FVector(0.0f, 0.0f, 25.0f));
@@ -68,6 +78,7 @@ void RMesh::Render(const FTransform& Transform, float DeltaTime)
     Shader->setUniform("model", Transform.GetMatrix());
     Shader->setUniform("view", Camera->GetViewMatrix());
     Shader->setUniform("projection", Camera->GetProjectionMatrix());
+    Shader->setUniform("bIsSelected", bIsSelected);
     
     for (const FStaticMesh& StaticMesh : StaticMeshes)
     {

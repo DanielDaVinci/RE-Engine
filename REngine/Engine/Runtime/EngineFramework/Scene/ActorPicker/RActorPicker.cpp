@@ -57,29 +57,35 @@ std::shared_ptr<RActor> RActorPicker::GetActorAtCursor(const FVector2D& CursorPo
     RCheckReturn(World, nullptr);
     
     FVector WorldCursorPoint = TransformCursorToWorldPoint(CursorPosition);
-
-    const auto& Actors = World->GetActors();
-    for (const auto& Actor : Actors)
+    
+    std::shared_ptr<RActor> NearlyActor = nullptr;
+    float MinDistanceToActor = FLT_MAX;
+    
+    for (const std::shared_ptr<RActor>& Actor : World->GetActors())
     {
         RCheckContinue(Actor);
 
         const FBox& BoundingBox = Actor->GetBoundingBox();
-        if (BoundingBox.IsInside(WorldCursorPoint))
+        const float Distance = FVector::Distance(Actor->GetActorPosition(), WorldCursorPoint);
+        if (BoundingBox.IsInside(WorldCursorPoint) && Distance < MinDistanceToActor)
         {
-            return Actor;
+            NearlyActor = Actor;
+            MinDistanceToActor = Distance;
         }
     }
 
-    return nullptr;
+    return NearlyActor;
 }
 
 FVector RActorPicker::TransformCursorToWorldPoint(const FVector2D& CursorPosition)
 {
     auto Frame = GetFrame();
-    std::shared_ptr<REditor> Editor = REditor::GetEngineEditor();
-    std::shared_ptr<RCameraComponent> Camera = Editor->GetCamera();
     RCheckReturn(Frame, {});
+    
+    std::shared_ptr<REditor> Editor = REditor::GetEngineEditor();
     RCheckReturn(Editor, {});
+    
+    std::shared_ptr<RCameraComponent> Camera = Editor->GetCamera();
     RCheckReturn(Camera, {});
 
     const float Depth = Frame->GetDepthAt(CursorPosition);

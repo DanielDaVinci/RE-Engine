@@ -5,14 +5,17 @@
 class CLASS() RActorComponent : public RObject
 {
     GENERATED_BODY()
+
+    friend class RActor;
     
-public:
+protected:
     virtual void Initialize();
     virtual void BeginPlay();
     virtual void Tick(float DeltaTime);
     virtual void PreRender(float DeltaTime);
     virtual void Render(float DeltaTime);
     virtual void EndPlay();
+    
 };
 
 META_REFLECT()

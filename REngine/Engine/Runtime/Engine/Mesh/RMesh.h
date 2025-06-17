@@ -15,7 +15,7 @@ public:
     void Construct() override;
 
     void LoadMesh(const std::string& MeshPath);
-    void Render(const FTransform& Transform, float DeltaTime);
+    void Render(const FTransform& Transform, bool bIsSelected, float DeltaTime);
     void RenderStroke(const FTransform& Transform, float DeltaTime);
 
     FBox CalcBoundingBox() const;

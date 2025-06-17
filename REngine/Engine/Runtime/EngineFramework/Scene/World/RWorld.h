@@ -4,6 +4,7 @@
 #include "Core/Public/Object/RObject.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Transform/FTransform.h"
 
+class RMeshActor;
 class RActor;
 
 class RWorld : public RObject
@@ -23,6 +24,11 @@ public:
 
 protected:
     std::vector<std::shared_ptr<RActor>> Actors;
+
+    void RemoveActor(const std::shared_ptr<RActor>& Actor);
+    void AddActor(const std::shared_ptr<RActor>& Actor);
+    
+    std::shared_ptr<RMeshActor> SpawnMeshActor(const FTransform& InTransform, const std::string& InMeshPath);
     
 };
 

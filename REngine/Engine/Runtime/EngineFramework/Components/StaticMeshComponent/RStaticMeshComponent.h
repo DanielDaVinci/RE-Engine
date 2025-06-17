@@ -17,6 +17,8 @@ public:
     FBox GetWorldBoundingBox() const;
     FBox GetLocalBoundingBox() const;
 
+    void SetMesh(const std::shared_ptr<RMesh>& Mesh);
+
 protected:
     std::shared_ptr<RMesh> StaticMesh;
     

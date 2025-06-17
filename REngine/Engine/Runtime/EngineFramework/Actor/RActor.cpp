@@ -92,6 +92,12 @@ FQuat RActor::GetRelativeRotation() const
     return RootComponent->GetRelativeRotation();
 }
 
+FVector RActor::GetActorPosition() const
+{
+    RCheckReturn(RootComponent, {});
+    return RootComponent->GetWorldPosition();
+}
+
 FVector RActor::GetForwardVector() const
 {
     RCheckReturn(RootComponent, {});

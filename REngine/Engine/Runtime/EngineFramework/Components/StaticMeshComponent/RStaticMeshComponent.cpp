@@ -9,24 +9,28 @@ void RStaticMeshComponent::Initialize()
 {
     RSceneComponent::Initialize();
 
-    auto MeshSubsystem = RMeshSubsystem::Get();
-    RCheckReturn(MeshSubsystem);
-    
-    StaticMesh = MeshSubsystem->GetMesh("Content/objects/sponza/sponza.obj");
-    RCheckReturn(StaticMesh);
+    if (!StaticMesh)
+    {
+        auto MeshSubsystem = RMeshSubsystem::Get();
+        RCheckReturn(MeshSubsystem);
+        
+        StaticMesh = MeshSubsystem->GetMesh("Content/objects/backpack/backpack.obj");
+        RCheckReturn(StaticMesh);
+    }
 }
 
 void RStaticMeshComponent::PreRender(float DeltaTime)
 {
     RSceneComponent::PreRender(DeltaTime);
 
-    const std::shared_ptr<RActor> OwnerActor = GetOwner<RActor>();
-    RCheckReturn(OwnerActor);
-
+    const std::shared_ptr<RActor> Owner = GetOwner<RActor>();
+    RCheckReturn(Owner);
+    
     FTransform WorldTransform = GetWorldTransform();
-
-    if (OwnerActor->IsSelected())
+    
+    if (Owner->IsSelected())
     {
+        RCheckReturn(StaticMesh);
         StaticMesh->RenderStroke(WorldTransform, DeltaTime);
     }
 }
@@ -34,9 +38,12 @@ void RStaticMeshComponent::PreRender(float DeltaTime)
 void RStaticMeshComponent::Render(float DeltaTime)
 {
     RSceneComponent::Render(DeltaTime);
+
+    const std::shared_ptr<RActor> Owner = GetOwner<RActor>();
+    RCheckReturn(Owner);
     
     RCheck(StaticMesh);
-    StaticMesh->Render(GetWorldTransform(), DeltaTime);
+    StaticMesh->Render(GetWorldTransform(), Owner->IsSelected(), DeltaTime);
 }
 
 FBox RStaticMeshComponent::GetWorldBoundingBox() const
@@ -48,4 +55,10 @@ FBox RStaticMeshComponent::GetLocalBoundingBox() const
 {
     RCheckReturn(StaticMesh, {});
     return StaticMesh->GetBoundingBox();
+}
+
+void RStaticMeshComponent::SetMesh(const std::shared_ptr<RMesh>& Mesh)
+{
+    RCheckReturn(Mesh);
+    StaticMesh = Mesh;
 }
