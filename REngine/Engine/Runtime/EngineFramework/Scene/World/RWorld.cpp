@@ -10,24 +10,24 @@ const std::vector<std::shared_ptr<RActor>>& RWorld::GetActors() const
 
 void RWorld::Initialize()
 {
-    SpawnActor<RMeshActor>(FTransform(
-        FVector(10.0f, 10.0f, 0.0f),
-        FQuat(0.0f, -90.0f, 90.0f),
-        FVector::OneVector));
-
-    SpawnActor<RMeshActor>(FTransform(
-        FVector(10.0f, 0.0f, 0.0f),
-        FQuat(0.0f, -90.0f, 90.0f),
-        FVector::OneVector));
-
-    SpawnActor<RMeshActor>(FTransform(
-        FVector(10.0f, -10.0f, 0.0f),
-        FQuat(0.0f, -90.0f, 90.0f),
-        FVector::OneVector));
-
     SpawnActor<RCameraActor>(FTransform(
-        FVector(0.0f, 0.0f, 0.0f),
+        FVector(-100.0f, 0.0f, 10.0f),
         FQuat(0.0f, 0.0f, 0.0f)));
+    
+    SpawnActor<RMeshActor>(FTransform(
+        FVector(0.0f, 0.0f, 0.0f),
+        FQuat(0.0f, 0.0f, 90.0f),
+        FVector(0.1f, 0.1f, 0.1f)));
+
+    // SpawnActor<RMeshActor>(FTransform(
+    //     FVector(10.0f, 0.0f, 0.0f),
+    //     FQuat(0.0f, -90.0f, 90.0f),
+    //     FVector::OneVector));
+    //
+    // SpawnActor<RMeshActor>(FTransform(
+    //     FVector(10.0f, -10.0f, 0.0f),
+    //     FQuat(0.0f, -90.0f, 90.0f),
+    //     FVector::OneVector));
     
     for (const std::shared_ptr<RActor>& Actor : Actors)
     {

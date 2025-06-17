@@ -32,7 +32,7 @@ void RFrame::Draw(FShader shader)
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void RFrame::SetFrameSize(GLuint InWidth, GLuint InHeight)
+void RFrame::SetFrameSize(int InWidth, int InHeight)
 {
     Width = InWidth;
     Height = InHeight;
@@ -50,7 +50,7 @@ void RFrame::SetFrameSize(GLuint InWidth, GLuint InHeight)
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
-void RFrame::SetFrameSize(std::pair<GLuint, GLuint> InSize)
+void RFrame::SetFrameSize(std::pair<int, int> InSize)
 {
     SetFrameSize(InSize.first, InSize.second);
 }

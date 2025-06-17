@@ -44,28 +44,25 @@ void RMesh::LoadMesh(const std::string& MeshPath)
 
 void RMesh::Render(const FTransform& Transform, float DeltaTime)
 {
-    // glStencilFunc(GL_ALWAYS, 1, 0xFF); 
-    // glStencilMask(0xFF);
-    
     RCheckReturn(Shader);
     RCheckReturn(REngine::GetEngine());
 
     auto Editor = REngine::GetEngine()->GetEditor();
     RCheckReturn(Editor);
 
-    auto Camera = REditor::GetCamera();
+    std::shared_ptr<RCameraComponent> Camera = REditor::GetCamera();
     RCheckReturn(Camera);
 
     auto CameraPosition = Camera->GetWorldPosition();
     
     Shader->Use();
-    Shader->setUniform("pointLight.position", CameraPosition);
-    Shader->setUniform("pointLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-    Shader->setUniform("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+    Shader->setUniform("pointLight.position", FVector(0.0f, 0.0f, 25.0f));
+    Shader->setUniform("pointLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+    Shader->setUniform("pointLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
     Shader->setUniform("pointLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
     Shader->setUniform("pointLight.constant", 1.0f);
-    Shader->setUniform("pointLight.linear", 0.22f);
-    Shader->setUniform("pointLight.constant", 0.20f);
+    Shader->setUniform("pointLight.linear", 0.05f);
+    Shader->setUniform("pointLight.constant", 0.05f);
     Shader->setUniform("viewPos", CameraPosition);
     
     Shader->setUniform("model", Transform.GetMatrix());

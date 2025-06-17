@@ -4,7 +4,6 @@
 #include "REngine/Engine/Runtime/EngineFramework/Math/Quat/FQuat.h"
 #include "REngine/Engine/Runtime/EngineFramework/Math/Vector/FVector.h"
 #include "Generated/FTransform.generated.h"
-#include "REngine/Engine/Runtime/EngineFramework/Math/Rotator/FRotator.h"
 
 struct STRUCT() FTransform
 {

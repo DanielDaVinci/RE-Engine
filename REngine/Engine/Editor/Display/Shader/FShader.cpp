@@ -27,7 +27,7 @@ void FShader::setProgram()
 	if (!success)
 	{
 		glGetProgramInfoLog(program, 512, NULL, infoLog);
-		cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << endl;
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 }
 
@@ -36,12 +36,12 @@ GLuint FShader::getProgram() const
 	return program;
 }
 
-string FShader::getVertexPath() const
+std::string FShader::getVertexPath() const
 {
 	return vertexPath;
 }
 
-string FShader::getFragmentPath() const
+std::string FShader::getFragmentPath() const
 {
 	return fragmentPath;
 }
@@ -50,7 +50,7 @@ void FShader::setVertex(const GLchar* path)
 {
 	vertexPath = (path == nullptr) ? "" : path;
 
-	string vertexCode = getCodeFromFile(path);
+	std::string vertexCode = getCodeFromFile(path);
 
 	vertexShader = getShader(GL_VERTEX_SHADER, vertexCode.c_str());
 }
@@ -59,7 +59,7 @@ void FShader::setFragment(const GLchar* path)
 {
 	fragmentPath = (path == nullptr) ? "" : path;
 
-	string fragmentCode = getCodeFromFile(path);
+	std::string fragmentCode = getCodeFromFile(path);
 
 	fragmentShader = getShader(GL_FRAGMENT_SHADER, fragmentCode.c_str());
 }
@@ -104,26 +104,26 @@ void FShader::setUniform(const GLchar* name, glm::mat4 value) const
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-string FShader::getCodeFromFile(const GLchar* path)
+std::string FShader::getCodeFromFile(const GLchar* path)
 {
-	string shaderCode;
-	ifstream shaderFile;
+	std::string shaderCode;
+	std::ifstream shaderFile;
 
-	shaderFile.exceptions(ifstream::badbit);
+	shaderFile.exceptions(std::ifstream::badbit);
 	try
 	{
 		shaderFile.open((path == nullptr) ? "" : path);
 
-		stringstream shaderStream;
+		std::stringstream shaderStream;
 		shaderStream << shaderFile.rdbuf();
 
 		shaderFile.close();
 
 		shaderCode = shaderStream.str();
 	}
-	catch (istream::failure e)
+	catch (std::istream::failure e)
 	{
-		cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << endl;
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
 	}
 
 	return shaderCode;
@@ -143,7 +143,7 @@ GLuint FShader::getShader(GLenum type, const GLchar* source)
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED" << endl << infoLog << endl;
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED" << std::endl << infoLog << std::endl;
 	}
 
 	return shader;

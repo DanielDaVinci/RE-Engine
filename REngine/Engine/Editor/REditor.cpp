@@ -31,7 +31,7 @@ void REditor::Initialize()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     
-    io.FontGlobalScale = 1.1f; // Scale text
+    io.FontGlobalScale = 1.1f;
     ImGui::GetStyle().ScaleAllSizes(1.1f);
     
     ImGui::StyleColorsDark();

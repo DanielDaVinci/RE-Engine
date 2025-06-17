@@ -20,7 +20,7 @@ public:
 
 protected:
     PROPERTY()
-    float FOV = 90.0f;
+    float FOV = 60.0f;
 
     PROPERTY()
     float Speed = 5.0f;

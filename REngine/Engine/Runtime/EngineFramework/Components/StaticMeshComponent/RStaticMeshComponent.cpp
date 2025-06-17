@@ -12,7 +12,7 @@ void RStaticMeshComponent::Initialize()
     auto MeshSubsystem = RMeshSubsystem::Get();
     RCheckReturn(MeshSubsystem);
     
-    StaticMesh = MeshSubsystem->GetMesh("Content/objects/backpack/backpack.obj");
+    StaticMesh = MeshSubsystem->GetMesh("Content/objects/sponza/sponza.obj");
     RCheckReturn(StaticMesh);
 }
 

@@ -36,8 +36,8 @@ public:
 	void UnBind();
 	void Draw(FShader shader);
 	
-	void SetFrameSize(GLuint InWidth, GLuint InHeight);
-	void SetFrameSize(std::pair<GLuint, GLuint> InSize);
+	void SetFrameSize(int InWidth, int InHeight);
+	void SetFrameSize(std::pair<int, int> InSize);
 	FIntVector GetFrameSize() const;
 
 	GLuint GetTextureID() const;
@@ -50,7 +50,7 @@ protected:
 
 private:
 	bool bIsBinded = false;
-	GLuint Width, Height;
+	int Width, Height;
 
 	GLuint FrameBuffer;
 	GLuint ColorBuffer;

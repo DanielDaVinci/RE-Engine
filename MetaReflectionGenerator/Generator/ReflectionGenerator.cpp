@@ -98,12 +98,6 @@ void ReflectionGenerator::GenerateCommonFile() const
     std::cout << "-------------------------------" << std::endl;
 }
 
-// void ReflectionGenerator::FillCommonFile(std::ofstream& File) const
-// {
-//     File << "#pragma once" << std::endl;
-//     File << 
-// }
-
 void ReflectionGenerator::GenerateFiles() const
 {
     for (const std::shared_ptr<ClassParser>& ClassParser : ClassParsers)

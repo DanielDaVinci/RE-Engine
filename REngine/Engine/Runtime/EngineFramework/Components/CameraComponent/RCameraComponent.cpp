@@ -35,7 +35,7 @@ FMatrix RCameraComponent::GetProjectionMatrix() const
     const FIntVector FrameSize = Frame->GetFrameSize();
     const GLfloat FrameRatio = static_cast<GLfloat>(FrameSize.x) / static_cast<GLfloat>(FrameSize.y);
     
-    return glm::perspective(glm::radians(FOV), FrameRatio, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(FOV), FrameRatio, 0.1f, 10000.0f);
 }
 
 void RCameraComponent::SetFOV(float InFOV)
@@ -55,5 +55,5 @@ void RCameraComponent::SetSpeed(float InSpeed)
 
 float RCameraComponent::GetSpeed() const
 {
-    return Speed;
+    return Speed * 10.0f;
 }

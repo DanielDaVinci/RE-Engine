@@ -9,31 +9,16 @@
 #include "ThirdParty/ExternalIncludes/GL/glew.h"
 #include "ThirdParty/ExternalIncludes/GLM/fwd.hpp"
 
-#define GLEW_STATIC
-
-using namespace std;
-
 class FShader
 {
-private:
-
-	GLuint program = 0;
-
-	string vertexPath;
-	string fragmentPath;
-
-	GLuint vertexShader;
-	GLuint fragmentShader;
-
 public:
-
 	FShader(const GLchar* vertexPath = nullptr, const GLchar* fragmentPath = nullptr);
 	
 	void setProgram();
 	GLuint getProgram() const;
 
-	string getVertexPath() const;
-	string getFragmentPath() const;
+	std::string getVertexPath() const;
+	std::string getFragmentPath() const;
 
 	void setVertex(const GLchar* path);
 	void setFragment(const GLchar* path);
@@ -49,8 +34,15 @@ public:
 	void setUniform(const GLchar* name, glm::mat4 value) const;
 
 private:
+	GLuint program = 0;
 
-	static string getCodeFromFile(const GLchar* path);
+	std::string vertexPath;
+	std::string fragmentPath;
+
+	GLuint vertexShader;
+	GLuint fragmentShader;
+
+	static std::string getCodeFromFile(const GLchar* path);
 	static GLuint getShader(GLenum type, const GLchar* source);
 
 };
