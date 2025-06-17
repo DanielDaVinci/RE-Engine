@@ -104,8 +104,8 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(texture_diffuse1, TexCoord));
 
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 32.0f);
     vec3 specular = light.specular * spec * vec3(texture(texture_specular1, TexCoord));
 
     return (ambient + diffuse + specular);
@@ -120,8 +120,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(material.diffuse, TexCoord));
 
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 32.0f);
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoord));
 
     float distance    = length(light.position - fragPos);
@@ -148,8 +148,8 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(material.diffuse, TexCoord));
 
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 32.0f);
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoord));
 
     float distance    = length(light.position - fragPos);
