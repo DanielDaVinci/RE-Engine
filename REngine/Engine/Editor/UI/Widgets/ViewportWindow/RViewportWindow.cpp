@@ -60,6 +60,9 @@ void RViewportWindow::DrawWindowContent() const
         ImVec2(0, 1),
         ImVec2(1, 0)
     );
+    
+    ImGui::Text("FPS: %f", REngine::GetEngine()->GetFPS());
+    
 }
 
 void RViewportWindow::OnKeyDown(int Key, int Scancode, int Mode)

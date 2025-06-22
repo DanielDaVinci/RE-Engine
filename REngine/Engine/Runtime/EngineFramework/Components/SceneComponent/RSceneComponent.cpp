@@ -70,6 +70,11 @@ FVector RSceneComponent::GetWorldPosition() const
     return GetWorldTransform().Position;
 }
 
+FQuat RSceneComponent::GetWorldRotation() const
+{
+    return GetWorldTransform().Quaternion;
+}
+
 FVector RSceneComponent::GetRelativePosition() const
 {
     return Transform.Position;

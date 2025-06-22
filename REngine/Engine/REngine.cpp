@@ -47,6 +47,7 @@ void REngine::Initialize()
     EngineWindow->SetWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     EngineWindow->SetWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     EngineWindow->SetWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    EngineWindow->SetWindowName("REngine");
 
     glewExperimental = GL_TRUE;
     glewInit();
@@ -81,14 +82,12 @@ void REngine::PreTick()
 void REngine::Tick()
 {
     RCheckReturn(Editor);
-
-    // TODO: Debug FPS, Remove for Release
+    
     static GLdouble PrevFPS = 0.0f;
     if (CurrentTickTime - PrevFPS > 1.0f)
     {
         PrevFPS = CurrentTickTime;
-        RCheckReturn(EngineWindow);
-        EngineWindow->SetWindowName(std::to_string(floor(1.0f / DeltaTime)));
+        CurrentFPS = 1.0f / DeltaTime;
     }
     
     Editor->Tick(DeltaTime);
@@ -114,6 +113,11 @@ std::shared_ptr<REditor> REngine::GetEditor() const
 std::shared_ptr<REngineWindow> REngine::GetEngineWindow() const
 {
     return EngineWindow;
+}
+
+float REngine::GetFPS() const
+{
+    return 800.0f + CurrentFPS;
 }
 
 void REngine::SetWindowCallbacks()

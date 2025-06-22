@@ -92,6 +92,10 @@ void main()
         result *= vec3(0.5f, 0.5f, 1.0f);
     }    
     
+    // Gamma correction
+    // const float gamma = 2.2;
+    // result = pow(result, vec3(1.0f / gamma));
+    
     color = vec4(result, 1.0);
 } 
 

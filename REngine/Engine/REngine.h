@@ -34,6 +34,8 @@ public:
     std::shared_ptr<REditor> GetEditor() const;
     std::shared_ptr<REngineWindow> GetEngineWindow() const;
 
+    float GetFPS() const;
+
 protected:
     // ----------- Callbacks -----------
     class FCallbackWrapper
@@ -62,6 +64,7 @@ private:
     GLdouble DeltaTime;
     GLdouble CurrentTickTime;
     GLdouble PreviousTickTime;
+    float CurrentFPS = 0.0f;
 
     std::shared_ptr<REngineWindow> EngineWindow;
     std::shared_ptr<REditor> Editor;

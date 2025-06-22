@@ -269,22 +269,25 @@ GLuint RMesh::LoadTextureFromFile(const std::string& Path, const std::string& Di
     unsigned char* data = SOIL_load_image(Fullpath.c_str(), &Width, &Height, &Channels, 0);
     if (RCheck(data))
     {
-        GLenum format;
+        GLenum InternalFormat;
+        GLenum DataFormat;
         if (Channels == 1)
         {
-            format = GL_RED;
+            InternalFormat = DataFormat = GL_RED;
         }
         else if (Channels == 3)
         {
-            format = GL_RGB;
+            InternalFormat = gamma ? GL_SRGB : GL_RGB;
+            DataFormat = GL_RGB;
         }
         else if (Channels == 4)
         {
-            format = GL_RGBA;
+            InternalFormat = gamma ? GL_SRGB_ALPHA : GL_RGBA;
+            DataFormat = GL_RGBA;
         }
 
         glBindTexture(GL_TEXTURE_2D, TextureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, Width, Height, 0, format, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, DataFormat, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

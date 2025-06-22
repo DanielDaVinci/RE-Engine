@@ -35,6 +35,7 @@ void RDetailsView::DrawActorProperties(const std::shared_ptr<RActor>& Actor) con
 
     if (ImGui::TreeNodeEx(Actor->GetClassName().c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen))
     {
+        ImGui::Button("Add Component");
         DrawValuesFromReflection(Actor.get());
 
         for (const auto& Component : Actor->GetAllComponents())

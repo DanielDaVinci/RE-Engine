@@ -27,6 +27,10 @@ static constexpr void RDetailsView::DrawValuesFromReflection(T* Value)
         {
             ImGui::SliderFloat3(MemberName.c_str(), &MemberValue.x, -100.0f, 100.0f);
         }
+        else if constexpr (std::is_same_v<MemberType, FVector2D>)
+        {
+            ImGui::SliderFloat2(MemberName.c_str(), &MemberValue.x, -100.0f, 100.0f);
+        }
         else if constexpr (std::is_same_v<MemberType, FQuat>)
         {
             if (ImGui::SliderFloat3(MemberName.c_str(), &MemberValue.EditorPitch, -180.0f, 180.0f))

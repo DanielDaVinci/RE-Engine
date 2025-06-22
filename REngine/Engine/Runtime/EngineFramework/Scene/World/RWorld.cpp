@@ -25,6 +25,60 @@ void RWorld::Initialize()
         "Content/objects/backpack/backpack.obj");
 
     SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+
+    SpawnMeshActor(FTransform(
+        FVector(0.0f, 0.0f, 1000.0f),
+        FQuat(0.0f, -90.0f, 90.0f),
+        FVector(2.0f, 2.0f, 2.0f)),
+        "Content/objects/backpack/backpack.obj");
+    
+    SpawnMeshActor(FTransform(
         FVector(0.0f, 0.0f, 0.0f),
         FQuat(0.0f, 0.0f, 90.0f),
         FVector(0.1f, 0.1f, 0.1f)),

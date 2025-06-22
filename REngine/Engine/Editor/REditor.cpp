@@ -6,10 +6,8 @@
 #include "REngine/Engine/REngine.h"
 #include "REngine/Engine/Runtime/Engine/EngineWindow/REngineWindow.h"
 #include "REngine/Engine/Runtime/Engine/Mesh/RMesh.h"
-#include "REngine/Engine/Runtime/EngineFramework/Actor/RActor.h"
 #include "REngine/Engine/Runtime/EngineFramework/Camera/RCameraSubsystem.h"
 #include "REngine/Engine/Runtime/EngineFramework/Components/CameraComponent/RCameraComponent.h"
-#include "REngine/Engine/Runtime/EngineFramework/Model/RModel.h"
 #include "REngine/Engine/Runtime/EngineFramework/Scene/RScene.h"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui.h"
 #include "ThirdParty/ExternalIncludes/imGUI/imgui_impl_glfw.h"
@@ -86,7 +84,7 @@ void REditor::PreRender(GLdouble DeltaTime)
 {
     Frame->Bind();
 
-    glfwWindowHint(GLFW_SAMPLES, 32);
+    glfwWindowHint(GLFW_SAMPLES, 8);
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_DEPTH_TEST);
@@ -132,9 +130,29 @@ void REditor::DrawMainMenuBar()
 {
     if (ImGui::BeginMainMenuBar())
     {
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Import File"))
+            {
+                
+            }
+
+            if (ImGui::MenuItem("Add Actor"))
+            {
+                
+            }
+
+            ImGui::EndMenu();
+        }
+        
         if (ImGui::BeginMenu("Settings"))
         {
-            if (ImGui::MenuItem("Import file"))
+            if (ImGui::MenuItem("Editor Settings"))
+            {
+                
+            }
+
+            if (ImGui::MenuItem("Engine Settings"))
             {
                 
             }

@@ -108,5 +108,13 @@ void FQuat::UpdateEditorAngles()
 
 void FQuat::OnEditorValueChanged()
 {
+    float TargetPitch = EditorPitch;
+    float TargetYaw = EditorYaw;
+    float TargetRoll = EditorRoll;
+    
     *this = FQuat(EditorPitch, EditorYaw, EditorRoll);
+    
+    EditorPitch = TargetPitch;
+    EditorYaw = TargetYaw;
+    EditorRoll = TargetRoll;
 }

@@ -23,16 +23,16 @@ void RStaticMeshComponent::PreRender(float DeltaTime)
 {
     RSceneComponent::PreRender(DeltaTime);
 
-    const std::shared_ptr<RActor> Owner = GetOwner<RActor>();
-    RCheckReturn(Owner);
-    
-    FTransform WorldTransform = GetWorldTransform();
-    
-    if (Owner->IsSelected())
-    {
-        RCheckReturn(StaticMesh);
-        StaticMesh->RenderStroke(WorldTransform, DeltaTime);
-    }
+    // const std::shared_ptr<RActor> Owner = GetOwner<RActor>();
+    // RCheckReturn(Owner);
+    //
+    // FTransform WorldTransform = GetWorldTransform();
+    //
+    // if (Owner->IsSelected())
+    // {
+    //     RCheckReturn(StaticMesh);
+    //     StaticMesh->RenderStroke(WorldTransform, DeltaTime);
+    // }
 }
 
 void RStaticMeshComponent::Render(float DeltaTime)

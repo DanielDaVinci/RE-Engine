@@ -24,6 +24,7 @@ public:
     FTransform GetRelativeTransform() const;
 
     FVector GetWorldPosition() const;
+    FQuat GetWorldRotation() const;
     FVector GetRelativePosition() const;
     FQuat GetRelativeRotation() const;
 

@@ -19,7 +19,6 @@ class RMesh;
 class RScene;
 class RRootWindow;
 class RWidget;
-class RModel;
 class RCameraLegacy;
 class FShader;
 class RFrame;
